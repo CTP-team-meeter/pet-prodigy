@@ -1,6 +1,13 @@
+// Avoids typescript error: Cannot redeclare block-scoped variable.
+export {};
+
+// Import dependencies
 const express = require('express');
-const router = express.Router();
+const bcrypt = require('bcrypt');
 const User = require('../models/user');
+
+// Create router
+const router = express.Router();
 
 // GET users listing
 router.get('/', async (req, res) => {
@@ -21,9 +28,18 @@ router.get('/:id', getUser, (req, res) => {
 
 // POST user
 router.post('/', async (req, res) => {
+  const salt = await bcrypt.genSalt();
+  const hashedPassword = await bcrypt.hash(req.body.password, salt);
+
+  User.find({ username: req.body.username }, (err, docs) => {
+    if (docs.length) {
+      res.status(400).json({ message: 'Username already exists' });
+    }
+  });
+
   const user = new User({
     username: req.body.username,
-    password: req.body.password,
+    password: hashedPassword,
   });
 
   try {

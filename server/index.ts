@@ -1,4 +1,4 @@
-// Avoids typescript from making global variables
+// Avoids typescript error: Cannot redeclare block-scoped variable.
 export {};
 
 // Importing dotenv

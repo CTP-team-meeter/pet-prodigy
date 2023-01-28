@@ -1,5 +1,5 @@
 GET http://localhost:8000/users
-
+      
 ###
 GET  http://localhost:8000/users/63d56a907808d15b56b5c599
 
@@ -8,7 +8,7 @@ POST http://localhost:8000/users
 Content-Type: application/json
 
 {
-  "username": "test",
+  "username": "karl",
   "password": "123"
 }
 
@@ -22,4 +22,4 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:8000/users/63d563abc57c2b859b795d6a
+DELETE http://localhost:8000/users/63d56a907808d15b56b5c599
