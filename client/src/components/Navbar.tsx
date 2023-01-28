@@ -8,7 +8,7 @@ function Navbar() {
   return (
     <nav className="w-full bg-black flex justify-around rounded-lg mb-10">
       <div className="nav__logo">
-        <h1>AnimaDex</h1>
+        <h1 className="text-3xl p-2">CatDex</h1>
       </div>
       <div className="nav__links flex items-center">
         <NavLink

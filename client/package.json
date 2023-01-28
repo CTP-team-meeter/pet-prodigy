@@ -2,7 +2,6 @@
   "name": "animadex",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -10,6 +9,7 @@
   },
   "dependencies": {
     "react": "^18.2.0",
+    "react-country-flag": "^3.0.2",
     "react-dom": "^18.2.0",
     "react-loader-spinner": "^5.3.4",
     "react-router-dom": "^6.7.0"

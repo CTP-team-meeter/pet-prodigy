@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import { TailSpin } from 'react-loader-spinner';
+import ReactCountryFlag from 'react-country-flag';
 
 interface CatBreed {
   id: string;
   breed: string;
   image: string;
   origin?: string;
+  country_code?: string;
   temperament?: string;
   status?: Array<number>;
 }
@@ -15,12 +17,15 @@ function Home() {
     id: '',
     breed: '',
     image: '',
-    origin: 'Unknown',
+    origin: '',
   });
 
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<any>(null);
+
   let stars = new Array(5);
+
+  // Array of stars for each status
   let adaptability = [];
   let affection_level = [];
   let child_friendly = [];
@@ -37,9 +42,9 @@ function Home() {
   const getCat = async () => {
     try {
       setLoading(true);
-      const catBreedsNumber = 66;
 
       // Get cat breed
+      const catBreedsNumber = 66;
       const randomIndex = Math.floor(Math.random() * catBreedsNumber);
       const response = await fetch('https://api.thecatapi.com/v1/breeds');
       const data = await response.json();
@@ -51,13 +56,13 @@ function Home() {
       );
       const catImageJson = await catImage.json();
       const catImageURL = catImageJson[0].url;
-      console.log(cat);
 
       setCatBreed({
         id: cat.id,
         breed: cat.name,
         image: catImageURL,
         origin: cat.origin,
+        country_code: cat.country_code,
         temperament: cat.temperament,
         status: [
           cat.adaptability,
@@ -199,15 +204,23 @@ function Home() {
         <h1 className="text-3xl mb-2">{catBreed.breed}</h1>
         <img
           style={{ width: '800px', height: '500px' }}
-          className="mb-2 rounded-lg object-cover"
+          className="mb-2 rounded-lg object-cover object-top"
           src={catBreed.image}
           alt="character"
         />
         <div
           style={{ width: '800px' }}
-          className="bg-black mb-3 text-white rounded-lg text-justify text-lg"
+          className="bg-black mb-3 text-white rounded-lg text-justify text-md"
         >
-          <p className="p-2">Origin: {catBreed.origin}</p>
+          <p className="p-2">
+            Origin: {catBreed.origin} &nbsp;
+            <ReactCountryFlag
+              countryCode={
+                catBreed.country_code ? catBreed.country_code : 'Undefined'
+              }
+              svg
+            />
+          </p>
           <p className="p-2">Temperament: {catBreed.temperament}</p>
           <p className="p-2">Adaptibility:{<>{adaptability}</>}</p>
           <p className="p-2">Affection Level:{<>{affection_level}</>}</p>
