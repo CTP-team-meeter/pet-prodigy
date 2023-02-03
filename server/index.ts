@@ -1,9 +1,9 @@
-// Avoids typescript error: Cannot redeclare block-scoped variable.
+// Avoids typescript from making modules global
 export {};
 
 // Importing dotenv
 require('dotenv').config();
-const dbPort = process.env.DATABASE_PORT || 8000;
+const dbPort = process.env.DATABASE_PORT || 8080;
 
 // Importing express
 const express = require('express');
@@ -11,6 +11,18 @@ const app = express();
 
 // Importing mongoose
 const mongoose = require('mongoose');
+
+// Enable CORS
+const cors = require('cors');
+const corsOptions = {
+  origin: '*',
+  credentials: true, //access-control-allow-credentials:true
+  optionSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
+
+// Avoids deprecation warnings
 mongoose.set('strictQuery', false);
 
 // Connecting to MongoDB
@@ -26,8 +38,7 @@ db.once('open', () => {
 app.use(express.json());
 
 // Importing routes
-const usersRouter = require('./routes/users');
-app.use('/users', usersRouter);
+app.use('/', require('./controllers'));
 
 // Starting server
 app.listen(dbPort, () => {

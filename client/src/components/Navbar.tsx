@@ -6,9 +6,9 @@ import { NavLink } from 'react-router-dom';
 
 function Navbar() {
   return (
-    <nav className="w-full bg-black flex justify-around rounded-lg mb-10">
+    <nav className="w-full sticky top-0 bg-slate-800 flex justify-around rounded-b-lg mb-10 z-50">
       <div className="nav__logo">
-        <h1 className="text-3xl p-2">CatDex</h1>
+        <h1 className="text-3xl p-2">Pet Prodigy</h1>
       </div>
       <div className="nav__links flex items-center">
         <NavLink

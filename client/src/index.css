@@ -24,6 +24,7 @@ a {
   font-weight: 500;
   color: #646cff;
   text-decoration: inherit;
+  font-family: Tahoma, Verdana, Segoe, sans-serif;
 }
 a:hover {
   color: #535bf2;
@@ -33,11 +34,17 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  background-color: #000000;
 }
 
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
+  font-family: Tahoma, Verdana, Segoe, sans-serif;
+}
+
+p {
+  font-family: Tahoma, Verdana, Segoe, sans-serif;
 }
 
 button {
@@ -47,12 +54,12 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #646cff;
   cursor: pointer;
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+  border-color: aqua;
 }
 button:focus,
 button:focus-visible {

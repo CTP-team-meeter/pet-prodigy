@@ -1,0 +1,29 @@
+GET http://localhost:8080/catBreeds
+      
+###
+GET  http://localhost:8080/catBreeds/
+
+###
+POST http://localhost:8080/catBreeds
+Content-Type: application/json
+
+{
+  "name": "Bengal"
+}
+
+###
+PATCH http://localhost:8080/pet_prodigy
+Content-Type: application/json
+
+{
+    "username": "John",
+    "password": "321"
+}
+
+###
+DELETE http://localhost:8080/users/63d5e6bbeac21a309fb1998b
+
+
+###
+
+GET http://localhost:8080/api/breeds

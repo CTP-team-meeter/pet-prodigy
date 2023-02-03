@@ -1,247 +1,286 @@
-import { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TailSpin } from 'react-loader-spinner';
 import ReactCountryFlag from 'react-country-flag';
+import StarRatings from 'react-star-ratings';
+interface Cat {
+  id: number;
+  name: string;
+  origin: string;
+  temperament: string;
+  life_span: string;
+  wikipedia_url: string;
+  description: string;
+  alt_names: string;
+  adaptability: number;
+  affection_level: number;
+  child_friendly: number;
+  dog_friendly: number;
+  energy_level: number;
+  grooming: number;
+  health_issues: number;
+  intelligence: number;
+  shedding_level: number;
+  social_needs: number;
+  stranger_friendly: number;
 
-interface CatBreed {
-  id: string;
-  breed: string;
-  image: string;
-  origin?: string;
-  country_code?: string;
-  temperament?: string;
-  status?: Array<number>;
+  weight: {
+    imperial: string;
+    metric: string;
+  };
+  cfa_url: string;
+  vetstreet_url: string;
+  vcahospitals_url: string;
+  country_code: string;
+  indoor: number;
+  lap: number;
+  url: string;
 }
 
-function Home() {
-  const [catBreed, setCatBreed] = useState<CatBreed>({
-    id: '',
-    breed: '',
-    image: '',
-    origin: '',
-  });
-
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<any>(null);
-
-  let stars = new Array(5);
-
-  // Array of stars for each status
-  let adaptability = [];
-  let affection_level = [];
-  let child_friendly = [];
-  let dog_friendly = [];
-  let energy_level = [];
-  let grooming = [];
-  let health_issues = [];
-  let intelligence = [];
-  let shedding_level = [];
-  let social_needs = [];
-  let stranger_friendly = [];
-  let vocalisation = [];
-
-  const getCat = async () => {
-    try {
-      setLoading(true);
-
-      // Get cat breed
-      const catBreedsNumber = 66;
-      const randomIndex = Math.floor(Math.random() * catBreedsNumber);
-      const response = await fetch('https://api.thecatapi.com/v1/breeds');
-      const data = await response.json();
-      const cat = data[randomIndex];
-
-      // Get cat image
-      const catImage = await fetch(
-        'https://api.thecatapi.com/v1/images/search?breed_ids=' + cat.id
-      );
-      const catImageJson = await catImage.json();
-      const catImageURL = catImageJson[0].url;
-
-      setCatBreed({
-        id: cat.id,
-        breed: cat.name,
-        image: catImageURL,
-        origin: cat.origin,
-        country_code: cat.country_code,
-        temperament: cat.temperament,
-        status: [
-          cat.adaptability,
-          cat.affection_level,
-          cat.child_friendly,
-          cat.dog_friendly,
-          cat.energy_level,
-          cat.grooming,
-          cat.health_issues,
-          cat.intelligence,
-          cat.shedding_level,
-          cat.social_needs,
-          cat.stranger_friendly,
-          cat.vocalisation,
-        ],
-      });
-    } catch (error) {
-      console.log(error);
-      setError(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+const Home = () => {
+  const [cats, setCats] = useState<Cat[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getCat();
+    const fetchData = async () => {
+      try {
+        const catBreeds = await fetch('https://api.thecatapi.com/v1/breeds');
+        const data = await catBreeds.json();
+        const promises = data.map(async (breed: any) => {
+          const resultImage = await fetch(
+            'https://api.thecatapi.com/v1/images/search?breed_ids=' + breed.id
+          );
+          const dataImage = await resultImage.json();
+
+          if (dataImage[0]) {
+            return {
+              id: breed.id,
+              name: breed.name || 'Missing data',
+              url: dataImage[0].url || 'Missing data',
+              origin: breed.origin || 'Missing data',
+              temperament: breed.temperament || 'Missing data',
+              life_span: breed.life_span || 0,
+              wikipedia_url: breed.wikipedia_url || 'Missing data',
+              description: breed.description || 'Missing data',
+              alt_names: breed.alt_names || 'Missing data',
+              adaptability: breed.adaptability || 0,
+              affection_level: breed.affection_level || 0,
+              child_friendly: breed.child_friendly || 0,
+              dog_friendly: breed.dog_friendly || 0,
+              energy_level: breed.energy_level || 0,
+              grooming: breed.grooming || 0,
+              health_issues: breed.health_issues || 0,
+              intelligence: breed.intelligence || 0,
+              shedding_level: breed.shedding_level || 0,
+              social_needs: breed.social_needs || 0,
+              stranger_friendly: breed.stranger_friendly || 0,
+              weight: breed.weight || 'Missing data',
+              cfa_url: breed.cfa_url || 'Missing data',
+              vetstreet_url: breed.vetstreet_url || 'Missing data',
+              vcahospitals_url: breed.vcahospitals_url || 'Missing data',
+              country_code: breed.country_code || 'Missing data',
+              indoor: breed.indoor || 0,
+              lap: breed.lap || 0,
+            };
+          }
+        });
+
+        const cats = await Promise.all(promises);
+        setCats(cats.filter(Boolean));
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
   }, []);
 
-  const refreshPage = () => {
-    window.location.reload();
-  };
-
-  if (loading)
-    return (
-      <TailSpin
-        height="30"
-        width="30"
-        color="#00FFFF"
-        ariaLabel="tail-spin-loading"
-        radius="1"
-        wrapperStyle={{
-          display: 'flex',
-          justifyContent: 'center',
-        }}
-        wrapperClass="mt-72"
-        visible={true}
-      />
-    );
-
-  if (error || !catBreed.status) {
-    return (
-      <div>
-        <h1 className="mb-6">Something went wrong!</h1>
-        <button onClick={refreshPage}>Click here to refresh</button>
-      </div>
-    );
-  }
-
-  for (let i = 0; i < stars.length; i++) {
-    if (i >= catBreed.status[0]) {
-      adaptability.push(<span className="fa fa-star p-1"></span>);
-    } else adaptability.push(<span className="fa fa-star checked p-1"></span>);
-  }
-
-  for (let i = 0; i < stars.length; i++) {
-    if (i >= catBreed.status[1]) {
-      affection_level.push(<span className="fa fa-star p-1"></span>);
-    } else
-      affection_level.push(<span className="fa fa-star checked p-1"></span>);
-  }
-
-  for (let i = 0; i < stars.length; i++) {
-    if (i >= catBreed.status[2]) {
-      child_friendly.push(<span className="fa fa-star p-1"></span>);
-    } else {
-      child_friendly.push(<span className="fa fa-star p-1 checked"></span>);
-    }
-  }
-
-  for (let i = 0; i < stars.length; i++) {
-    if (i >= catBreed.status[3]) {
-      dog_friendly.push(<span className="fa fa-star p-1"></span>);
-    } else dog_friendly.push(<span className="fa fa-star p-1 checked"></span>);
-  }
-
-  for (let i = 0; i < stars.length; i++) {
-    if (i >= catBreed.status[4]) {
-      energy_level.push(<span className="fa fa-star p-1"></span>);
-    } else energy_level.push(<span className="fa fa-star p-1 checked"></span>);
-  }
-
-  for (let i = 0; i < stars.length; i++) {
-    if (i >= catBreed.status[5]) {
-      grooming.push(<span className="fa fa-star p-1"></span>);
-    } else grooming.push(<span className="fa fa-star p-1 checked"></span>);
-  }
-
-  for (let i = 0; i < stars.length; i++) {
-    if (i >= catBreed.status[6]) {
-      health_issues.push(<span className="fa fa-star p-1"></span>);
-    } else health_issues.push(<span className="fa fa-star p-1 checked"></span>);
-  }
-
-  for (let i = 0; i < stars.length; i++) {
-    if (i >= catBreed.status[7]) {
-      intelligence.push(<span className="fa fa-star p-1"></span>);
-    } else intelligence.push(<span className="fa fa-star p-1 checked"></span>);
-  }
-
-  for (let i = 0; i < stars.length; i++) {
-    if (i >= catBreed.status[8]) {
-      shedding_level.push(<span className="fa fa-star p-1"></span>);
-    } else
-      shedding_level.push(<span className="fa fa-star p-1 checked"></span>);
-  }
-
-  for (let i = 0; i < stars.length; i++) {
-    if (i >= catBreed.status[9]) {
-      social_needs.push(<span className="fa fa-star p-1"></span>);
-    } else social_needs.push(<span className="fa fa-star p-1 checked"></span>);
-  }
-
-  for (let i = 0; i < stars.length; i++) {
-    if (i >= catBreed.status[10]) {
-      stranger_friendly.push(<span className="fa fa-star p-1"></span>);
-    } else
-      stranger_friendly.push(<span className="fa fa-star p-1 checked"></span>);
-  }
-
-  for (let i = 0; i < stars.length; i++) {
-    if (i >= catBreed.status[11]) {
-      vocalisation.push(<span className="fa fa-star p-1"></span>);
-    } else vocalisation.push(<span className="fa fa-star p-1 checked"></span>);
-  }
-
   return (
-    <>
-      <div className="mx-auto w-fit">
-        <h1 className="text-3xl mb-2">{catBreed.breed}</h1>
-        <img
-          style={{ width: '800px', height: '500px' }}
-          className="mb-2 rounded-lg object-cover object-top"
-          src={catBreed.image}
-          alt="character"
+    <div className="flex justify-center items-center">
+      {loading ? (
+        <TailSpin
+          width={40}
+          height={40}
+          color="#00FFFF"
+          ariaLabel="tail-spin-loading"
         />
-        <div
-          style={{ width: '800px' }}
-          className="bg-black mb-3 text-white rounded-lg text-justify text-md"
-        >
-          <p className="p-2">
-            Origin: {catBreed.origin} &nbsp;
-            <ReactCountryFlag
-              countryCode={
-                catBreed.country_code ? catBreed.country_code : 'Undefined'
-              }
-              svg
-            />
-          </p>
-          <p className="p-2">Temperament: {catBreed.temperament}</p>
-          <p className="p-2">Adaptibility:{<>{adaptability}</>}</p>
-          <p className="p-2">Affection Level:{<>{affection_level}</>}</p>
-          <p className="p-2">Child Friendly:{<>{child_friendly}</>}</p>
-          <p className="p-2">Dog Friendly: {<>{dog_friendly}</>}</p>
-          <p className="p-2">Energy Level:{<>{energy_level}</>}</p>
-          <p className="p-2">Grooming: {<>{grooming}</>}</p>
-          <p className="p-2">Health Issues: {<>{health_issues}</>}</p>
-          <p className="p-2">Intelligence: {<>{intelligence}</>}</p>
-          <p className="p-2">Shedding Level: {<>{shedding_level}</>}</p>
-          <p className="p-2">Social Needs: {<>{social_needs}</>}</p>
-          <p className="p-2">Stranger Friendly: {<>{stranger_friendly}</>}</p>
-          <p className="p-2">Vocalisation: {<>{vocalisation}</>}</p>
-        </div>
+      ) : (
+        <div className="w-full bg-slate-900 border-2 rounded-lg p-10">
+          {cats.map((cat: Cat) => (
+            <>
+              <div
+                className="flex flex-wrap justify-start text-justify mb-10 items-start"
+                key={cat.id}
+              >
+                <div className="" style={{ width: '40%' }}>
+                  <h1 className="text-center font-bold md:text-4xl sm:text-2xl text-lg mb-3">
+                    {cat.name}
+                  </h1>
 
-        <button className="mb-4" onClick={getCat}>
-          Next
-        </button>
-      </div>
-    </>
+                  <div
+                    style={{
+                      backgroundImage: `url(${cat.url})`,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                      backgroundRepeat: 'no-repeat',
+                      width: '100%',
+                      height: '600px',
+                    }}
+                    className="border-2 rounded-lg"
+                  ></div>
+                </div>
+                <div className="text-left  ml-3 mt-12">
+                  <p className="text-xl font-bold mb-3">
+                    {cat.origin} &nbsp;&nbsp;
+                    <ReactCountryFlag
+                      countryCode={cat.country_code.toLocaleLowerCase()}
+                      svg
+                    />
+                  </p>
+                  <p className="mb-3">
+                    Adaptability: &nbsp;
+                    <StarRatings
+                      starRatedColor="aqua"
+                      starDimension="15px"
+                      starSpacing="2px"
+                      rating={cat.adaptability}
+                    />
+                  </p>
+                  <p className="mb-3">
+                    Affection:&nbsp;
+                    <StarRatings
+                      starRatedColor="aqua"
+                      starDimension="15px"
+                      starSpacing="2px"
+                      rating={cat.affection_level}
+                    />
+                  </p>
+                  <p className="mb-3">
+                    Child Friendly:&nbsp;
+                    <StarRatings
+                      starRatedColor="aqua"
+                      starDimension="15px"
+                      starSpacing="2px"
+                      rating={cat.child_friendly}
+                    />
+                  </p>
+                  <p className="mb-3">
+                    Dog Friendly:&nbsp;{' '}
+                    <StarRatings
+                      starRatedColor="aqua"
+                      starDimension="15px"
+                      starSpacing="2px"
+                      rating={cat.dog_friendly}
+                    />
+                  </p>
+                  <p className="mb-3">
+                    Stranger Friendly:&nbsp;
+                    <StarRatings
+                      starRatedColor="aqua"
+                      starDimension="15px"
+                      starSpacing="2px"
+                      rating={cat.stranger_friendly}
+                    />
+                  </p>
+                  <p className="mb-3">
+                    Energy:&nbsp;{' '}
+                    <StarRatings
+                      starRatedColor="aqua"
+                      starDimension="15px"
+                      starSpacing="2px"
+                      rating={cat.energy_level}
+                    />
+                  </p>
+                  <p className="mb-3">
+                    Grooming:&nbsp;{' '}
+                    <StarRatings
+                      starRatedColor="aqua"
+                      starDimension="15px"
+                      starSpacing="2px"
+                      rating={cat.grooming}
+                    />
+                  </p>
+                  <p className="mb-3">
+                    Health Issues:&nbsp;{' '}
+                    <StarRatings
+                      starRatedColor="aqua"
+                      starDimension="15px"
+                      starSpacing="2px"
+                      rating={cat.health_issues}
+                    />
+                  </p>
+                  <p className="mb-3">
+                    Intelligence:&nbsp;
+                    <StarRatings
+                      starRatedColor="aqua"
+                      starDimension="15px"
+                      starSpacing="2px"
+                      rating={cat.intelligence}
+                    />
+                  </p>
+                  <p className="mb-3">
+                    Shedding:&nbsp;
+                    <StarRatings
+                      starRatedColor="aqua"
+                      starDimension="15px"
+                      starSpacing="2px"
+                      rating={cat.shedding_level}
+                    />
+                  </p>
+                  <p className="mb-3">
+                    Social Needs:&nbsp;
+                    <StarRatings
+                      starRatedColor="aqua"
+                      starDimension="15px"
+                      starSpacing="2px"
+                      rating={cat.social_needs}
+                    />
+                  </p>
+                  <p className="mb-3">
+                    Indoor:&nbsp;
+                    <StarRatings
+                      starRatedColor="aqua"
+                      starDimension="15px"
+                      starSpacing="2px"
+                      rating={cat.indoor}
+                    />
+                  </p>
+                  <p className="mb-3">
+                    Lap:&nbsp;
+                    <StarRatings
+                      starRatedColor="aqua"
+                      starDimension="15px"
+                      starSpacing="2px"
+                      rating={cat.lap}
+                    />
+                  </p>
+                  <p className="mb-3">
+                    Weight (Imperial):&nbsp;
+                    {cat.weight.imperial}
+                  </p>
+                  <p className="mb-3">
+                    Weight (Metric):&nbsp;
+                    {cat.weight.metric}
+                  </p>
+                </div>
+                <p className="w-full text-center mt-8">
+                  <span className="font-bold">Temperament:</span>
+                  &nbsp;
+                  {cat.temperament}
+                </p>
+                <p className="mt-8">
+                  <span className="text-lg font-bold">Description</span>
+                  :&nbsp;
+                  {cat.description}
+                </p>
+              </div>
+              <hr className="border-1 m-20" />
+            </>
+          ))}
+        </div>
+      )}
+    </div>
   );
-}
+};
 
 export default Home;
