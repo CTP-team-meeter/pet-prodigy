@@ -6,7 +6,7 @@ interface Cat {
   id: number;
   name: string;
   origin: string;
-  temperament: string;
+  temperament: Array<string>;
   life_span: string;
   wikipedia_url: string;
   description: string;
@@ -34,6 +34,7 @@ interface Cat {
 const Home = () => {
   const [cats, setCats] = useState<Cat[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -47,13 +48,15 @@ const Home = () => {
           );
           const dataImage = await resultImage.json();
 
+          const temperament = breed.temperament?.split(', ');
+
           if (dataImage[0]) {
             return {
               id: breed.id,
               name: breed.name || 'Missing data',
               url: dataImage[0].url || 'Missing data',
               origin: breed.origin || 'Missing data',
-              temperament: breed.temperament || 'Missing data',
+              temperament: temperament || 'Missing data',
               life_span: breed.life_span || 0,
               wikipedia_url: breed.wikipedia_url || 'Missing data',
               description: breed.description || 'Missing data',
@@ -80,6 +83,9 @@ const Home = () => {
         setCats(cats.filter(Boolean));
         setLoading(false);
       } catch (error) {
+        if (error instanceof Error) {
+          setError(error.message);
+        }
         console.log(error);
       }
     };
@@ -89,6 +95,7 @@ const Home = () => {
 
   return (
     <div className="flex justify-center items-center">
+      {error ? <p className="text-red-500">{error}</p> : null}
       {loading ? (
         <TailSpin
           width={40}
@@ -120,21 +127,26 @@ const Home = () => {
                     className="border-2 rounded-lg"
                   ></div>
                 </div>
-                <div className="w-5/12 text-left  ml-3 mt-12">
+                <div className="text-left  ml-3 mt-12">
                   <p className="text-xl font-bold mb-3">
                     {cat.origin} &nbsp;
                     <ReactCountryFlag countryCode={cat.country_code} svg />
                     <a
-                      className="text-sm text-white bg-cyan-500 hover:text-slate-900 p-2 rounded-lg ml-8"
+                      className="text-sm text-white bg-gray-400 hover:text-slate-900 p-2 rounded-lg ml-8"
                       href={cat.wikipedia_url}
                       target="_blank"
                     >
                       Wikipedia
                     </a>
                   </p>
-                  <p className="mb-3">
+                  <p className="mt-8 mb-3">
+                    {cat.temperament.map((temp: string) => (
+                      <span className="text-sm bg-cyan-500 rounded-lg p-2 mb-3 mr-2">
+                        {temp}
+                      </span>
+                    ))}
                     {cat.hypoallergenic === 1 ? (
-                      <span className="text-sm bg-yellow-500 rounded-lg p-1 mb-3 ">
+                      <span className="text-sm bg-yellow-500 rounded-lg p-2 mb-3 ">
                         Hypoallergenic
                       </span>
                     ) : null}
@@ -251,11 +263,6 @@ const Home = () => {
                     {cat.weight.metric}
                   </p>
                 </div>
-                <p className="w-full text-center mt-8">
-                  <span className="font-bold">Temperament:</span>
-                  &nbsp;
-                  {cat.temperament}
-                </p>
                 <p className="mt-8">
                   <span className="text-lg font-bold">Description</span>
                   :&nbsp;
