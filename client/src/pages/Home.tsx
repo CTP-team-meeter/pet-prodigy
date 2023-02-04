@@ -22,18 +22,13 @@ interface Cat {
   shedding_level: number;
   social_needs: number;
   stranger_friendly: number;
-
   weight: {
     imperial: string;
     metric: string;
   };
-  cfa_url: string;
-  vetstreet_url: string;
-  vcahospitals_url: string;
   country_code: string;
-  indoor: number;
-  lap: number;
   url: string;
+  hypoallergenic: number;
 }
 
 const Home = () => {
@@ -45,6 +40,7 @@ const Home = () => {
       try {
         const catBreeds = await fetch('https://api.thecatapi.com/v1/breeds');
         const data = await catBreeds.json();
+        console.log(data);
         const promises = data.map(async (breed: any) => {
           const resultImage = await fetch(
             'https://api.thecatapi.com/v1/images/search?breed_ids=' + breed.id
@@ -74,12 +70,8 @@ const Home = () => {
               social_needs: breed.social_needs || 0,
               stranger_friendly: breed.stranger_friendly || 0,
               weight: breed.weight || 'Missing data',
-              cfa_url: breed.cfa_url || 'Missing data',
-              vetstreet_url: breed.vetstreet_url || 'Missing data',
-              vcahospitals_url: breed.vcahospitals_url || 'Missing data',
               country_code: breed.country_code || 'Missing data',
-              indoor: breed.indoor || 0,
-              lap: breed.lap || 0,
+              hypoallergenic: breed.hypoallergenic || 0,
             };
           }
         });
@@ -116,7 +108,6 @@ const Home = () => {
                   <h1 className="text-center font-bold md:text-4xl sm:text-2xl text-lg mb-3">
                     {cat.name}
                   </h1>
-
                   <div
                     style={{
                       backgroundImage: `url(${cat.url})`,
@@ -129,15 +120,26 @@ const Home = () => {
                     className="border-2 rounded-lg"
                   ></div>
                 </div>
-                <div className="text-left  ml-3 mt-12">
+                <div className="w-5/12 text-left  ml-3 mt-12">
                   <p className="text-xl font-bold mb-3">
-                    {cat.origin} &nbsp;&nbsp;
-                    <ReactCountryFlag
-                      countryCode={cat.country_code.toLocaleLowerCase()}
-                      svg
-                    />
+                    {cat.origin} &nbsp;
+                    <ReactCountryFlag countryCode={cat.country_code} svg />
+                    <a
+                      className="text-sm text-white bg-cyan-500 hover:text-slate-900 p-2 rounded-lg ml-8"
+                      href={cat.wikipedia_url}
+                      target="_blank"
+                    >
+                      Wikipedia
+                    </a>
                   </p>
                   <p className="mb-3">
+                    {cat.hypoallergenic === 1 ? (
+                      <span className="text-sm bg-yellow-500 rounded-lg p-1 mb-3 ">
+                        Hypoallergenic
+                      </span>
+                    ) : null}
+                  </p>
+                  <p className="mt-6 mb-3">
                     Adaptability: &nbsp;
                     <StarRatings
                       starRatedColor="aqua"
@@ -192,7 +194,7 @@ const Home = () => {
                     />
                   </p>
                   <p className="mb-3">
-                    Grooming:&nbsp;{' '}
+                    Grooming:&nbsp;
                     <StarRatings
                       starRatedColor="aqua"
                       starDimension="15px"
@@ -237,22 +239,8 @@ const Home = () => {
                     />
                   </p>
                   <p className="mb-3">
-                    Indoor:&nbsp;
-                    <StarRatings
-                      starRatedColor="aqua"
-                      starDimension="15px"
-                      starSpacing="2px"
-                      rating={cat.indoor}
-                    />
-                  </p>
-                  <p className="mb-3">
-                    Lap:&nbsp;
-                    <StarRatings
-                      starRatedColor="aqua"
-                      starDimension="15px"
-                      starSpacing="2px"
-                      rating={cat.lap}
-                    />
+                    Life Span:&nbsp;
+                    {cat.life_span}
                   </p>
                   <p className="mb-3">
                     Weight (Imperial):&nbsp;
