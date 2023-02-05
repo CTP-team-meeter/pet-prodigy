@@ -243,16 +243,31 @@ function Encyclopedia() {
             <div className="w-full">
               <h2 className="w-3/12 text-center font-bold mb-2">{cat?.name}</h2>
               <div className="flex">
-                <div
-                  style={{
-                    backgroundImage: `url(${cat?.images})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    backgroundRepeat: 'no-repeat',
-                    height: '400px',
-                  }}
-                  className="w-3/12 border rounded-lg"
-                ></div>
+                <div className="flex-col">
+                  <div
+                    style={{
+                      backgroundImage: `url(${cat?.images})`,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                      backgroundRepeat: 'no-repeat',
+                      width: '300px',
+                      height: '400px',
+                    }}
+                    className="w-6/12 border rounded-lg"
+                  ></div>
+                  <div className="flex justify-center items-center mt-2">
+                    <h1 className="w-6/12 text-end text-xs mb-2">
+                      Life Span(Y):&nbsp;
+                      {cat?.life_span}
+                    </h1>
+                    &nbsp;&nbsp;
+                    <h1 className="w-6/12 text-xs mb-3">
+                      Weight(KG):&nbsp;
+                      {cat?.weight.imperial}
+                    </h1>
+                  </div>
+                </div>
+
                 <div className="w-9/12 ml-4">
                   <p>
                     {cat?.origin}&nbsp;&nbsp;
@@ -282,117 +297,122 @@ function Encyclopedia() {
                       </span>
                     ) : null}
                   </h1>
-                  <h1 className="text-sm mt-6 mb-2">
-                    Adaptability: &nbsp;
-                    <StarRatings
-                      starRatedColor="aqua"
-                      starDimension="15px"
-                      starSpacing="2px"
-                      rating={cat?.adaptability}
-                    />
-                  </h1>
-                  <h1 className="text-sm mb-2">
-                    Affection:&nbsp;
-                    <StarRatings
-                      starRatedColor="aqua"
-                      starDimension="15px"
-                      starSpacing="2px"
-                      rating={cat?.affection_level}
-                    />
-                  </h1>
-                  <h1 className="text-sm mb-2">
-                    Child Friendly:&nbsp;
-                    <StarRatings
-                      starRatedColor="aqua"
-                      starDimension="15px"
-                      starSpacing="2px"
-                      rating={cat?.child_friendly}
-                    />
-                  </h1>
-                  <h1 className="text-sm mb-2">
-                    Dog Friendly:&nbsp;{' '}
-                    <StarRatings
-                      starRatedColor="aqua"
-                      starDimension="15px"
-                      starSpacing="2px"
-                      rating={cat?.dog_friendly}
-                    />
-                  </h1>
-                  <h1 className="text-sm mb-2">
-                    Stranger Friendly:&nbsp;
-                    <StarRatings
-                      starRatedColor="aqua"
-                      starDimension="15px"
-                      starSpacing="2px"
-                      rating={cat?.stranger_friendly}
-                    />
-                  </h1>
-                  <h1 className="text-sm mb-2">
-                    Energy:&nbsp;{' '}
-                    <StarRatings
-                      starRatedColor="aqua"
-                      starDimension="15px"
-                      starSpacing="2px"
-                      rating={cat?.energy_level}
-                    />
-                  </h1>
-                  <h1 className="text-sm mb-2">
-                    Grooming:&nbsp;
-                    <StarRatings
-                      starRatedColor="aqua"
-                      starDimension="15px"
-                      starSpacing="2px"
-                      rating={cat?.grooming}
-                    />
-                  </h1>
-                  <h1 className="text-sm mb-2">
-                    Health Issues:&nbsp;{' '}
-                    <StarRatings
-                      starRatedColor="aqua"
-                      starDimension="15px"
-                      starSpacing="2px"
-                      rating={cat?.health_issues}
-                    />
-                  </h1>
-                  <h1 className="text-sm mb-2">
-                    Intelligence:&nbsp;
-                    <StarRatings
-                      starRatedColor="aqua"
-                      starDimension="15px"
-                      starSpacing="2px"
-                      rating={cat?.intelligence}
-                    />
-                  </h1>
-                  <h1 className="text-sm mb-2">
-                    Shedding:&nbsp;
-                    <StarRatings
-                      starRatedColor="aqua"
-                      starDimension="15px"
-                      starSpacing="2px"
-                      rating={cat?.shedding_level}
-                    />
-                  </h1>
-                  <h1 className="text-sm mb-2">
-                    Social Needs:&nbsp;
-                    <StarRatings
-                      starRatedColor="aqua"
-                      starDimension="15px"
-                      starSpacing="2px"
-                      rating={cat?.social_needs}
-                    />
-                  </h1>
-                  <h1 className="text-sm mb-2">
-                    Life Span:&nbsp;
-                    {cat?.life_span}
-                  </h1>
-                  <h1 className="text-sm mb-3">
-                    Weight (Imperial):&nbsp;
-                    {cat?.weight.imperial}
-                  </h1>
-                  <h1 className="text-sm mb-3">
-                    Weight (Metric):&nbsp;
-                    {cat?.weight.metric}
-                  </h1>
+                  <div className="flex justify-center items-center text-center mt-14">
+                    <h1 className="w-3/12 text-sm mb-2">
+                      Adaptability &nbsp;
+                      <br />
+                      <StarRatings
+                        starRatedColor="aqua"
+                        starDimension="15px"
+                        starSpacing="2px"
+                        rating={cat?.adaptability}
+                      />
+                    </h1>
+                    <h1 className="w-3/12 text-sm mb-2">
+                      Affection&nbsp;
+                      <br />
+                      <StarRatings
+                        starRatedColor="aqua"
+                        starDimension="15px"
+                        starSpacing="2px"
+                        rating={cat?.affection_level}
+                      />
+                    </h1>
+                    <h1 className="w-3/12 text-sm mb-2">
+                      Child Friendly&nbsp;
+                      <br />
+                      <StarRatings
+                        starRatedColor="aqua"
+                        starDimension="15px"
+                        starSpacing="2px"
+                        rating={cat?.child_friendly}
+                      />
+                    </h1>
+                    <h1 className="w-3/12 text-sm mb-2">
+                      Dog Friendly&nbsp;
+                      <br />
+                      <StarRatings
+                        starRatedColor="aqua"
+                        starDimension="15px"
+                        starSpacing="2px"
+                        rating={cat?.dog_friendly}
+                      />
+                    </h1>
+                  </div>
+                  <div className="flex justify-center items-center text-center mt-6">
+                    <h1 className="w-3/12 text-sm text-center mb-2">
+                      Stranger Friendly&nbsp;
+                      <br />
+                      <StarRatings
+                        starRatedColor="aqua"
+                        starDimension="15px"
+                        starSpacing="2px"
+                        rating={cat?.stranger_friendly}
+                      />
+                    </h1>
+                    <h1 className="w-3/12 text-sm mb-2">
+                      Energy&nbsp;
+                      <br />
+                      <StarRatings
+                        starRatedColor="aqua"
+                        starDimension="15px"
+                        starSpacing="2px"
+                        rating={cat?.energy_level}
+                      />
+                    </h1>
+                    <h1 className="w-3/12 text-sm mb-2">
+                      Grooming&nbsp;
+                      <br />
+                      <StarRatings
+                        starRatedColor="aqua"
+                        starDimension="15px"
+                        starSpacing="2px"
+                        rating={cat?.grooming}
+                      />
+                    </h1>
+                    <h1 className="w-3/12 text-sm mb-2">
+                      Health Issues&nbsp;
+                      <br />
+                      <StarRatings
+                        starRatedColor="aqua"
+                        starDimension="15px"
+                        starSpacing="2px"
+                        rating={cat?.health_issues}
+                      />
+                    </h1>
+                  </div>
+                  <div className="flex items-center justify-center text-center mt-6">
+                    <h1 className="w-3/12 text-sm mb-2">
+                      Intelligence&nbsp;
+                      <br />
+                      <StarRatings
+                        starRatedColor="aqua"
+                        starDimension="15px"
+                        starSpacing="2px"
+                        rating={cat?.intelligence}
+                      />
+                    </h1>
+                    <h1 className="w-3/12 text-sm mb-2">
+                      Shedding&nbsp;
+                      <br />
+                      <StarRatings
+                        starRatedColor="aqua"
+                        starDimension="15px"
+                        starSpacing="2px"
+                        rating={cat?.shedding_level}
+                      />
+                    </h1>
+                    <h1 className="w-3/12 text-center text-sm mb-2">
+                      Social Needs&nbsp;
+                      <br />
+                      <StarRatings
+                        starRatedColor="aqua"
+                        starDimension="15px"
+                        starSpacing="2px"
+                        rating={cat?.social_needs}
+                      />
+                    </h1>
+                  </div>
                 </div>
               </div>
               <br />
