@@ -1,10 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import LazyLoad from 'react-lazy-load';
 import { TailSpin } from 'react-loader-spinner';
+import Modal from 'react-modal';
 import ReactCountryFlag from 'react-country-flag';
 import StarRatings from 'react-star-ratings';
+import Slider from 'react-slick';
+
 interface Cat {
   id: number;
   name: string;
+  images: string;
   origin: string;
   temperament: Array<string>;
   life_span: string;
@@ -27,255 +32,388 @@ interface Cat {
     metric: string;
   };
   country_code: string;
-  url: string;
   hypoallergenic: number;
 }
 
-const Home = () => {
-  const [cats, setCats] = useState<Cat[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+// Set Modal to root
+Modal.setAppElement('#root');
+
+function Encyclopedia() {
+  const [cats, setCats] = useState<Array<Cat>>([]);
+  const [cat, setCat] = useState<Cat>();
+  const [modal, setModal] = useState<boolean>(false);
+  const [search, setSearch] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string>('');
+
+  const fetchData = useCallback(async () => {
+    try {
+      const catBreeds = await fetch('https://api.thecatapi.com/v1/breeds');
+      const data = await catBreeds.json();
+      const promises = data.map(async (breed: any) => {
+        const resultImage = await fetch(
+          'https://api.thecatapi.com/v1/images/search?breed_ids=' + breed.id
+        );
+        const dataImage = await resultImage.json();
+        const temperament = breed.temperament?.split(', ');
+
+        if (dataImage && dataImage[0 && dataImage[0].url]) {
+          return {
+            id: breed.id,
+            name: breed.name || 'Missing data',
+            images: dataImage[0].url || 'Missing data',
+            origin: breed.origin || 'Missing data',
+            temperament: temperament || 'Missing data',
+            life_span: breed.life_span || 0,
+            wikipedia_url: breed.wikipedia_url || 'Missing data',
+            description: breed.description || 'Missing data',
+            alt_names: breed.alt_names || 'Missing data',
+            adaptability: breed.adaptability || 0,
+            affection_level: breed.affection_level || 0,
+            child_friendly: breed.child_friendly || 0,
+            dog_friendly: breed.dog_friendly || 0,
+            energy_level: breed.energy_level || 0,
+            grooming: breed.grooming || 0,
+            health_issues: breed.health_issues || 0,
+            intelligence: breed.intelligence || 0,
+            shedding_level: breed.shedding_level || 0,
+            social_needs: breed.social_needs || 0,
+            stranger_friendly: breed.stranger_friendly || 0,
+            weight: breed.weight || 'Missing data',
+            country_code: breed.country_code || 'Missing data',
+            hypoallergenic: breed.hypoallergenic || 0,
+          };
+        }
+      });
+
+      const catsPromise = await Promise.all(promises);
+      setCats(catsPromise.filter(Boolean));
+      setLoading(false);
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
+      }
+      console.log(error);
+    }
+  }, []);
+
+  const catInformation = async (id: number) => {
+    try {
+      setLoading(true);
+      const catBreed = await fetch('https://api.thecatapi.com/v1/breeds/' + id);
+      const data = await catBreed.json();
+      const temperament = data.temperament?.split(', ');
+
+      const catImage = await fetch(
+        'https://api.thecatapi.com/v1/images/search?breed_ids=' +
+          id +
+          '&limit=5'
+      );
+      const dataImage = await catImage.json();
+
+      dataImage.map((image: any) => {
+        console.log(image);
+      });
+
+      const cat = {
+        id: data.id,
+        name: data.name || 'Missing data',
+        images: dataImage ? dataImage : 'Missing data',
+        origin: data.origin || 'Missing data',
+        temperament: temperament || 'Missing data',
+        life_span: data.life_span || 0,
+        wikipedia_url: data.wikipedia_url || 'Missing data',
+        description: data.description || 'Missing data',
+        alt_names: data.alt_names || 'Missing data',
+        adaptability: data.adaptability || 0,
+        affection_level: data.affection_level || 0,
+        child_friendly: data.child_friendly || 0,
+        dog_friendly: data.dog_friendly || 0,
+        energy_level: data.energy_level || 0,
+        grooming: data.grooming || 0,
+        health_issues: data.health_issues || 0,
+        intelligence: data.intelligence || 0,
+        shedding_level: data.shedding_level || 0,
+        social_needs: data.social_needs || 0,
+        stranger_friendly: data.stranger_friendly || 0,
+        weight: data.weight || 'Missing data',
+        country_code: data.country_code || 'Missing data',
+        hypoallergenic: data.hypoallergenic || 0,
+      };
+
+      setCat(cat);
+      setLoading(false);
+
+      return cat;
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
+      }
+      console.log(error);
+    }
+  };
+
+  const openModal = (selectedCat: Cat) => {
+    setModal(true);
+    setCat(selectedCat);
+  };
+
+  const closeModal = () => {
+    setModal(false);
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const catBreeds = await fetch('https://api.thecatapi.com/v1/breeds');
-        const data = await catBreeds.json();
-        console.log(data);
-        const promises = data.map(async (breed: any) => {
-          const resultImage = await fetch(
-            'https://api.thecatapi.com/v1/images/search?breed_ids=' + breed.id
-          );
-          const dataImage = await resultImage.json();
-
-          const temperament = breed.temperament?.split(', ');
-
-          if (dataImage[0]) {
-            return {
-              id: breed.id,
-              name: breed.name || 'Missing data',
-              url: dataImage[0].url || 'Missing data',
-              origin: breed.origin || 'Missing data',
-              temperament: temperament || 'Missing data',
-              life_span: breed.life_span || 0,
-              wikipedia_url: breed.wikipedia_url || 'Missing data',
-              description: breed.description || 'Missing data',
-              alt_names: breed.alt_names || 'Missing data',
-              adaptability: breed.adaptability || 0,
-              affection_level: breed.affection_level || 0,
-              child_friendly: breed.child_friendly || 0,
-              dog_friendly: breed.dog_friendly || 0,
-              energy_level: breed.energy_level || 0,
-              grooming: breed.grooming || 0,
-              health_issues: breed.health_issues || 0,
-              intelligence: breed.intelligence || 0,
-              shedding_level: breed.shedding_level || 0,
-              social_needs: breed.social_needs || 0,
-              stranger_friendly: breed.stranger_friendly || 0,
-              weight: breed.weight || 'Missing data',
-              country_code: breed.country_code || 'Missing data',
-              hypoallergenic: breed.hypoallergenic || 0,
-            };
-          }
-        });
-
-        const cats = await Promise.all(promises);
-        setCats(cats.filter(Boolean));
-        setLoading(false);
-      } catch (error) {
-        if (error instanceof Error) {
-          setError(error.message);
-        }
-        console.log(error);
-      }
-    };
-
     fetchData();
   }, []);
 
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <TailSpin width={100} height={100} color="#00BFFF" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div>
+        <h1>Something went wrong!</h1>
+        <br />
+        <br />
+        <button
+          className="bg-slate-900 p-4 border-2 rounded-lg ml-4 mb-4"
+          onClick={() => window.location.reload()}
+        >
+          Retry
+        </button>
+      </div>
+    );
+  }
+
   return (
-    <div className="flex justify-center items-center">
-      {error ? <p className="text-red-500">{error}</p> : null}
-      {loading ? (
-        <TailSpin
-          width={40}
-          height={40}
-          color="#00FFFF"
-          ariaLabel="tail-spin-loading"
-        />
-      ) : (
-        <div className="w-full bg-slate-900 border-2 rounded-lg p-10">
-          {cats.map((cat: Cat) => (
-            <>
-              <div
-                className="flex flex-wrap justify-start text-justify mb-10 items-start"
-                key={cat.id}
-              >
-                <div className="" style={{ width: '40%' }}>
-                  <h1 className="text-center font-bold md:text-4xl sm:text-2xl text-lg mb-3">
-                    {cat.name}
-                  </h1>
-                  <div
-                    style={{
-                      backgroundImage: `url(${cat.url})`,
-                      backgroundSize: 'cover',
-                      backgroundPosition: 'center',
-                      backgroundRepeat: 'no-repeat',
-                      width: '100%',
-                      height: '600px',
-                    }}
-                    className="border-2 rounded-lg"
-                  ></div>
-                </div>
-                <div className="text-left  ml-3 mt-12">
-                  <p className="text-xl font-bold mb-3">
-                    {cat.origin} &nbsp;
-                    <ReactCountryFlag countryCode={cat.country_code} svg />
+    <div>
+      <h1 className="mb-4">Encyclopedia</h1>
+      <br />
+      <input
+        className="w-8/12 mt-4 mb-14 p-2 border-2 rounded-lg"
+        type="text"
+        placeholder="Search"
+        onChange={(e) => setSearch(e.target.value)}
+      />
+      <button className="bg-slate-900 p-3 border-2 rounded-lg ml-4 mb-4">
+        Random cat
+      </button>
+      <div className="bg-slate-900 p-4 border-2 rounded-lg grid grid-cols-3 gap-4">
+        {cats
+
+          .filter((cat: Cat) => {
+            if (search === '') {
+              return cat;
+            } else if (cat.name.toLowerCase().includes(search.toLowerCase())) {
+              return cat;
+            }
+          })
+          .map((cat: Cat) => (
+            <div className="sm:text-lg md:text-2xl text-xs  " key={cat.id}>
+              <h2 className="mb-4">{cat.name}</h2>
+              <LazyLoad>
+                <div
+                  onClick={() => {
+                    openModal(cat);
+                  }}
+                  className="bg-slate-900 border-2 rounded-lg mb-10 cursor-crosshair hover:opacity-60"
+                  style={{
+                    backgroundImage: `url(${cat.images})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    backgroundRepeat: 'no-repeat',
+                    width: '100%',
+                    height: '600px',
+                  }}
+                ></div>
+              </LazyLoad>
+            </div>
+          ))}
+        <Modal
+          isOpen={modal}
+          onRequestClose={closeModal}
+          contentLabel="Cat information"
+        >
+          <div className="flex">
+            <div className="w-full">
+              <h2 className="w-3/12 text-center font-bold mb-2">{cat?.name}</h2>
+              <div className="flex">
+                <div
+                  style={{
+                    backgroundImage: `url(${cat?.images})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    backgroundRepeat: 'no-repeat',
+                    height: '400px',
+                  }}
+                  className="w-3/12 border rounded-lg"
+                ></div>
+                <div className="w-9/12 ml-4">
+                  <p>
+                    {cat?.origin}&nbsp;&nbsp;
+                    <ReactCountryFlag
+                      countryCode={
+                        cat?.country_code ? cat.country_code : 'Unknown'
+                      }
+                      svg
+                    />
                     <a
-                      className="text-sm text-white bg-gray-400 hover:text-slate-900 p-2 rounded-lg ml-8"
-                      href={cat.wikipedia_url}
+                      className="text-sm text-white bg-gray-500 hover:text-slate-900 p-2 rounded-lg ml-8"
+                      href={cat?.wikipedia_url}
                       target="_blank"
                     >
                       Wikipedia
                     </a>
                   </p>
-                  <p className="mt-8 mb-3">
-                    {cat.temperament.map((temp: string) => (
-                      <span className="text-sm bg-cyan-500 rounded-lg p-2 mb-3 mr-2">
+                  <h1 className="text-sm mt-8 mb-3">
+                    {cat?.temperament.map((temp: string) => (
+                      <span className="text-xs bg-cyan-600 rounded-lg p-2 mb-3 mr-2">
                         {temp}
                       </span>
                     ))}
-                    {cat.hypoallergenic === 1 ? (
-                      <span className="text-sm bg-yellow-500 rounded-lg p-2 mb-3 ">
+                    {cat?.hypoallergenic === 1 ? (
+                      <span className="text-xs bg-yellow-500 rounded-lg p-2 mb-3 ">
                         Hypoallergenic
                       </span>
                     ) : null}
-                  </p>
-                  <p className="mt-6 mb-3">
+                  </h1>
+                  <h1 className="text-sm mt-6 mb-2">
                     Adaptability: &nbsp;
                     <StarRatings
                       starRatedColor="aqua"
                       starDimension="15px"
                       starSpacing="2px"
-                      rating={cat.adaptability}
+                      rating={cat?.adaptability}
                     />
-                  </p>
-                  <p className="mb-3">
+                  </h1>
+                  <h1 className="text-sm mb-2">
                     Affection:&nbsp;
                     <StarRatings
                       starRatedColor="aqua"
                       starDimension="15px"
                       starSpacing="2px"
-                      rating={cat.affection_level}
+                      rating={cat?.affection_level}
                     />
-                  </p>
-                  <p className="mb-3">
+                  </h1>
+                  <h1 className="text-sm mb-2">
                     Child Friendly:&nbsp;
                     <StarRatings
                       starRatedColor="aqua"
                       starDimension="15px"
                       starSpacing="2px"
-                      rating={cat.child_friendly}
+                      rating={cat?.child_friendly}
                     />
-                  </p>
-                  <p className="mb-3">
+                  </h1>
+                  <h1 className="text-sm mb-2">
                     Dog Friendly:&nbsp;{' '}
                     <StarRatings
                       starRatedColor="aqua"
                       starDimension="15px"
                       starSpacing="2px"
-                      rating={cat.dog_friendly}
+                      rating={cat?.dog_friendly}
                     />
-                  </p>
-                  <p className="mb-3">
+                  </h1>
+                  <h1 className="text-sm mb-2">
                     Stranger Friendly:&nbsp;
                     <StarRatings
                       starRatedColor="aqua"
                       starDimension="15px"
                       starSpacing="2px"
-                      rating={cat.stranger_friendly}
+                      rating={cat?.stranger_friendly}
                     />
-                  </p>
-                  <p className="mb-3">
+                  </h1>
+                  <h1 className="text-sm mb-2">
                     Energy:&nbsp;{' '}
                     <StarRatings
                       starRatedColor="aqua"
                       starDimension="15px"
                       starSpacing="2px"
-                      rating={cat.energy_level}
+                      rating={cat?.energy_level}
                     />
-                  </p>
-                  <p className="mb-3">
+                  </h1>
+                  <h1 className="text-sm mb-2">
                     Grooming:&nbsp;
                     <StarRatings
                       starRatedColor="aqua"
                       starDimension="15px"
                       starSpacing="2px"
-                      rating={cat.grooming}
+                      rating={cat?.grooming}
                     />
-                  </p>
-                  <p className="mb-3">
+                  </h1>
+                  <h1 className="text-sm mb-2">
                     Health Issues:&nbsp;{' '}
                     <StarRatings
                       starRatedColor="aqua"
                       starDimension="15px"
                       starSpacing="2px"
-                      rating={cat.health_issues}
+                      rating={cat?.health_issues}
                     />
-                  </p>
-                  <p className="mb-3">
+                  </h1>
+                  <h1 className="text-sm mb-2">
                     Intelligence:&nbsp;
                     <StarRatings
                       starRatedColor="aqua"
                       starDimension="15px"
                       starSpacing="2px"
-                      rating={cat.intelligence}
+                      rating={cat?.intelligence}
                     />
-                  </p>
-                  <p className="mb-3">
+                  </h1>
+                  <h1 className="text-sm mb-2">
                     Shedding:&nbsp;
                     <StarRatings
                       starRatedColor="aqua"
                       starDimension="15px"
                       starSpacing="2px"
-                      rating={cat.shedding_level}
+                      rating={cat?.shedding_level}
                     />
-                  </p>
-                  <p className="mb-3">
+                  </h1>
+                  <h1 className="text-sm mb-2">
                     Social Needs:&nbsp;
                     <StarRatings
                       starRatedColor="aqua"
                       starDimension="15px"
                       starSpacing="2px"
-                      rating={cat.social_needs}
+                      rating={cat?.social_needs}
                     />
-                  </p>
-                  <p className="mb-3">
+                  </h1>
+                  <h1 className="text-sm mb-2">
                     Life Span:&nbsp;
-                    {cat.life_span}
-                  </p>
-                  <p className="mb-3">
+                    {cat?.life_span}
+                  </h1>
+                  <h1 className="text-sm mb-3">
                     Weight (Imperial):&nbsp;
-                    {cat.weight.imperial}
-                  </p>
-                  <p className="mb-3">
+                    {cat?.weight.imperial}
+                  </h1>
+                  <h1 className="text-sm mb-3">
                     Weight (Metric):&nbsp;
-                    {cat.weight.metric}
-                  </p>
+                    {cat?.weight.metric}
+                  </h1>
                 </div>
-                <p className="mt-8">
-                  <span className="text-lg font-bold">Description</span>
-                  :&nbsp;
-                  {cat.description}
-                </p>
               </div>
-              <hr className="border-1 m-20" />
-            </>
-          ))}
-        </div>
-      )}
+              <br />
+              <p>
+                <span className="text-lg font-bold">Description:</span>{' '}
+                {cat?.description}
+              </p>
+            </div>
+
+            <div className="text-end">
+              <button className="bg-transparent" onClick={closeModal}>
+                <span role="img" aria-label="close">
+                  ❌
+                </span>
+              </button>
+            </div>
+          </div>
+        </Modal>
+      </div>
     </div>
   );
-};
+}
 
-export default Home;
+export default Encyclopedia;

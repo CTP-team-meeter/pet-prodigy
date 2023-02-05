@@ -18,3 +18,15 @@
 .checked {
   color: aqua;
 }
+
+.ReactModal__Overlay {
+  background-color: rgba(30, 28, 28, 0.9) !important;
+  transition: 200ms ease-in-out;
+}
+
+.ReactModal__Content {
+  margin-top: 30px;
+  border: white solid 2px !important;
+  border-radius: 0.5rem !important;
+  background-color: rgba(0, 0, 0, 0.647) !important;
+}
