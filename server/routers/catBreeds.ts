@@ -6,21 +6,12 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 
 const CatBreed = require('../models/catBreed');
-
+const catBreadController = require('../controllers/catBreed')
 // Create router
 const router = express.Router();
 
 // GET cat breeds listing
-router.get('/', async (req: any, res: any) => {
-  try {
-    const breeds = await CatBreed.find();
-    res.json(breeds);
-  } catch (err) {
-    if (err instanceof Error) {
-      res.status(500).json({ message: err.message });
-    }
-  }
-});
+router.get('/', catBreadController.catbreed_list);
 
 // GET cat breed by id
 router.get('/:id', getBreed, (req: any, res: any) => {
