@@ -3,7 +3,7 @@ export {};
 
 // Importing dotenv
 require('dotenv').config();
-const dbPort = process.env.DATABASE_PORT || 8080;
+const port = process.env.PORT || 8080;
 
 // Importing express
 const express = require('express');
@@ -41,6 +41,6 @@ app.use(express.json());
 app.use('/', require('./controllers'));
 
 // Starting server
-app.listen(dbPort, () => {
-  console.log('Server started on port ' + dbPort);
+app.listen(port, () => {
+  console.log('Server started on port ' + port);
 });
