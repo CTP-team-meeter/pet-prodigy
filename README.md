@@ -12,7 +12,7 @@ https://www.mongodb.com/docs/manual/administration/install-community/
 ### Back-end
 ```
 cd server
-cp .env.example .env
+cp .env_template .env
 npm install
 npm run dev
 ```
