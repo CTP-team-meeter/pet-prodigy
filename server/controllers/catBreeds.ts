@@ -11,7 +11,7 @@ const CatBreed = require('../models/catBreed');
 const router = express.Router();
 
 // GET cat breeds listing
-router.get('/', async (req, res) => {
+router.get('/', async (req: any, res: any) => {
   try {
     const breeds = await CatBreed.find();
     res.json(breeds);
@@ -23,12 +23,12 @@ router.get('/', async (req, res) => {
 });
 
 // GET cat breed by id
-router.get('/:id', getBreed, (req, res) => {
+router.get('/:id', getBreed, (req: any, res: any) => {
   res.json(res.breed);
 });
 
 // POST cat breed
-router.post('/', async (req, res) => {
+router.post('/', async (req: any, res: any) => {
   try {
     const catBreed = new CatBreed({
       name: req.body.name,
@@ -62,7 +62,7 @@ router.post('/', async (req, res) => {
 });
 
 // Patch cat breed
-router.patch('/:id', getBreed, (req, res) => {
+router.patch('/:id', getBreed, (req: any, res: any) => {
   if (req.body.name != null) {
     res.catBreed.name = req.body.name;
     res.catBreed.origin = req.body.origin;
@@ -95,7 +95,7 @@ router.patch('/:id', getBreed, (req, res) => {
 });
 
 // Delete cat breed
-router.delete('/:id', getBreed, async (req, res) => {
+router.delete('/:id', getBreed, async (req: any, res: any) => {
   try {
     await res.breed.remove();
     res.json({ message: 'Deleted cat breed' });
@@ -106,7 +106,7 @@ router.delete('/:id', getBreed, async (req, res) => {
   }
 });
 
-async function getBreed(req, res, next) {
+async function getBreed(req: any, res: any, next: any) {
   let breed: any;
   try {
     breed = await CatBreed.findById(req.params.id);
@@ -123,7 +123,7 @@ async function getBreed(req, res, next) {
   next();
 }
 
-async function authenticateCatBreed(req, res, next) {
+async function authenticateCatBreed(req: any, res: any, next: any) {
   let breed: any;
   try {
     breed = await CatBreed.findOne({ name: req.body.name });
