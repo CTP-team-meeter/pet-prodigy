@@ -38,7 +38,8 @@ db.once('open', () => {
 app.use(express.json());
 
 // Importing routes
-app.use('/', require('./controllers'));
+app.use('/api', require('./controllers'));
+
 
 // Starting server
 app.listen(port, () => {

@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 // Importing dotenv
 require('dotenv').config();
-var dbPort = process.env.DATABASE_PORT || 8080;
+var port = process.env.PORT || 8080;
 // Importing express
 var express = require('express');
 var app = express();
@@ -28,8 +28,8 @@ db.once('open', function () {
 });
 app.use(express.json());
 // Importing routes
-app.use('/', require('./controllers'));
+app.use('/api', require('./controllers'));
 // Starting server
-app.listen(dbPort, function () {
-    console.log('Server started on port ' + dbPort);
+app.listen(port, function () {
+    console.log('Server started on port ' + port);
 });
