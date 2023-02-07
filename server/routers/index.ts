@@ -5,9 +5,9 @@ const express = require('express');
 const router = express.Router();
 
 // Import all the routes
-const catBreedsController = require('./catBreeds');
+const catBreedsRouter = require('./catBreeds');
 
 // Use the routes
-router.use('/catBreeds', catBreedsController);
+router.use('/catBreeds', catBreedsRouter);
 
 module.exports = router;

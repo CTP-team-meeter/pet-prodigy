@@ -38,7 +38,7 @@ db.once('open', () => {
 app.use(express.json());
 
 // Importing routes
-app.use('/api', require('./controllers'));
+app.use('/api', require('./routers'));
 
 
 // Starting server
