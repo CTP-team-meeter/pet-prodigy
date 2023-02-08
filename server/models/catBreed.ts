@@ -16,12 +16,12 @@ const catBreedSchema = new mongoose.Schema({
   vocalisation: { type: Number, required: false },
   energy_level: { type: Number, required: false },
   description: { type: String, required: false },
-  imageURL: { type: String, required: true },
+  imageURLs: { type: Object, required: true },
   origin: { type: String, required: false },
   life_span: { type: String, required: false },
   temperament: { type: String, required: false },
   wikipedia_url: { type: String, required: false },
-  weight: { type: String, required: false },
+  weight: { type: Object, required: false },
   height: { type: String, required: false },
 });
 
