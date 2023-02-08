@@ -1,6 +1,7 @@
 exports.seedPet = async (model: any) => {
   const res = await fetch('https://api.thecatapi.com/v1/breeds');
   const data = await res.json();
+  model.collection.drop();
   data.forEach(async (cat: any) => {
     const imgRes = await fetch(`https://api.thecatapi.com/v1/images/search?limit=5&breed_ids=${cat.id}`);
     const images = await imgRes.json()

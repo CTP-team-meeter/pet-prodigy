@@ -36,9 +36,7 @@ db.once('open', () => {
   console.log('Connected to MongoDB');
 });
 
-
 seedPet(require('./models/catBreed'));
-
 
 app.use(express.json());
 
