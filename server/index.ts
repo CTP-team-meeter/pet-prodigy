@@ -36,7 +36,14 @@ db.once('open', () => {
   console.log('Connected to MongoDB');
 });
 
-seedPet(require('./models/catBreed'));
+//seedPet(require('./models/catBreed'));
+////////////////////////////////////////////////////
+const jwt = require('jsonwebtoken');
+function generateAccessToken(username: Object) {
+  return jwt.sign(username, process.env.TOKEN_SECRET, { expiresIn: '1800s' });
+}
+console.log(generateAccessToken({username: "aaa", ssa: "afwe"}));
+////////////////////////////////////////////////////
 
 app.use(express.json());
 
