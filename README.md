@@ -9,7 +9,7 @@ npm run dev
 ### Database
 - Install mongoDB following the instruction 
 https://www.mongodb.com/docs/manual/administration/install-community/
-- Connect to your db server on MongoDB Compass
+- Connect to your db server on MongoDB Compass or Mongosh
 - Create Datebase `pet_prodigy`
 ### Back-end
 ```
