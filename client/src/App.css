@@ -35,3 +35,30 @@
   border-radius: 0.5rem !important;
   background-color: rgba(0, 0, 0, 0.322) !important;
 }
+
+.slick-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+  color: white;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.slick-arrow:hover {
+  background-color: rgba(105, 95, 95, 0.322);
+}
+
+.slick-arrow::before {
+  font-size: 1.5rem;
+}
+
+.slick-dots > li > button::before {
+  color: white !important;
+  font-size: 0.8rem;
+}

@@ -1,46 +1,18 @@
-import { useCallback, useEffect, useState } from 'react';
+import { Fragment, useCallback, useEffect, useState } from 'react';
 import LazyLoad from 'react-lazy-load';
 import { TailSpin } from 'react-loader-spinner';
 import Modal from 'react-modal';
 import ReactCountryFlag from 'react-country-flag';
 import StarRatings from 'react-star-ratings';
+import { CatBreed } from '../global/cat';
 import Slider from 'react-slick';
-
-interface Cat {
-  id: number;
-  name: string;
-  images: string;
-  origin: string;
-  temperament: Array<string>;
-  life_span: string;
-  wikipedia_url: string;
-  description: string;
-  alt_names: string;
-  adaptability: number;
-  affection_level: number;
-  child_friendly: number;
-  dog_friendly: number;
-  energy_level: number;
-  grooming: number;
-  health_issues: number;
-  intelligence: number;
-  shedding_level: number;
-  social_needs: number;
-  stranger_friendly: number;
-  weight: {
-    imperial: string;
-    metric: string;
-  };
-  country_code: string;
-  hypoallergenic: number;
-}
 
 // Set Modal to root
 Modal.setAppElement('#root');
 
 function Encyclopedia() {
-  const [cats, setCats] = useState<Array<Cat>>([]);
-  const [cat, setCat] = useState<Cat>();
+  const [catBreeds, setCatBreeds] = useState<Array<CatBreed>>([]);
+  const [catBreed, setCatBreed] = useState<CatBreed>();
   const [modal, setModal] = useState<boolean>(false);
   const [search, setSearch] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
@@ -48,8 +20,8 @@ function Encyclopedia() {
 
   const fetchData = useCallback(async () => {
     try {
-      const catBreeds = await fetch('https://api.thecatapi.com/v1/breeds');
-      const data = await catBreeds.json();
+      const response = await fetch('https://api.thecatapi.com/v1/breeds');
+      const data = await response.json();
       const promises = data.map(async (breed: any) => {
         const resultImage = await fetch(
           'https://api.thecatapi.com/v1/images/search?breed_ids=' + breed.id
@@ -57,37 +29,38 @@ function Encyclopedia() {
         const dataImage = await resultImage.json();
         const temperament = breed.temperament?.split(', ');
 
-        if (dataImage && dataImage[0 && dataImage[0].url]) {
+        if (dataImage && dataImage[0] && dataImage[0].url) {
           return {
             id: breed.id,
+            life_span: breed.life_span || 'Missing data',
+            adaptability: breed.adaptability || 'Missing data',
+            affection_level: breed.affection_level || 'Missing data',
+            child_friendly: breed.child_friendly || 'Missing data',
+            dog_friendly: breed.dog_friendly || 'Missing data',
+            energy_level: breed.energy_level || 'Missing data',
+            grooming: breed.grooming || 'Missing data',
+            health_issues: breed.health_issues || 'Missing data',
+            intelligence: breed.intelligence || 'Missing data',
+            shedding_level: breed.shedding_level || 'Missing data',
+            social_needs: breed.social_needs || 'Missing data',
+            stranger_friendly: breed.stranger_friendly || 'Missing data',
+            hypoallergenic: breed.hypoallergenic || 'Missing data',
+            vocalisation: breed.vocalisation || 'Missing data',
+            wikipedia_url: breed.wikipedia_url || 'Missing data',
+            description: breed.description || 'Missing data',
+            alt_names: breed.alt_names || 'Missing data',
+            weight: breed.weight || 'Missing data',
+            country_code: breed.country_code || 'Missing data',
             name: breed.name || 'Missing data',
             images: dataImage[0].url || 'Missing data',
             origin: breed.origin || 'Missing data',
             temperament: temperament || 'Missing data',
-            life_span: breed.life_span || 0,
-            wikipedia_url: breed.wikipedia_url || 'Missing data',
-            description: breed.description || 'Missing data',
-            alt_names: breed.alt_names || 'Missing data',
-            adaptability: breed.adaptability || 0,
-            affection_level: breed.affection_level || 0,
-            child_friendly: breed.child_friendly || 0,
-            dog_friendly: breed.dog_friendly || 0,
-            energy_level: breed.energy_level || 0,
-            grooming: breed.grooming || 0,
-            health_issues: breed.health_issues || 0,
-            intelligence: breed.intelligence || 0,
-            shedding_level: breed.shedding_level || 0,
-            social_needs: breed.social_needs || 0,
-            stranger_friendly: breed.stranger_friendly || 0,
-            weight: breed.weight || 'Missing data',
-            country_code: breed.country_code || 'Missing data',
-            hypoallergenic: breed.hypoallergenic || 0,
           };
         }
       });
 
       const catsPromise = await Promise.all(promises);
-      setCats(catsPromise.filter(Boolean));
+      setCatBreeds(catsPromise.filter(Boolean));
       setLoading(false);
     } catch (error) {
       if (error instanceof Error) {
@@ -97,11 +70,11 @@ function Encyclopedia() {
     }
   }, []);
 
-  const catInformation = async (id: number) => {
+  const catBreedInformation = async (id: number) => {
     try {
       setLoading(true);
-      const catBreed = await fetch('https://api.thecatapi.com/v1/breeds/' + id);
-      const data = await catBreed.json();
+      const response = await fetch('https://api.thecatapi.com/v1/breeds/' + id);
+      const data = await response.json();
       const temperament = data.temperament?.split(', ');
 
       const catImage = await fetch(
@@ -111,37 +84,34 @@ function Encyclopedia() {
       );
       const dataImage = await catImage.json();
 
-      dataImage.map((image: any) => {
-        console.log(image);
-      });
-
       const cat = {
         id: data.id,
         name: data.name || 'Missing data',
-        images: dataImage ? dataImage : 'Missing data',
+        images: dataImage || 'Missing data',
         origin: data.origin || 'Missing data',
         temperament: temperament || 'Missing data',
-        life_span: data.life_span || 0,
+        life_span: data.life_span || 'Missing data',
         wikipedia_url: data.wikipedia_url || 'Missing data',
         description: data.description || 'Missing data',
         alt_names: data.alt_names || 'Missing data',
-        adaptability: data.adaptability || 0,
-        affection_level: data.affection_level || 0,
-        child_friendly: data.child_friendly || 0,
-        dog_friendly: data.dog_friendly || 0,
-        energy_level: data.energy_level || 0,
-        grooming: data.grooming || 0,
-        health_issues: data.health_issues || 0,
-        intelligence: data.intelligence || 0,
-        shedding_level: data.shedding_level || 0,
-        social_needs: data.social_needs || 0,
-        stranger_friendly: data.stranger_friendly || 0,
+        adaptability: data.adaptability || 'Missing data',
+        affection_level: data.affection_level || 'Missing data',
+        child_friendly: data.child_friendly || 'Missing data',
+        dog_friendly: data.dog_friendly || 'Missing data',
+        energy_level: data.energy_level || 'Missing data',
+        grooming: data.grooming || 'Missing data',
+        health_issues: data.health_issues || 'Missing data',
+        intelligence: data.intelligence || 'Missing data',
+        shedding_level: data.shedding_level || 'Missing data',
+        social_needs: data.social_needs || 'Missing data',
+        stranger_friendly: data.stranger_friendly || 'Missing data',
         weight: data.weight || 'Missing data',
         country_code: data.country_code || 'Missing data',
-        hypoallergenic: data.hypoallergenic || 0,
+        hypoallergenic: data.hypoallergenic || 'Missing data',
+        vocalisation: data.vocalisation || 'Missing data',
       };
 
-      setCat(cat);
+      setCatBreed(cat);
       setLoading(false);
 
       return cat;
@@ -153,13 +123,22 @@ function Encyclopedia() {
     }
   };
 
-  const openModal = (selectedCat: Cat) => {
+  const openModal = (selectedCat: CatBreed) => {
     setModal(true);
-    setCat(selectedCat);
+    catBreedInformation(selectedCat.id);
   };
 
   const closeModal = () => {
     setModal(false);
+  };
+
+  // Slider settings
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
   };
 
   useEffect(() => {
@@ -190,6 +169,8 @@ function Encyclopedia() {
     );
   }
 
+  console.log(catBreed?.images);
+
   return (
     <div>
       <h1 className="mb-4">Encyclopedia</h1>
@@ -203,37 +184,37 @@ function Encyclopedia() {
       <button className="bg-slate-900 p-3 border-2 rounded-lg ml-4 mb-4">
         Random cat
       </button>
-      <div className="bg-slate-900 p-4 border-2 rounded-lg grid grid-cols-3 gap-4">
-        {cats
-
-          .filter((cat: Cat) => {
+      <div className="bg-slate-900 p-4 border-2 rounded-lg grid grid-cols-4 gap-4 text-center">
+        {catBreeds
+          .filter((cat: CatBreed) => {
             if (search === '') {
               return cat;
             } else if (cat.name.toLowerCase().includes(search.toLowerCase())) {
               return cat;
             }
           })
-          .map((cat: Cat) => (
-            <div className="sm:text-lg md:text-2xl text-xs  " key={cat.id}>
+          .map((cat: CatBreed) => (
+            <div className="sm:text-lg md:text-lg text-xs" key={cat.id}>
               <h2 className="mb-4">{cat.name}</h2>
               <LazyLoad>
                 <div
                   onClick={() => {
                     openModal(cat);
                   }}
-                  className="bg-slate-900 border-2 rounded-lg mb-10 cursor-crosshair hover:opacity-60"
+                  className="bg-slate-900 border-2 rounded-lg cursor-crosshair hover:opacity-60 mx-auto"
                   style={{
                     backgroundImage: `url(${cat.images})`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     backgroundRepeat: 'no-repeat',
-                    width: '100%',
-                    height: '600px',
+                    width: '300px',
+                    height: '300px',
                   }}
                 ></div>
               </LazyLoad>
             </div>
           ))}
+
         <Modal
           isOpen={modal}
           onRequestClose={closeModal}
@@ -241,57 +222,65 @@ function Encyclopedia() {
         >
           <div className="flex">
             <div className="w-full">
-              <h2 className="w-3/12 text-center font-bold mb-2">{cat?.name}</h2>
+              <h2 className="w-3/12 text-center font-bold mb-2 ml-8">
+                {catBreed?.name}
+                <br />
+                <span className=" text-end text-xs mb-2">
+                  Life Span(Y):&nbsp;
+                  {catBreed?.life_span}
+                </span>
+                &nbsp;&nbsp;
+                <span className=" text-xs mb-3">
+                  Weight(KG):&nbsp;
+                  {catBreed?.weight.metric}
+                </span>
+              </h2>
               <div className="flex">
                 <div className="flex-col">
-                  <div
-                    style={{
-                      backgroundImage: `url(${cat?.images})`,
-                      backgroundSize: 'cover',
-                      backgroundPosition: 'center',
-                      backgroundRepeat: 'no-repeat',
-                      width: '300px',
-                      height: '400px',
-                    }}
-                    className="w-6/12 border rounded-lg"
-                  ></div>
                   <div className="flex justify-center items-center mt-2">
-                    <h1 className="w-6/12 text-end text-xs mb-2">
-                      Life Span(Y):&nbsp;
-                      {cat?.life_span}
-                    </h1>
-                    &nbsp;&nbsp;
-                    <h1 className="w-6/12 text-xs mb-3">
-                      Weight(KG):&nbsp;
-                      {cat?.weight.imperial}
-                    </h1>
+                    <div className="w-96 h-96 ">
+                      <Slider {...settings}>
+                        {catBreed?.images.map((image: any) => {
+                          return (
+                            <div className="w-96 h-30">
+                              <img
+                                className="w-72 h-96 object-cover rounded-lg border mx-auto"
+                                key={image.id}
+                                src={image.url}
+                              />
+                            </div>
+                          );
+                        })}
+                      </Slider>
+                    </div>
                   </div>
                 </div>
-
                 <div className="w-9/12 ml-4">
-                  <p>
-                    {cat?.origin}&nbsp;&nbsp;
+                  <p className="mt-3">
+                    {catBreed?.origin}&nbsp;&nbsp;
                     <ReactCountryFlag
                       countryCode={
-                        cat?.country_code ? cat.country_code : 'Unknown'
+                        catBreed?.country_code
+                          ? catBreed.country_code
+                          : 'Unknown'
                       }
                       svg
                     />
                     <a
                       className="text-sm text-white bg-gray-500 hover:text-slate-900 p-2 rounded-lg ml-8"
-                      href={cat?.wikipedia_url}
+                      href={catBreed?.wikipedia_url}
                       target="_blank"
                     >
                       Wikipedia
                     </a>
                   </p>
                   <h1 className="text-sm mt-8 mb-3">
-                    {cat?.temperament.map((temp: string) => (
+                    {catBreed?.temperament.map((temp: string) => (
                       <span className="text-xs bg-cyan-600 rounded-lg p-2 mb-3 mr-2">
                         {temp}
                       </span>
                     ))}
-                    {cat?.hypoallergenic === 1 ? (
+                    {catBreed?.hypoallergenic === 1 ? (
                       <span className="text-xs bg-yellow-500 rounded-lg p-2 mb-3 ">
                         Hypoallergenic
                       </span>
@@ -305,7 +294,7 @@ function Encyclopedia() {
                         starRatedColor="aqua"
                         starDimension="15px"
                         starSpacing="2px"
-                        rating={cat?.adaptability}
+                        rating={catBreed?.adaptability}
                       />
                     </h1>
                     <h1 className="w-3/12 text-sm mb-2">
@@ -315,7 +304,7 @@ function Encyclopedia() {
                         starRatedColor="aqua"
                         starDimension="15px"
                         starSpacing="2px"
-                        rating={cat?.affection_level}
+                        rating={catBreed?.affection_level}
                       />
                     </h1>
                     <h1 className="w-3/12 text-sm mb-2">
@@ -325,7 +314,7 @@ function Encyclopedia() {
                         starRatedColor="aqua"
                         starDimension="15px"
                         starSpacing="2px"
-                        rating={cat?.child_friendly}
+                        rating={catBreed?.child_friendly}
                       />
                     </h1>
                     <h1 className="w-3/12 text-sm mb-2">
@@ -335,7 +324,7 @@ function Encyclopedia() {
                         starRatedColor="aqua"
                         starDimension="15px"
                         starSpacing="2px"
-                        rating={cat?.dog_friendly}
+                        rating={catBreed?.dog_friendly}
                       />
                     </h1>
                   </div>
@@ -347,7 +336,7 @@ function Encyclopedia() {
                         starRatedColor="aqua"
                         starDimension="15px"
                         starSpacing="2px"
-                        rating={cat?.stranger_friendly}
+                        rating={catBreed?.stranger_friendly}
                       />
                     </h1>
                     <h1 className="w-3/12 text-sm mb-2">
@@ -357,7 +346,7 @@ function Encyclopedia() {
                         starRatedColor="aqua"
                         starDimension="15px"
                         starSpacing="2px"
-                        rating={cat?.energy_level}
+                        rating={catBreed?.energy_level}
                       />
                     </h1>
                     <h1 className="w-3/12 text-sm mb-2">
@@ -367,7 +356,7 @@ function Encyclopedia() {
                         starRatedColor="aqua"
                         starDimension="15px"
                         starSpacing="2px"
-                        rating={cat?.grooming}
+                        rating={catBreed?.grooming}
                       />
                     </h1>
                     <h1 className="w-3/12 text-sm mb-2">
@@ -377,7 +366,7 @@ function Encyclopedia() {
                         starRatedColor="aqua"
                         starDimension="15px"
                         starSpacing="2px"
-                        rating={cat?.health_issues}
+                        rating={catBreed?.health_issues}
                       />
                     </h1>
                   </div>
@@ -389,7 +378,7 @@ function Encyclopedia() {
                         starRatedColor="aqua"
                         starDimension="15px"
                         starSpacing="2px"
-                        rating={cat?.intelligence}
+                        rating={catBreed?.intelligence}
                       />
                     </h1>
                     <h1 className="w-3/12 text-sm mb-2">
@@ -399,7 +388,7 @@ function Encyclopedia() {
                         starRatedColor="aqua"
                         starDimension="15px"
                         starSpacing="2px"
-                        rating={cat?.shedding_level}
+                        rating={catBreed?.shedding_level}
                       />
                     </h1>
                     <h1 className="w-3/12 text-center text-sm mb-2">
@@ -409,16 +398,26 @@ function Encyclopedia() {
                         starRatedColor="aqua"
                         starDimension="15px"
                         starSpacing="2px"
-                        rating={cat?.social_needs}
+                        rating={catBreed?.social_needs}
+                      />
+                    </h1>
+                    <h1 className="w-3/12 text-sm mb-2">
+                      Vocalisation&nbsp;
+                      <br />
+                      <StarRatings
+                        starRatedColor="aqua"
+                        starDimension="15px"
+                        starSpacing="2px"
+                        rating={catBreed?.vocalisation}
                       />
                     </h1>
                   </div>
                 </div>
               </div>
               <br />
-              <p>
+              <p className="mt-4">
                 <span className="text-lg font-bold">Description:</span>{' '}
-                {cat?.description}
+                {catBreed?.description}
               </p>
             </div>
 
