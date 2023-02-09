@@ -1,11 +1,13 @@
 exports.seedPet = async (model: any) => {
-  const res = await fetch('https://api.thecatapi.com/v1/breeds');
+  const res = await fetch("https://api.thecatapi.com/v1/breeds");
   const data = await res.json();
   model.collection.drop();
   data.forEach(async (cat: any) => {
-    const imgRes = await fetch(`https://api.thecatapi.com/v1/images/search?limit=5&breed_ids=${cat.id}`);
-    const images = await imgRes.json()
-    const newCat =  new model({
+    const imgRes = await fetch(
+      `https://api.thecatapi.com/v1/images/search?limit=5&breed_ids=${cat.id}`
+    );
+    const images = await imgRes.json();
+    const newCat = new model({
       name: cat.name,
       imageURLs: images,
       origin: cat.origin,
@@ -24,14 +26,12 @@ exports.seedPet = async (model: any) => {
       stranger_friendly: cat.stranger_friendly,
       vocalisation: cat.vocalisation,
       energy_level: cat.energy_level,
-      description: cat.description
+      description: cat.description,
     });
     console.log(images);
-    newCat.save((err: any,res: any)=>{
+    newCat.save((err: any, res: any) => {
       console.log(err);
       console.log(res);
-    });  
+    });
   });
 };
-
-

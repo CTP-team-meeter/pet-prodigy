@@ -2,24 +2,24 @@
 export {};
 
 // Import dependencies
-const express = require('express');
-const bcrypt = require('bcrypt');
+const express = require("express");
+const bcrypt = require("bcrypt");
 
-const CatBreed = require('../models/catBreed');
-const catBreadController = require('../controllers/catBreed')
+const CatBreed = require("../models/catBreed");
+const catBreadController = require("../controllers/catBreed");
 // Create router
 const router = express.Router();
 
 // GET cat breeds listing
-router.get('/', catBreadController.catbreed_list);
+router.get("/", catBreadController.catbreed_list);
 
 // GET cat breed by id
-router.get('/:id', getBreed, (req: any, res: any) => {
+router.get("/:id", getBreed, (req: any, res: any) => {
   res.json(res.breed);
 });
 
 // POST cat breed
-router.post('/', async (req: any, res: any) => {
+router.post("/", async (req: any, res: any) => {
   try {
     const catBreed = new CatBreed({
       name: req.body.name,
@@ -53,7 +53,7 @@ router.post('/', async (req: any, res: any) => {
 });
 
 // Patch cat breed
-router.patch('/:id', getBreed, (req: any, res: any) => {
+router.patch("/:id", getBreed, (req: any, res: any) => {
   if (req.body.name != null) {
     res.catBreed.name = req.body.name;
     res.catBreed.origin = req.body.origin;
@@ -86,10 +86,10 @@ router.patch('/:id', getBreed, (req: any, res: any) => {
 });
 
 // Delete cat breed
-router.delete('/:id', getBreed, async (req: any, res: any) => {
+router.delete("/:id", getBreed, async (req: any, res: any) => {
   try {
     await res.breed.remove();
-    res.json({ message: 'Deleted cat breed' });
+    res.json({ message: "Deleted cat breed" });
   } catch (err) {
     if (err instanceof Error) {
       res.status(500).json({ message: err.message });
@@ -102,7 +102,7 @@ async function getBreed(req: any, res: any, next: any) {
   try {
     breed = await CatBreed.findById(req.params.id);
     if (breed == null) {
-      return res.status(404).json({ message: 'Cannot find breed' });
+      return res.status(404).json({ message: "Cannot find breed" });
     }
   } catch (err) {
     if (err instanceof Error) {
@@ -119,7 +119,7 @@ async function authenticateCatBreed(req: any, res: any, next: any) {
   try {
     breed = await CatBreed.findOne({ name: req.body.name });
     if (breed == null) {
-      return res.status(400).json({ message: 'Cannot find cat breed' });
+      return res.status(400).json({ message: "Cannot find cat breed" });
     }
   } catch (err) {
     if (err instanceof Error) {
@@ -132,7 +132,7 @@ async function authenticateCatBreed(req: any, res: any, next: any) {
       res.breed = breed;
       next();
     } else {
-      res.status(401).json({ message: 'Not allowed' });
+      res.status(401).json({ message: "Not allowed" });
     }
   } catch (err) {
     if (err instanceof Error) {

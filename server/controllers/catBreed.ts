@@ -1,5 +1,4 @@
-const CatBreed = require('../models/catBreed');
-
+const CatBreed = require("../models/catBreed");
 
 // Return list of all CatBreads.
 exports.catbreed_list = async (req: any, res: any) => {
@@ -11,4 +10,4 @@ exports.catbreed_list = async (req: any, res: any) => {
       res.status(500).json({ message: err.message });
     }
   }
-}
+};
