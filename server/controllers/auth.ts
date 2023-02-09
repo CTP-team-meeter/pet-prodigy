@@ -7,11 +7,16 @@ const bcrypt = require("bcrypt");
 
 exports.signup = async (req: any, res: any) => {
   try {
+    if (await User.exists({ username: req.body.username })) {
+      return res.status(400).json({
+        msg: "This username is already taken. Enter a different username",
+      });
+    }
     const hashedPassword = bcrypt.hashSync(
       req.body.password,
       Number(process.env.SALT)
     );
-    console.log("POST body: ", req.body);
+
     const newUser = await new User({
       username: req.body.username,
       password: hashedPassword,
@@ -21,14 +26,7 @@ exports.signup = async (req: any, res: any) => {
     const token = await generateAccessToken({ username: req.body.username });
     res.status(200).json(token);
   } catch (err) {
-    if (await User.exists({ username: req.body.username })) {
-      res.status(400).json({
-        msg: "This username is already taken. Enter a different username",
-        err,
-      });
-    } else {
-      res.status(400).json({ msg: "Failed Signup", err });
-    }
+    res.status(400).json({ msg: "Failed Signup", err });
   }
 };
 
