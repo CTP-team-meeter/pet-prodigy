@@ -1,7 +1,7 @@
 // Avoids typescript from making global modules
 export {};
 
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const catBreedSchema = new mongoose.Schema({
   name: { type: String, required: true, unique: true },
@@ -25,4 +25,4 @@ const catBreedSchema = new mongoose.Schema({
   height: { type: String, required: false },
 });
 
-module.exports = mongoose.model('CatBreed', catBreedSchema);
+module.exports = mongoose.model("CatBreed", catBreedSchema);

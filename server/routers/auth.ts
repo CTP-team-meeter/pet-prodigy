@@ -2,7 +2,7 @@
 export {};
 
 const router = require("express").Router();
-const { signup } = require("../controllers/auth");
+const { signup, login, check_login } = require("../controllers/auth");
 const User = require("../models/user");
 const {
   generateAccessToken,
@@ -11,4 +11,7 @@ const {
 
 router.post("/signup", signup);
 
+router.post("/login", login);
+
+router.get("/login", check_login);
 module.exports = router;
