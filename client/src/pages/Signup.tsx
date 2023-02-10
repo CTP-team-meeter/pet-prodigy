@@ -18,7 +18,7 @@ function Signup() {
     e.preventDefault();
 
     // Send data to server
-    const response = await fetch('/api/users', {
+    const response = await fetch('/api/signup', {
       method: 'POST',
       body: JSON.stringify({ username, password }),
       headers: {
@@ -33,8 +33,7 @@ function Signup() {
 
     // If response is not ok, display error message
     const data = await response.json();
-    setError(data.message);
-    console.log(data);
+    setError(data.msg);
 
     // Clear input fields
     setUsername('');
@@ -52,7 +51,7 @@ function Signup() {
     <div className="w-2/5 sm:h-96 h-fit bg-slate-500 mx-auto border-2 rounded-lg">
       <h1 className="mx-auto sm:text-5xl text-2xl p-8">Sign Up</h1>
       {error && (
-        <p className="w-96 mx-auto text-red-500 text-center bg-white mb-5">
+        <p className="w-96 mx-auto text-red-500 text-lg text-center font-bold bg-white mb-5">
           {error}
         </p>
       )}

@@ -222,23 +222,23 @@ function Encyclopedia() {
         >
           <div className="flex">
             <div className="w-full">
-              <h2 className="w-3/12 text-center font-bold mb-2 ml-8">
-                {catBreed?.name}
-                <br />
-                <span className=" text-end text-xs mb-2">
-                  Life Span(Y):&nbsp;
-                  {catBreed?.life_span}
-                </span>
-                &nbsp;&nbsp;
-                <span className=" text-xs mb-3">
-                  Weight(KG):&nbsp;
-                  {catBreed?.weight.metric}
-                </span>
-              </h2>
               <div className="flex">
                 <div className="flex-col">
                   <div className="flex justify-center items-center mt-2">
                     <div className="w-96 h-96 ">
+                      <h2 className="w-full text-center font-bold mb-2 mx-auto">
+                        {catBreed?.name}
+                        <br />
+                        <span className=" text-end text-xs mb-2">
+                          Life Span(Y):&nbsp;
+                          {catBreed?.life_span}
+                        </span>
+                        &nbsp;&nbsp;
+                        <span className=" text-xs mb-3">
+                          Weight(KG):&nbsp;
+                          {catBreed?.weight.metric}
+                        </span>
+                      </h2>
                       <Slider {...settings}>
                         {catBreed?.images.map((image: any) => {
                           return (
@@ -256,7 +256,7 @@ function Encyclopedia() {
                   </div>
                 </div>
                 <div className="w-9/12 ml-4">
-                  <p className="mt-3">
+                  <p className="mt-16">
                     {catBreed?.origin}&nbsp;&nbsp;
                     <ReactCountryFlag
                       countryCode={
@@ -415,7 +415,7 @@ function Encyclopedia() {
                 </div>
               </div>
               <br />
-              <p className="mt-4">
+              <p className="mt-20">
                 <span className="text-lg font-bold">Description:</span>{' '}
                 {catBreed?.description}
               </p>
