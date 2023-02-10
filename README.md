@@ -1,4 +1,7 @@
 # Pet Prodigy
+## Links
+- [API Docs](https://github.com/CTP-team-meeter/pet-prodigy/blob/main/server/API_DOCS.md)
+- [Scrum board](https://petprodigy.atlassian.net/jira/software/projects/PP/boards/1)
 ## How to setup your local
 ### Front-end
 ```
