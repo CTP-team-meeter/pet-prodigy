@@ -24,7 +24,7 @@ exports.signup = async (req: any, res: any) => {
     await newUser.save();
 
     const token = await generateAccessToken({ username: req.body.username });
-    res.status(200).json(token);
+    res.status(200).json({ token });
   } catch (err) {
     res.status(400).json({ msg: "Failed Signup", err });
   }
@@ -42,7 +42,7 @@ exports.login = async (req: any, res: any) => {
     });
     if (bcrypt.compareSync(req.body.password, user.password)) {
       const token = await generateAccessToken({ username: req.body.username });
-      res.status(200).json(token);
+      res.status(200).json({ token });
     } else {
       res
         .status(400)
