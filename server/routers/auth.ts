@@ -3,14 +3,15 @@ export {};
 
 const router = require("express").Router();
 const { signup, login, check_login } = require("../controllers/auth");
-const User = require("../models/user");
-const {
-  generateAccessToken,
-  authenticateToken,
-} = require("../middlewares/authentication");
 
+// @route   Post /api/signup
+// @access  Public
+// @desc    Sign up
 router.post("/signup", signup);
 
+// @route   Post /api/login
+// @access  Public
+// @desc    Login
 router.post("/login", login);
 
 router.get("/login", check_login);
