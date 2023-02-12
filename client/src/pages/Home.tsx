@@ -1,4 +1,4 @@
-import { Fragment, useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import LazyLoad from 'react-lazy-load';
 import { TailSpin } from 'react-loader-spinner';
 import Modal from 'react-modal';
@@ -167,7 +167,12 @@ function Encyclopedia() {
                   }}
                 ></div>
               </LazyLoad>
-              <img width={300} src="./assets/paw.png" alt="" />
+              <img
+                width={30}
+                className="mx-auto mt-4 mb-4"
+                src="/paw.png"
+                alt=""
+              />
             </div>
           ))}
 
