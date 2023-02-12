@@ -1,10 +1,16 @@
 // Avoids typescript from making global modules
 export {};
 
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const catBreedSchema = new mongoose.Schema({
   name: { type: String, required: true, unique: true },
+  alt_names: { type: String, required: false },
+  country_code: { type: String, required: false },
+  dog_friendly: { type: Number, required: false },
+  description: { type: String, required: false },
+  hypoallergenic: { type: Number, required: false },
+  shedding_level: { type: Number, required: false },
   adaptability: { type: Number, required: false },
   affection_level: { type: Number, required: false },
   child_friendly: { type: Number, required: false },
@@ -15,7 +21,6 @@ const catBreedSchema = new mongoose.Schema({
   stranger_friendly: { type: Number, required: false },
   vocalisation: { type: Number, required: false },
   energy_level: { type: Number, required: false },
-  description: { type: String, required: false },
   imageURLs: { type: Object, required: true },
   origin: { type: String, required: false },
   life_span: { type: String, required: false },
@@ -25,4 +30,4 @@ const catBreedSchema = new mongoose.Schema({
   height: { type: String, required: false },
 });
 
-module.exports = mongoose.model("CatBreed", catBreedSchema);
+module.exports = mongoose.model('CatBreed', catBreedSchema);

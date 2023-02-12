@@ -1,36 +1,39 @@
 // Avoids typescript from making global modules
 export {};
 
-// Import dependencies
-const express = require("express");
-const bcrypt = require("bcrypt");
+// getBreed is a middleware function that gets a cat breed by id
+const getBreed = require('../middlewares/catBreed').getBreed;
+const createBreed = require('../middlewares/catBreed').createBreed;
 
-const CatBreed = require("../models/catBreed");
-const catBreadController = require("../controllers/catBreed");
+// Import dependencies
+const express = require('express');
+const bcrypt = require('bcrypt');
+
+const CatBreed = require('../models/catBreed');
+const catBreadController = require('../controllers/catBreed');
 // Create router
 const router = express.Router();
 
 // @route   Get /api/catBreeds
 // @access  Public
 // @desc    Get a list of all cats
-router.get("/", catBreadController.catbreed_list);
+router.get('/', catBreadController.catbreed_list);
 
 // @route   Get /api/catBreeds/:id
 // @access  Public
 // @desc    Get a cat breed, not implemented yet
-router.get("/:id", getBreed, (req: any, res: any) => {
+router.get('/:id', getBreed, (req: any, res: any) => {
   res.json(res.breed);
 });
 
 // POST cat breed
-router.post("/");
-
+router.post('/');
 
 // Delete cat breed
-router.delete("/:id", getBreed, async (req: any, res: any) => {
+router.delete('/:id', getBreed, async (req: any, res: any) => {
   try {
     await res.breed.remove();
-    res.json({ message: "Deleted cat breed" });
+    res.json({ message: 'Deleted cat breed' });
   } catch (err) {
     if (err instanceof Error) {
       res.status(500).json({ message: err.message });
@@ -38,29 +41,13 @@ router.delete("/:id", getBreed, async (req: any, res: any) => {
   }
 });
 
-async function getBreed(req: any, res: any, next: any) {
-  let breed: any;
-  try {
-    breed = await CatBreed.findById(req.params.id);
-    if (breed == null) {
-      return res.status(404).json({ message: "Cannot find breed" });
-    }
-  } catch (err) {
-    if (err instanceof Error) {
-      return res.status(500).json({ message: err.message });
-    }
-  }
-
-  res.name = breed;
-  next();
-}
-
+// Middleware function to get cat breed by id
 async function authenticateCatBreed(req: any, res: any, next: any) {
   let breed: any;
   try {
     breed = await CatBreed.findOne({ name: req.body.name });
     if (breed == null) {
-      return res.status(400).json({ message: "Cannot find cat breed" });
+      return res.status(400).json({ message: 'Cannot find cat breed' });
     }
   } catch (err) {
     if (err instanceof Error) {
@@ -73,7 +60,7 @@ async function authenticateCatBreed(req: any, res: any, next: any) {
       res.breed = breed;
       next();
     } else {
-      res.status(401).json({ message: "Not allowed" });
+      res.status(401).json({ message: 'Not allowed' });
     }
   } catch (err) {
     if (err instanceof Error) {

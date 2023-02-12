@@ -1,28 +1,27 @@
 export interface CatBreed {
-  id: number;
+  _id: string;
   name: string;
-  images: Array<string>;
-  temperament: Array<string>;
+  imageURLs: string[];
   origin: string;
-  life_span: string;
-  wikipedia_url: string;
-  description: string;
+  country_code: string;
   alt_names: string;
+  life_span: string;
+  temperament: string;
+  wikipedia_url: string;
+  weight: string;
+  height: string;
   adaptability: number;
   affection_level: number;
   child_friendly: number;
   dog_friendly: number;
-  energy_level: number;
   grooming: number;
-  health_issues: number;
   intelligence: number;
-  shedding_level: number;
+  health_issues: number;
   social_needs: number;
   stranger_friendly: number;
-  weight: {
-    metric: string;
-  };
-  country_code: string;
-  hypoallergenic: number;
   vocalisation: number;
+  energy_level: number;
+  hypoallergenic: number;
+  shedding_level: number;
+  description: string;
 }

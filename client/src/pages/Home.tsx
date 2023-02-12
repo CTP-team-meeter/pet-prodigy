@@ -11,7 +11,7 @@ import Slider from 'react-slick';
 Modal.setAppElement('#root');
 
 function Encyclopedia() {
-  const [catBreeds, setCatBreeds] = useState<Array<CatBreed>>([]);
+  const [catBreeds, setCatBreeds] = useState<CatBreed[]>([]);
   const [catBreed, setCatBreed] = useState<CatBreed>();
   const [modal, setModal] = useState<boolean>(false);
   const [search, setSearch] = useState<string>('');
@@ -20,47 +20,42 @@ function Encyclopedia() {
 
   const fetchData = useCallback(async () => {
     try {
-      const response = await fetch('https://api.thecatapi.com/v1/breeds');
+      const response = await fetch('api/catBreeds');
       const data = await response.json();
-      const promises = data.map(async (breed: any) => {
-        const resultImage = await fetch(
-          'https://api.thecatapi.com/v1/images/search?breed_ids=' + breed.id
-        );
-        const dataImage = await resultImage.json();
-        const temperament = breed.temperament?.split(', ');
 
-        if (dataImage && dataImage[0] && dataImage[0].url) {
+      const catData: CatBreed[] = data
+        .map((cat: CatBreed) => {
+          const temperament = cat.temperament?.split(', ');
           return {
-            id: breed.id,
-            life_span: breed.life_span || 'Missing data',
-            adaptability: breed.adaptability || 'Missing data',
-            affection_level: breed.affection_level || 'Missing data',
-            child_friendly: breed.child_friendly || 'Missing data',
-            dog_friendly: breed.dog_friendly || 'Missing data',
-            energy_level: breed.energy_level || 'Missing data',
-            grooming: breed.grooming || 'Missing data',
-            health_issues: breed.health_issues || 'Missing data',
-            intelligence: breed.intelligence || 'Missing data',
-            shedding_level: breed.shedding_level || 'Missing data',
-            social_needs: breed.social_needs || 'Missing data',
-            stranger_friendly: breed.stranger_friendly || 'Missing data',
-            hypoallergenic: breed.hypoallergenic || 'Missing data',
-            vocalisation: breed.vocalisation || 'Missing data',
-            wikipedia_url: breed.wikipedia_url || 'Missing data',
-            description: breed.description || 'Missing data',
-            alt_names: breed.alt_names || 'Missing data',
-            weight: breed.weight || 'Missing data',
-            country_code: breed.country_code || 'Missing data',
-            name: breed.name || 'Missing data',
-            images: dataImage[0].url || 'Missing data',
-            origin: breed.origin || 'Missing data',
+            _id: cat._id || 'Missing data',
+            name: cat.name || 'Missing data',
+            imageURLs: cat.imageURLs || ['Missing data'],
+            origin: cat.origin || 'Missing data',
             temperament: temperament || 'Missing data',
+            life_span: cat.life_span || 'Missing data',
+            wikipedia_url: cat.wikipedia_url || 'Missing data',
+            description: cat.description || 'Missing data',
+            alt_names: cat.alt_names || 'Missing data',
+            country_code: cat.country_code || 'Missing data',
+            adaptability: cat.adaptability || -1,
+            affection_level: cat.affection_level || -1,
+            child_friendly: cat.child_friendly || -1,
+            dog_friendly: cat.dog_friendly || -1,
+            energy_level: cat.energy_level || -1,
+            grooming: cat.grooming || -1,
+            health_issues: cat.health_issues || -1,
+            intelligence: cat.intelligence || -1,
+            shedding_level: cat.shedding_level || -1,
+            social_needs: cat.social_needs || -1,
+            stranger_friendly: cat.stranger_friendly || -1,
+            weight: cat.weight || -1,
+            hypoallergenic: cat.hypoallergenic || -1,
+            vocalisation: cat.vocalisation || -1,
           };
-        }
-      });
+        })
+        .sort((a: any, b: any) => (a.name > b.name ? 1 : -1));
 
-      const catsPromise = await Promise.all(promises);
-      setCatBreeds(catsPromise.filter(Boolean));
+      setCatBreeds(catData);
       setLoading(false);
     } catch (error) {
       if (error instanceof Error) {
@@ -70,51 +65,13 @@ function Encyclopedia() {
     }
   }, []);
 
-  const catBreedInformation = async (id: number) => {
+  const catBreedInformation = async (id: string) => {
     try {
-      setLoading(true);
-      const response = await fetch('https://api.thecatapi.com/v1/breeds/' + id);
-      const data = await response.json();
-      const temperament = data.temperament?.split(', ');
-
-      const catImage = await fetch(
-        'https://api.thecatapi.com/v1/images/search?breed_ids=' +
-          id +
-          '&limit=5'
-      );
-      const dataImage = await catImage.json();
-
-      const cat = {
-        id: data.id,
-        name: data.name || 'Missing data',
-        images: dataImage || 'Missing data',
-        origin: data.origin || 'Missing data',
-        temperament: temperament || 'Missing data',
-        life_span: data.life_span || 'Missing data',
-        wikipedia_url: data.wikipedia_url || 'Missing data',
-        description: data.description || 'Missing data',
-        alt_names: data.alt_names || 'Missing data',
-        adaptability: data.adaptability || 'Missing data',
-        affection_level: data.affection_level || 'Missing data',
-        child_friendly: data.child_friendly || 'Missing data',
-        dog_friendly: data.dog_friendly || 'Missing data',
-        energy_level: data.energy_level || 'Missing data',
-        grooming: data.grooming || 'Missing data',
-        health_issues: data.health_issues || 'Missing data',
-        intelligence: data.intelligence || 'Missing data',
-        shedding_level: data.shedding_level || 'Missing data',
-        social_needs: data.social_needs || 'Missing data',
-        stranger_friendly: data.stranger_friendly || 'Missing data',
-        weight: data.weight || 'Missing data',
-        country_code: data.country_code || 'Missing data',
-        hypoallergenic: data.hypoallergenic || 'Missing data',
-        vocalisation: data.vocalisation || 'Missing data',
-      };
-
-      setCatBreed(cat);
-      setLoading(false);
-
-      return cat;
+      catBreeds.map((cat: CatBreed) => {
+        if (cat._id === id) {
+          setCatBreed(cat);
+        }
+      });
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);
@@ -125,7 +82,7 @@ function Encyclopedia() {
 
   const openModal = (selectedCat: CatBreed) => {
     setModal(true);
-    catBreedInformation(selectedCat.id);
+    catBreedInformation(selectedCat._id);
   };
 
   const closeModal = () => {
@@ -169,8 +126,6 @@ function Encyclopedia() {
     );
   }
 
-  console.log(catBreed?.images);
-
   return (
     <div>
       <h1 className="mb-4">Encyclopedia</h1>
@@ -194,16 +149,16 @@ function Encyclopedia() {
             }
           })
           .map((cat: CatBreed) => (
-            <div className="sm:text-lg md:text-lg text-xs" key={cat.id}>
+            <div className="sm:text-lg md:text-lg text-xs" key={cat._id}>
               <h2 className="mb-4">{cat.name}</h2>
               <LazyLoad>
                 <div
                   onClick={() => {
                     openModal(cat);
                   }}
-                  className="bg-slate-900 border-2 rounded-lg cursor-crosshair hover:opacity-60 mx-auto"
+                  className="bg-slate-900 border-2 rounded-lg cursor-crosshair hover:opacity-60 mx-auto mb-10"
                   style={{
-                    backgroundImage: `url(${cat.images})`,
+                    backgroundImage: `url(${cat.imageURLs[0]?.url})`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     backgroundRepeat: 'no-repeat',
@@ -212,6 +167,7 @@ function Encyclopedia() {
                   }}
                 ></div>
               </LazyLoad>
+              <img width={300} src="./assets/paw.png" alt="" />
             </div>
           ))}
 
@@ -236,11 +192,11 @@ function Encyclopedia() {
                         &nbsp;&nbsp;
                         <span className=" text-xs mb-3">
                           Weight(KG):&nbsp;
-                          {catBreed?.weight.metric}
+                          {catBreed?.weight?.metric}
                         </span>
                       </h2>
                       <Slider {...settings}>
-                        {catBreed?.images.map((image: any) => {
+                        {catBreed?.imageURLs.map((image: any) => {
                           return (
                             <div className="w-96 h-30">
                               <img
