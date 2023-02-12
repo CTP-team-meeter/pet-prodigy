@@ -1,15 +1,15 @@
 export interface CatBreed {
   _id: string;
   name: string;
-  imageURLs: string[];
+  imageURLs: any;
   origin: string;
   country_code: string;
   alt_names: string;
   life_span: string;
-  temperament: string;
+  temperament: any;
   wikipedia_url: string;
-  weight: string;
-  height: string;
+  weight: any;
+  height: any;
   adaptability: number;
   affection_level: number;
   child_friendly: number;
