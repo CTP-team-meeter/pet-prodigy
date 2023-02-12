@@ -242,7 +242,7 @@ function Encyclopedia() {
                       Wikipedia
                     </a>
                   </div>
-                  <div className="flex justify-center">
+                  <div className="flex xl:justify-start justify-center">
                     <h1 className="text-center text-sm mt-8 mb-3">
                       {catBreed?.temperament.map((temp: string) => (
                         <span className="text-xs bg-cyan-600 rounded-lg p-2 mb-3 mr-2">
