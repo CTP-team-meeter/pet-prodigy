@@ -139,7 +139,7 @@ function Encyclopedia() {
       <button className="bg-slate-900 p-3 border-2 rounded-lg ml-4 mb-4">
         Random cat
       </button>
-      <div className="bg-slate-900 p-4 border-2 rounded-lg grid grid-cols-4 gap-4 text-center">
+      <div className="bg-slate-900 p-4 border-2 rounded-lg grid xl:grid-cols-4 lg:grid-cols-3 gap-4 text-center">
         {catBreeds
           .filter((cat: CatBreed) => {
             if (search === '') {
@@ -149,7 +149,7 @@ function Encyclopedia() {
             }
           })
           .map((cat: CatBreed) => (
-            <div className="sm:text-lg md:text-lg text-xs" key={cat._id}>
+            <div className="text-lg" key={cat._id}>
               <h2 className="mb-4">{cat.name}</h2>
               <LazyLoad>
                 <div
