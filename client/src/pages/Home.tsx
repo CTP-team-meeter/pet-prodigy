@@ -181,74 +181,83 @@ function Encyclopedia() {
           onRequestClose={closeModal}
           contentLabel="Cat information"
         >
-          <div className="flex">
+          <div className="flex ">
             <div className="w-full">
-              <div className="flex">
-                <div className="flex-col">
-                  <div className="flex justify-center items-center mt-2">
-                    <div className="w-96 h-96 ">
-                      <h2 className="w-full text-center font-bold mb-2 mx-auto">
-                        {catBreed?.name}
-                        <br />
-                        <span className=" text-end text-xs mb-2">
-                          Life Span(Y):&nbsp;
-                          {catBreed?.life_span}
-                        </span>
-                        &nbsp;&nbsp;
-                        <span className=" text-xs mb-3">
-                          Weight(KG):&nbsp;
-                          {catBreed?.weight?.metric}
-                        </span>
-                      </h2>
-                      <Slider {...settings}>
-                        {catBreed?.imageURLs.map((image: any) => {
-                          return (
-                            <div className="w-96 h-30">
-                              <img
-                                className="w-72 h-96 object-cover rounded-lg border mx-auto"
-                                key={image.id}
-                                src={image.url}
-                              />
-                            </div>
-                          );
-                        })}
-                      </Slider>
-                    </div>
+              <div className="text-end float-righ whitespace-nowrapt">
+                <button className="bg-transparent" onClick={closeModal}>
+                  <span role="img" aria-label="close">
+                    ❌
+                  </span>
+                </button>
+              </div>
+              <div className="md:flex md:flex-col lg:flex lg:flex-row ">
+                <div className="flex justify-center">
+                  <div className="w-96 h-96 ">
+                    <h2 className="w-full text-center font-bold mb-2 mx-auto">
+                      {catBreed?.name}
+                      <br />
+                      <span className=" text-end text-xs mb-2">
+                        Life Span(Y):&nbsp;
+                        {catBreed?.life_span}
+                      </span>
+                      &nbsp;&nbsp;
+                      <span className=" text-xs mb-3">
+                        Weight(KG):&nbsp;
+                        {catBreed?.weight?.metric}
+                      </span>
+                    </h2>
+                    <Slider {...settings}>
+                      {catBreed?.imageURLs.map((image: any) => {
+                        return (
+                          <div className="w-96 h-30 mx-auto">
+                            <img
+                              className="w-full h-96 object-cover rounded-lg border mx-auto"
+                              key={image.id}
+                              src={image.url}
+                            />
+                          </div>
+                        );
+                      })}
+                    </Slider>
                   </div>
                 </div>
-                <div className="w-9/12 ml-4">
-                  <p className="mt-16">
-                    {catBreed?.origin}&nbsp;&nbsp;
-                    <ReactCountryFlag
-                      countryCode={
-                        catBreed?.country_code
-                          ? catBreed.country_code
-                          : 'Unknown'
-                      }
-                      svg
-                    />
+                <div className="flex flex-col ml-4 w-full">
+                  <div className="headline w-full mx-auto lg:text-left text-center xl:mt-0 mt-4">
+                    <p className="inline-block lg:mt-20 lg:text-left mt-24 text-center">
+                      {catBreed?.origin}&nbsp;&nbsp;
+                      <ReactCountryFlag
+                        countryCode={
+                          catBreed?.country_code
+                            ? catBreed.country_code
+                            : 'Unknown'
+                        }
+                        svg
+                      />
+                    </p>
                     <a
-                      className="text-sm text-white bg-gray-500 hover:text-slate-900 p-2 rounded-lg ml-8"
+                      className="inline-block text-sm text-white bg-gray-500 hover:text-slate-900 p-2 rounded-lg ml-8"
                       href={catBreed?.wikipedia_url}
                       target="_blank"
                     >
                       Wikipedia
                     </a>
-                  </p>
-                  <h1 className="text-sm mt-8 mb-3">
-                    {catBreed?.temperament.map((temp: string) => (
-                      <span className="text-xs bg-cyan-600 rounded-lg p-2 mb-3 mr-2">
-                        {temp}
-                      </span>
-                    ))}
-                    {catBreed?.hypoallergenic === 1 ? (
-                      <span className="text-xs bg-yellow-500 rounded-lg p-2 mb-3 ">
-                        Hypoallergenic
-                      </span>
-                    ) : null}
-                  </h1>
-                  <div className="flex justify-center items-center text-center mt-14">
-                    <h1 className="w-3/12 text-sm mb-2">
+                  </div>
+                  <div className="flex">
+                    <h1 className=" xl:w-fit text-center text-sm mt-8 mb-3">
+                      {catBreed?.temperament.map((temp: string) => (
+                        <span className="text-xs bg-cyan-600 rounded-lg p-2 mb-3 mr-2">
+                          {temp}
+                        </span>
+                      ))}
+                      {catBreed?.hypoallergenic === 1 ? (
+                        <span className="text-xs bg-yellow-500 rounded-lg p-2 mb-3 ">
+                          Hypoallergenic
+                        </span>
+                      ) : null}
+                    </h1>
+                  </div>
+                  <div className="flex justify-center text-center mt-8 flex-col md:flex-row xl:flex-row">
+                    <h1 className="xl:w-3/12 text-sm mb-2 p-2">
                       Adaptability &nbsp;
                       <br />
                       <StarRatings
@@ -258,7 +267,7 @@ function Encyclopedia() {
                         rating={catBreed?.adaptability}
                       />
                     </h1>
-                    <h1 className="w-3/12 text-sm mb-2">
+                    <h1 className="xl:w-3/12 text-sm mb-2 p-2">
                       Affection&nbsp;
                       <br />
                       <StarRatings
@@ -268,7 +277,7 @@ function Encyclopedia() {
                         rating={catBreed?.affection_level}
                       />
                     </h1>
-                    <h1 className="w-3/12 text-sm mb-2">
+                    <h1 className="xl:w-3/12 text-sm mb-2 p-2">
                       Child Friendly&nbsp;
                       <br />
                       <StarRatings
@@ -278,7 +287,7 @@ function Encyclopedia() {
                         rating={catBreed?.child_friendly}
                       />
                     </h1>
-                    <h1 className="w-3/12 text-sm mb-2">
+                    <h1 className="xl:w-3/12 text-sm mb-2 p-2">
                       Dog Friendly&nbsp;
                       <br />
                       <StarRatings
@@ -289,8 +298,8 @@ function Encyclopedia() {
                       />
                     </h1>
                   </div>
-                  <div className="flex justify-center items-center text-center mt-6">
-                    <h1 className="w-3/12 text-sm text-center mb-2">
+                  <div className="flex justify-center text-center  flex-col xl:flex-row md:flex-row">
+                    <h1 className="xl:w-3/12 text-sm text-center mb-2 p-2">
                       Stranger Friendly&nbsp;
                       <br />
                       <StarRatings
@@ -300,7 +309,7 @@ function Encyclopedia() {
                         rating={catBreed?.stranger_friendly}
                       />
                     </h1>
-                    <h1 className="w-3/12 text-sm mb-2">
+                    <h1 className="xl:w-3/12 text-sm mb-2 p-2">
                       Energy&nbsp;
                       <br />
                       <StarRatings
@@ -310,7 +319,7 @@ function Encyclopedia() {
                         rating={catBreed?.energy_level}
                       />
                     </h1>
-                    <h1 className="w-3/12 text-sm mb-2">
+                    <h1 className="xl:w-3/12 text-sm mb-2 p-2">
                       Grooming&nbsp;
                       <br />
                       <StarRatings
@@ -320,7 +329,7 @@ function Encyclopedia() {
                         rating={catBreed?.grooming}
                       />
                     </h1>
-                    <h1 className="w-3/12 text-sm mb-2">
+                    <h1 className="xl:w-3/12 text-sm mb-2 p-2">
                       Health Issues&nbsp;
                       <br />
                       <StarRatings
@@ -331,8 +340,8 @@ function Encyclopedia() {
                       />
                     </h1>
                   </div>
-                  <div className="flex items-center justify-center text-center mt-6">
-                    <h1 className="w-3/12 text-sm mb-2">
+                  <div className="flex justify-center text-center  flex-col xl:flex-row md:flex-row">
+                    <h1 className="xl:w-3/12 text-sm mb-2 p-2 ">
                       Intelligence&nbsp;
                       <br />
                       <StarRatings
@@ -342,7 +351,7 @@ function Encyclopedia() {
                         rating={catBreed?.intelligence}
                       />
                     </h1>
-                    <h1 className="w-3/12 text-sm mb-2">
+                    <h1 className="xl:w-3/12 text-sm mb-2 p-2">
                       Shedding&nbsp;
                       <br />
                       <StarRatings
@@ -352,7 +361,7 @@ function Encyclopedia() {
                         rating={catBreed?.shedding_level}
                       />
                     </h1>
-                    <h1 className="w-3/12 text-center text-sm mb-2">
+                    <h1 className="xl:w-3/12 text-center text-sm mb-2 p-2">
                       Social Needs&nbsp;
                       <br />
                       <StarRatings
@@ -362,7 +371,7 @@ function Encyclopedia() {
                         rating={catBreed?.social_needs}
                       />
                     </h1>
-                    <h1 className="w-3/12 text-sm mb-2">
+                    <h1 className="xl:w-3/12 text-sm mb-2 p-2">
                       Vocalisation&nbsp;
                       <br />
                       <StarRatings
@@ -375,20 +384,14 @@ function Encyclopedia() {
                   </div>
                 </div>
               </div>
-              <br />
-              <p className="mt-20">
-                <span className="text-lg font-bold">Description:</span>{' '}
-                {catBreed?.description}
-              </p>
             </div>
-
-            <div className="text-end">
-              <button className="bg-transparent" onClick={closeModal}>
-                <span role="img" aria-label="close">
-                  ❌
-                </span>
-              </button>
-            </div>
+            <br />
+          </div>
+          <div>
+            <p className="xl:mt-32 mt-10">
+              <span className="text-lg font-bold">Description:&nbsp;</span>
+              {catBreed?.description}
+            </p>
           </div>
         </Modal>
       </div>
