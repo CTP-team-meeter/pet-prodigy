@@ -80,6 +80,17 @@ function Encyclopedia() {
     }
   };
 
+  const getRandomCat = () => {
+    try {
+      openModal(catBreeds[Math.floor(Math.random() * catBreeds.length)]);
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
+      }
+      console.log(error);
+    }
+  };
+
   const openModal = (selectedCat: CatBreed) => {
     setModal(true);
     catBreedInformation(selectedCat._id);
@@ -137,7 +148,10 @@ function Encyclopedia() {
           placeholder="Search"
           onChange={(e) => setSearch(e.target.value)}
         />
-        <button className="bg-slate-900 p-3 border-2 rounded-lg ml-4 mb-4">
+        <button
+          onClick={getRandomCat}
+          className="bg-slate-900 p-3 border-2 rounded-lg ml-4 mb-4"
+        >
           Random cat
         </button>
       </div>
@@ -245,9 +259,9 @@ function Encyclopedia() {
                     </a>
                   </div>
                   <div className="xl:justify-start lg:justify-start sm:justify-center">
-                    <h1 className="w-32 mx-auto md:flex-row md:justify-center flex flex-col sm:flex-col xl:inline-block lg:inline-block text-center xl:text-start lg:text-start text-sm mt-8 mb-3">
+                    <h1 className="flex flex-wrap justify-center mt-10 xl:justify-start lg:justify-start ">
                       {catBreed?.temperament.map((temp: string) => (
-                        <span className="text-xs bg-cyan-600 rounded-lg p-2 mb-3 mr-2">
+                        <span className="text-xs bg-cyan-600 rounded-lg p-2 mb-3 mr-2 break-all">
                           {temp}
                         </span>
                       ))}
