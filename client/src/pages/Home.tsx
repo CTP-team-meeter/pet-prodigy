@@ -130,15 +130,17 @@ function Encyclopedia() {
     <div>
       <h1 className="mb-4">Encyclopedia</h1>
       <br />
-      <input
-        className="w-8/12 mt-4 mb-14 p-2 border-2 rounded-lg"
-        type="text"
-        placeholder="Search"
-        onChange={(e) => setSearch(e.target.value)}
-      />
-      <button className="bg-slate-900 p-3 border-2 rounded-lg ml-4 mb-4">
-        Random cat
-      </button>
+      <div className="mt-4 mb-14">
+        <input
+          className="w-8/12 p-2 border-2 mb-4 rounded-lg"
+          type="text"
+          placeholder="Search"
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        <button className="bg-slate-900 p-3 border-2 rounded-lg ml-4 mb-4">
+          Random cat
+        </button>
+      </div>
       <div className="bg-slate-900 p-4 border-2 rounded-lg grid xl:grid-cols-4 lg:grid-cols-3 gap-4 text-center">
         {catBreeds
           .filter((cat: CatBreed) => {
@@ -181,9 +183,9 @@ function Encyclopedia() {
           onRequestClose={closeModal}
           contentLabel="Cat information"
         >
-          <div className="flex ">
+          <div className="flex">
             <div className="w-full">
-              <div className="text-end float-righ whitespace-nowrapt">
+              <div className="text-end xl:float-right lg:float-right">
                 <button className="bg-transparent" onClick={closeModal}>
                   <span role="img" aria-label="close">
                     ❌
@@ -242,8 +244,8 @@ function Encyclopedia() {
                       Wikipedia
                     </a>
                   </div>
-                  <div className="flex xl:justify-start justify-center">
-                    <h1 className="text-center text-sm mt-8 mb-3">
+                  <div className="xl:justify-start lg:justify-start sm:justify-center">
+                    <h1 className="w-32 mx-auto md:flex-row md:justify-center flex flex-col sm:flex-col xl:inline-block lg:inline-block text-center xl:text-start lg:text-start text-sm mt-8 mb-3">
                       {catBreed?.temperament.map((temp: string) => (
                         <span className="text-xs bg-cyan-600 rounded-lg p-2 mb-3 mr-2">
                           {temp}
