@@ -5,7 +5,7 @@ import Modal from 'react-modal';
 import ReactCountryFlag from 'react-country-flag';
 import StarRatings from 'react-star-ratings';
 import { CatBreed } from '../global/cat';
-import Slider from 'react-slick';
+import CarouselSlider from '../components/CarouselSlider';
 
 // Set Modal to root
 Modal.setAppElement('#root');
@@ -100,15 +100,6 @@ function Encyclopedia() {
     setModal(false);
   };
 
-  // Slider settings
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-  };
-
   useEffect(() => {
     fetchData();
   }, []);
@@ -168,26 +159,20 @@ function Encyclopedia() {
             <div className="text-lg" key={cat._id}>
               <h2 className="mb-4">{cat.name}</h2>
               <LazyLoad>
-                <div
+                <img
+                  width={30}
                   onClick={() => {
                     openModal(cat);
                   }}
-                  className="bg-slate-900 border-2 rounded-lg cursor-crosshair hover:opacity-60 mx-auto mb-10"
-                  style={{
-                    backgroundImage: `url(${cat.imageURLs[0]?.url})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    backgroundRepeat: 'no-repeat',
-                    width: '300px',
-                    height: '300px',
-                  }}
-                ></div>
+                  src={cat.imageURLs[0]?.url}
+                  className="w-full h-80 bg-slate-900 border-2 rounded-lg cursor-crosshair hover:opacity-60 mx-auto mb-10 object-cover"
+                />
               </LazyLoad>
               <img
                 width={30}
                 className="mx-auto mt-4 mb-4"
                 src="/paw.png"
-                alt=""
+                alt="paw"
               />
             </div>
           ))}
@@ -222,19 +207,7 @@ function Encyclopedia() {
                         {catBreed?.weight?.metric}
                       </span>
                     </h2>
-                    <Slider {...settings}>
-                      {catBreed?.imageURLs.map((image: any) => {
-                        return (
-                          <div className="w-96 h-30 mx-auto">
-                            <img
-                              className="w-full h-96 object-cover rounded-lg border mx-auto"
-                              key={image.id}
-                              src={image.url}
-                            />
-                          </div>
-                        );
-                      })}
-                    </Slider>
+                    <CarouselSlider props={catBreed} />
                   </div>
                 </div>
                 <div className="flex flex-col ml-4 w-full">
