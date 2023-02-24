@@ -36,7 +36,7 @@ function Navbar({themeToggle}:any) {
           className={({ isActive }) => (isActive ? 'active' : '')}
           to="/signup"
         >
-         <Button title={"Signup"} ></Button> 
+         <Button title={"Signup"}></Button> 
         </NavLink>
       </div>
     </nav>
