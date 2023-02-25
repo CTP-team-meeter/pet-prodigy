@@ -1,0 +1,14 @@
+#light-dark-toggle {
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+#navbar {
+  transition: all 0.5s;
+  background-color: var(--background-secondary);
+  color: var(--text-primary);
+}
+
+.nav__links a{
+  color: var(--text-primary);
+}
