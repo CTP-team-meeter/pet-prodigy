@@ -8,7 +8,7 @@
   --background-secondary: #E2DAEB;
   --headline: #1F1235;
   --paragraph: #1B1425;
-  --text-primary: #1F1235;
+  --text-primary: #1B1425;
   --text-secondary: #2a2a2a;
   --button: #FF6E6C;
   --button-text: #1F1235;
@@ -24,7 +24,7 @@
   --text-primary: #FFFFFE;
   --text-secondary: #B8C1EC;
   --button: #EEBBC3;
-  --button-text: #301E4E;
+  --button-text: #1B1425;
   --accent: #EEBBC3;
   --toggle-text: "Light Mode";
 }
@@ -37,7 +37,6 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -54,13 +53,6 @@ a {
 }
 a:hover {
   color: #535bf2;
-}
-
-body {
-  margin: 0;
-  min-width: 320px;
-  min-height: 100vh;
-  background-color: #000000;
 }
 
 h1 {
