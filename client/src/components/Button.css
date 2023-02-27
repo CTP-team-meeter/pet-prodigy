@@ -1,19 +1,24 @@
 button {
   color: var(--button-text);
   background-color: var(--button);
-
   border-radius: 5px;
   border: 0px solid transparent;
   padding: 5px 35px;
-  font-size: 1em;
+  font-size: 14px;
+  /* font-size: 1em; */
   font-weight: 500;
   font-family: inherit;
   cursor: pointer;
 }
-button:hover {
-  border-color: aqua;
-}
-button:focus,
+
+/* button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+} */
+
+[data-transparent=true] {
+  color: var(--text-primary);
+  border:2px solid var(--text-primary);
+  background-color: transparent;
 }
+
