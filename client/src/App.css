@@ -5,7 +5,6 @@
 @tailwind utilities;
 
 #root {
-  max-width: 1280px;
   margin: 0 auto;
   text-align: center;
   font-family: 'Unbounded', cursive;
@@ -14,7 +13,7 @@
 .App {
   background-color:var(--background);
   transition: all 0.5s;
-  height:100vh;
+  height: 100vh;
 }
 .active {
   color: aqua;
