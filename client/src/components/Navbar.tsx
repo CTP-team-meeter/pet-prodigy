@@ -7,7 +7,7 @@ import Button from './Button'
 import './Navbar.css';
 function Navbar({themeToggle}:any) {
   return (
-    <nav id="navbar" className="w-full sticky top-0 bg-slate-800 flex justify-around rounded-b-lg mb-10 z-50">
+    <nav id="navbar" className="w-full sticky top-0 bg-slate-800 flex justify-around rounded-b-lg z-50">
       <div className="nav__logo">
         <h1 className="text-3xl p-2">Pet Prodigy</h1>
       </div>

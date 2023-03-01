@@ -3,15 +3,3 @@
   color: var(--text-primary);
   transition: all 0.5s;
 }
-
-#landing-first-section {
-  background-color: var(--background);
-}
-
-#landing-second-section {
-  background-color: var(--background-secondary);
-}
-
-#landing-third-section {
-  background-color: var(--background);
-}
