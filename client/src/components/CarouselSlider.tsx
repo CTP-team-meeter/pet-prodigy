@@ -12,7 +12,7 @@ function CarouselSlider(props: any) {
   return (
     <div className="slider">
       <Slider {...settings}>
-        {props.props.imageURLs?.map((image: any) => (
+        {props.breeds.imageURLs?.map((image: any) => (
           <div className="w-96 h-30 mx-auto" key={image.id}>
             <img
               className="w-full h-96 object-cover rounded-lg border mx-auto"
