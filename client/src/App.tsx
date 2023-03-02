@@ -17,9 +17,9 @@ function App() {
     setTheme(theme == 'light' ? 'dark' : 'light');
   };
   return (
-    <div className="App" data-theme={theme}>
+    <div className="App bg-primary text-primary" data-theme={theme}>
       <Router>
-        <Navbar />
+        <Navbar themeToggle={themeToggle}/>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
