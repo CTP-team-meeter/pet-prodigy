@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import LazyLoad from 'react-lazy-load';
+import CatBreeds from './CatBreeds';
 
 function SearchBar(props: any) {
   const [search, setSearch] = useState<string>('');
@@ -28,23 +28,7 @@ function SearchBar(props: any) {
       {/* render the filteredBreeds array */}
       <div className=" bg-slate-900 p-4 border-2 rounded-lg grid xl:grid-cols-4 lg:grid-cols-3 gap-4 text-center">
         {filteredBreeds.map((breed) => (
-          <LazyLoad>
-            <div className="w-96 px-10" key={breed._id}>
-              <h2 className="mb-4 text-lg">{breed.name}</h2>
-
-              <img
-                className="w-full h-80 bg-slate-900 border-2 rounded-lg cursor-crosshair hover:opacity-60 mx-auto mb-10 object-cover"
-                src={breed?.imageURLs[0]?.url}
-                alt={breed.name}
-              />
-              <img
-                width={30}
-                className="mx-auto mt-4 mb-4"
-                src="/paw.png"
-                alt="paw"
-              />
-            </div>
-          </LazyLoad>
+          <CatBreeds {...breed} />
         ))}
       </div>
     </div>
