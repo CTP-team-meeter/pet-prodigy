@@ -130,7 +130,7 @@ function Encyclopedia() {
 
   return (
     <div>
-      <h1 className="mb-4">Encyclopedia</h1>
+      <h1 className="mb-4 mt-10">Encyclopedia</h1>
       <br />
       <div className="mt-4 mb-14">
         <input
