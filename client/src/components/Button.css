@@ -1,4 +1,4 @@
-button {
+.button {
   color: var(--button-text);
   background-color: var(--button);
   border-radius: 5px;
@@ -7,7 +7,7 @@ button {
   font-size: 14px;
   /* font-size: 1em; */
   font-weight: 500;
-  font-family: inherit;
+  font-family: Tahoma, Verdana, Segoe, sans-serif;
   cursor: pointer;
   justify-self: start;
 }

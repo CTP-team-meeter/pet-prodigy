@@ -23,6 +23,7 @@ const Button = ({
 }) => {
   return (
     <button
+      className="button"
       onClick={onclick}
       data-transparent={transparent}
       style={{ width: width }}
