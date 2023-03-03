@@ -1,4 +1,4 @@
-import "./Button.css";
+import './Button.css';
 /*
 This is a functional React component called "Button" that takes three props:
 1. "title": A string that represents the text that will be displayed on the button.
@@ -14,12 +14,22 @@ const Button = ({
   title,
   width,
   transparent,
+  onclick,
 }: {
   title: string;
   width?: number;
   transparent?: boolean;
+  onclick?: any;
 }) => {
-  return <button data-transparent={transparent} style={{ width: width }}>{title}</button>;
+  return (
+    <button
+      onClick={onclick}
+      data-transparent={transparent}
+      style={{ width: width }}
+    >
+      {title}
+    </button>
+  );
 };
 
 export default Button;

@@ -1,8 +1,6 @@
-import { useCallback, useState } from 'react';
-import { CatBreed } from '../types/cat';
 import LazyLoad from 'react-lazy-load';
 
-function CatBreeds(props: any) {
+function BreedImages(props: any) {
   return (
     <LazyLoad>
       <div className="w-96 px-10" key={props._id}>
@@ -24,4 +22,4 @@ function CatBreeds(props: any) {
   );
 }
 
-export default CatBreeds;
+export default BreedImages;
