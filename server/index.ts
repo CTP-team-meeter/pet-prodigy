@@ -36,7 +36,12 @@ db.once('open', () => {
   console.log('Connected to MongoDB');
 });
 
-seedPet(require('./models/catBreed'));
+const CatBread = require('./models/catBreed');
+CatBread.count((err:any, count:any) => {
+  if (!err && count === 0) {
+    seedPet(CatBread);
+  }
+});
 
 app.use(express.json());
 

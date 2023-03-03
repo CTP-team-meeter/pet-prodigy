@@ -1,8 +1,8 @@
 exports.seedPet = async (model: any) => {
   const res = await fetch('https://api.thecatapi.com/v1/breeds', {
-    headers: {
-      'x-api-key': process.env.CAT_API_KEY || '',
-    },
+    // headers: {
+    //   'x-api-key': process.env.CAT_API_KEY || '',
+    // },
   });
   const data = await res.json();
   model.collection.drop();
@@ -42,10 +42,12 @@ exports.seedPet = async (model: any) => {
       hypoallergenic: cat.hypoallergenic,
       description: cat.description,
     });
-    console.log(images);
     newCat.save((err: any, res: any) => {
       console.log(err);
       console.log(res);
+      if(!err){
+        console.log("Seeding completed");
+      }
     });
   });
 };
