@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, Children, cloneElement } from "react";
-import "./FadeInChildren.css"
+import "./FadeInChildren.css";
 const FadeInChildren = ({
   children,
   toLeft,
@@ -7,7 +7,7 @@ const FadeInChildren = ({
   children: any;
   toLeft?: boolean;
 }) => {
-  const [isVisible, setVisible] = useState(children.map(() => false));
+  const [isVisible, setVisible] = useState(Children.toArray(children).map(() => false));
   const childRefs = useRef<Array<HTMLElement | null>>([]);
   useEffect(() => {
     childRefs.current.forEach((childRef, i) => {
@@ -15,7 +15,6 @@ const FadeInChildren = ({
         (entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
-              console.log(entry);
               setVisible((prevIsVisible: any) =>
                 prevIsVisible.map((visible: any, index: any) =>
                   index === i ? true : visible
@@ -25,7 +24,7 @@ const FadeInChildren = ({
             }
           });
         },
-        { rootMargin: "-20% 0% -20% 0%"}
+        { rootMargin: "-20% 0% -20% 0%" }
       );
       if (childRef) {
         observer.observe(childRef);
@@ -47,8 +46,8 @@ const FadeInChildren = ({
           ? "hide-from-right fade-in-left"
           : "hide-from-right"
         : isVisible[index]
-        ? "hide-from-left fade-in-right"
-        : "hide-from-left",
+          ? "hide-from-left fade-in-right"
+          : "hide-from-left",
     });
   });
 
