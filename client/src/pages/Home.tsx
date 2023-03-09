@@ -5,7 +5,6 @@ import SearchBar from '../components/SearchBar';
 
 function Encyclopedia() {
   const [catBreeds, setCatBreeds] = useState<CatBreed[]>([]);
-  const [catBreed, setCatBreed] = useState<CatBreed>();
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>('');
 

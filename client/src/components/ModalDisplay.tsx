@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import Modal from 'react-modal';
 import CarouselSlider from './CarouselSlider';
 import ReactCountryFlag from 'react-country-flag';
@@ -6,7 +5,6 @@ import StarRatings from 'react-star-ratings';
 
 function ModalDisplay(props: any) {
   function closeModal() {
-    console.log('closeModal called');
     props.setShowModal(false);
   }
 
