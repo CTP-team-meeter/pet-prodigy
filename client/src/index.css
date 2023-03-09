@@ -1,38 +1,38 @@
 /* Color palate */
 :root {
-  --background: #FFFFFF;
-  --background-secondary: #E2DAEB;
-  --headline: #1F1235;
-  --paragraph: #1B1425;
+  --background: #ffffff;
+  --background-secondary: #e2daeb;
+  --headline: #1f1235;
+  --paragraph: #1b1425;
   --text-primary: #111013;
   --text-secondary: #2a2a2a;
-  --button: #FF6E6C;
-  --button-text: #1F1235;
-  --accent: #FF6E6C;
-  --toggle-text: "Dark Mode";
+  --button: #ff6e6c;
+  --button-text: #1f1235;
+  --accent: #ff6e6c;
+  --toggle-text: 'Dark Mode';
 }
 
-[data-theme="dark"] {
-  --background: #301E4E;
+[data-theme='dark'] {
+  --background: #301e4e;
   --background-secondary: #463366;
-  --headline: #FFFFFE;
-  --paragraph: #B8C1EC;
-  --text-primary: #FFFFFE;
-  --text-secondary: #B8C1EC;
-  --button: #EEBBC3;
-  --button-text: #1B1425;
-  --accent: #EEBBC3;
-  --toggle-text: "Light Mode";
+  --headline: #fffffe;
+  --paragraph: #b8c1ec;
+  --text-primary: #fffffe;
+  --text-secondary: #b8c1ec;
+  --button: #eebbc3;
+  --button-text: #1b1425;
+  --accent: #eebbc3;
+  --toggle-text: 'Light Mode';
 }
 
 /* Color classes */
 .bg-primary {
   transition: all 0.5s;
-  background-color:var(--background);
+  background-color: var(--background);
 }
 
 .bg-secondary {
-  background-color:var(--background-secondary);
+  background-color: var(--background-secondary);
 }
 
 .text-primary {
@@ -62,7 +62,7 @@
 }
 
 body {
-  background-color:var(--background);
+  background-color: var(--background);
   transition: all 0.5s;
 }
 

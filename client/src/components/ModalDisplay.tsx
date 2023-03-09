@@ -1,26 +1,18 @@
 import { useState } from 'react';
 import Modal from 'react-modal';
 import CarouselSlider from './CarouselSlider';
-import StarRatings from 'react-star-ratings';
 import ReactCountryFlag from 'react-country-flag';
-
-// Set Modal to root
-Modal.setAppElement('#root');
-
-const [modalIsOpen, setModalIsOpen] = useState(false);
-
-export function openModal() {
-  setModalIsOpen(true);
-}
+import StarRatings from 'react-star-ratings';
 
 function ModalDisplay(props: any) {
   function closeModal() {
-    setModalIsOpen(false);
+    console.log('closeModal called');
+    props.setShowModal(false);
   }
 
   return (
     <Modal
-      isOpen={modalIsOpen}
+      isOpen={true}
       onRequestClose={closeModal}
       contentLabel="Cat information"
     >

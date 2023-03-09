@@ -1,6 +1,6 @@
-import "./Landing.css";
-import Button from "../components/Button";
-import FadeInChildren from "../components/FadeInChildren";
+import './Landing.css';
+import Button from '../components/Button';
+import FadeInChildren from '../components/FadeInChildren';
 
 const Landing = () => {
   return (
@@ -18,11 +18,12 @@ const Landing = () => {
                 eiusmod tempor incididunt ut labore et dolore magna aliqua.
               </p>
             </FadeInChildren>
-
           </div>
           {/* The div will be replaced to an image */}
           <div className="bg-slate-100 relative h-96 row-span-2 lg:static xl:pl-10 col-span-3"></div>
-          <Button title={"Start free trial"} />
+          <FadeInChildren>
+            <Button title={'Start free trial'} />
+          </FadeInChildren>
         </div>
       </section>
       <section className="bg-secondary" id="landing-second-section">

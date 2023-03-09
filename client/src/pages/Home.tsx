@@ -1,20 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
-import LazyLoad from 'react-lazy-load';
 import { TailSpin } from 'react-loader-spinner';
-import Modal from 'react-modal';
-import ReactCountryFlag from 'react-country-flag';
-import StarRatings from 'react-star-ratings';
 import { CatBreed } from '../types/cat';
-import CarouselSlider from '../components/CarouselSlider';
 import SearchBar from '../components/SearchBar';
-
-// Set Modal to root
-Modal.setAppElement('#root');
 
 function Encyclopedia() {
   const [catBreeds, setCatBreeds] = useState<CatBreed[]>([]);
   const [catBreed, setCatBreed] = useState<CatBreed>();
-  const [modal, setModal] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>('');
 
@@ -65,41 +56,6 @@ function Encyclopedia() {
     }
   }, []);
 
-  const catBreedInformation = async (id: string) => {
-    try {
-      catBreeds.map((cat: CatBreed) => {
-        if (cat._id === id) {
-          setCatBreed(cat);
-        }
-      });
-    } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message);
-      }
-      console.log(error);
-    }
-  };
-
-  const getRandomCat = () => {
-    try {
-      openModal(catBreeds[Math.floor(Math.random() * catBreeds.length)]);
-    } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message);
-      }
-      console.log(error);
-    }
-  };
-
-  const openModal = (selectedCat: CatBreed) => {
-    setModal(true);
-    catBreedInformation(selectedCat._id);
-  };
-
-  const closeModal = () => {
-    setModal(false);
-  };
-
   useEffect(() => {
     fetchData();
   }, []);
@@ -129,7 +85,7 @@ function Encyclopedia() {
   }
 
   return (
-    <div>
+    <div className="w-full h-full">
       <h1 className="mb-4 mt-10">Encyclopedia</h1>
       <br />
       <div className="mt-4 mb-14 w-10/12 mx-auto">

@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import Button from './Button';
-import ModalDisplay, { openModal } from './ModalDisplay';
+import ModalDisplay from './ModalDisplay';
 
 function RandomBreedButton(props: any) {
   const [breed, setBreed] = useState({});
+  const [showModal, setShowModal] = useState(false);
 
   function getRandomBreed() {
+    setShowModal(true);
     const randomCat =
       props.breeds[Math.floor(Math.random() * props.breeds.length)];
     setBreed(randomCat);
@@ -14,6 +16,7 @@ function RandomBreedButton(props: any) {
   return (
     <>
       <Button title="Random Cat" onclick={getRandomBreed} />
+      {showModal && <ModalDisplay {...breed} setShowModal={setShowModal} />}
     </>
   );
 }
