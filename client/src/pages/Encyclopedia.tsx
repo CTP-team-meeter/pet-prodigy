@@ -85,7 +85,7 @@ function Encyclopedia() {
 
   return (
     <div className="w-full h-full">
-      <h1 className="mb-4 mt-10">Encyclopedia</h1>
+      <h1 className="mb-4">Encyclopedia</h1>
       <br />
       <div className="mt-4 mb-14 w-10/12 mx-auto">
         <SearchBar breeds={catBreeds} />

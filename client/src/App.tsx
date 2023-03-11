@@ -3,6 +3,7 @@ import Home from './pages/Encyclopedia';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Landing from './pages/Landing';
+import Map from './pages/Map';
 import Navbar from './components/Navbar';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import useLocalStorage from 'use-local-storage';
@@ -24,6 +25,7 @@ function App() {
           <Route path="/" element={<Landing />} />
           <Route path="/encyclopedia" element={<Home />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/map" element={<Map />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/" element={<Landing />} />
         </Routes>

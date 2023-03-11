@@ -18,10 +18,6 @@
   color: aqua !important;
 }
 
-.checked {
-  color: aqua;
-}
-
 .ReactModal__Overlay {
   background-color: rgba(30, 28, 28, 0.9) !important;
   transition: 200ms ease-in-out !important;

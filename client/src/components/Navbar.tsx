@@ -9,7 +9,7 @@ function Navbar({ themeToggle }: any) {
   return (
     <nav
       id="navbar"
-      className="w-full sticky top-0 bg-slate-800 flex justify-around rounded-b-lg z-50"
+      className="w-full sticky top-0 bg-slate-800 flex justify-around rounded-b-lg z-50 mb-10"
     >
       <div className="nav__logo">
         <NavLink to="/">
@@ -40,6 +40,13 @@ function Navbar({ themeToggle }: any) {
           to="/login"
         >
           Login
+        </NavLink>
+        <NavLink
+          style={{ padding: '0 10px' }}
+          className={({ isActive }) => (isActive ? 'active' : '')}
+          to="/map"
+        >
+          Find Pet Stores
         </NavLink>
 
         {/* This toggle icon to be replaced with an image */}
