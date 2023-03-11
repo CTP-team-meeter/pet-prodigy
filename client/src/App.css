@@ -15,7 +15,7 @@
 }
 
 .active {
-  color: aqua;
+  color: aqua !important;
 }
 
 .checked {

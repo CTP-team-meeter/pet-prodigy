@@ -1,5 +1,5 @@
 import './App.css';
-import Home from './pages/Home';
+import Home from './pages/Encyclopedia';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Landing from './pages/Landing';
@@ -19,12 +19,13 @@ function App() {
   return (
     <div className="App bg-primary text-primary" data-theme={theme}>
       <Router>
-        <Navbar themeToggle={themeToggle}/>
+        <Navbar themeToggle={themeToggle} />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Landing />} />
+          <Route path="/encyclopedia" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/landing" element={<Landing />} />
+          <Route path="/" element={<Landing />} />
         </Routes>
       </Router>
     </div>
