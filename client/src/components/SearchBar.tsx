@@ -13,8 +13,6 @@ function SearchBar(props: any) {
     setFilteredBreeds(filtered);
   }, [props.breeds, search]);
 
-  console.log(props);
-
   return (
     <div>
       <input
