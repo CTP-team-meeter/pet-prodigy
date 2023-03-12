@@ -49,10 +49,10 @@ function Map() {
     if (map && isLoaded) {
       const placesService = new window.google.maps.places.PlacesService(map);
       const request = {
-        location: map.getCenter(),
+        location: position,
         radius: 30000,
         keyword: 'pet store',
-      };
+      } as google.maps.places.PlaceSearchRequest;
 
       placesService.nearbySearch(request, (results: any, status) => {
         if (status === window.google.maps.places.PlacesServiceStatus.OK) {
@@ -60,8 +60,7 @@ function Map() {
         }
       });
     }
-  }, [map, isLoaded]);
-
+  }, [map, isLoaded, position]);
   // Load the map
   const onLoad = (map: google.maps.Map) => {
     setMap(map);
