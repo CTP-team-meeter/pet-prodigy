@@ -12,11 +12,6 @@ const containerStyle = {
   height: '600px',
 };
 
-const mapStyle = {
-  height: '100%',
-  width: '100%',
-};
-
 function Map() {
   const [map, setMap] = useState(null);
   const [places, setPlaces] = useState([]);
@@ -45,8 +40,7 @@ function Map() {
       const request = {
         location: map.getCenter(),
         radius: 5000,
-        keyword:
-          'pet store, pet supply, pet shelter, pet grooming, pet hospital, pet clinic, pet boarding, pet training, pet food, pet accessories, pet store near me, pet supply near me, pet shelter near me, pet grooming near me, pet hospital near me, pet clinic near me, pet boarding near me, pet training near me, pet food near me, pet accessories near me',
+        keyword: 'pet store',
       };
 
       placesService.nearbySearch(request, (results, status) => {
@@ -94,13 +88,9 @@ function Map() {
             <GoogleMap
               mapContainerStyle={containerStyle}
               center={{ lat: position?.lat, lng: position?.lng }}
-              zoom={18}
+              zoom={15}
               onLoad={onLoad}
               onUnmount={onUnmount}
-              options={{
-                disableDefaultUI: true,
-                zoomControl: true,
-              }}
             >
               {places.map((place) => (
                 <Marker
@@ -114,17 +104,17 @@ function Map() {
             onLoad={onAutocompleteLoad}
             onPlaceChanged={onPlaceChanged}
           >
-            <div className="w-80 mx-auto mt-4">
+            <div className="w-6/12 mx-auto ">
               <input
                 type="text"
                 placeholder="Enter a location"
-                className="w-full border rounded-md px-3 py-2 flex-1"
+                className="w-full border rounded-md px-3 py-2 mt-4 mx-auto bg-white placeholder-black"
               />
             </div>
           </Autocomplete>
         </>
       ) : (
-        <div className="mt-40">
+        <div className="mt-40 flex justify-center">
           <TailSpin color="#00BFFF" height={100} width={100} />
         </div>
       )}
