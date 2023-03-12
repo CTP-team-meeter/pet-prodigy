@@ -1,7 +1,3 @@
-import React from 'react';
-import Home from '../pages/Encyclopedia';
-import Login from '../pages/Login';
-import Signup from '../pages/Signup';
 import { NavLink } from 'react-router-dom';
 import Button from './Button';
 import './Navbar.css';
@@ -21,29 +17,45 @@ function Navbar({ themeToggle }: any) {
 
       <div className="nav__links flex items-center">
         <NavLink
-          style={{ padding: '0 10px' }}
-          className={({ isActive }) => (isActive ? 'active' : '')}
+          style={{
+            margin: '0 15px',
+            padding: '8px 10px',
+            borderRadius: '5px',
+          }}
+          className={({ isActive }) => (isActive ? 'bg-primary' : '')}
           to="/"
         >
           Home
         </NavLink>
         <NavLink
-          style={{ padding: '0 10px' }}
-          className={({ isActive }) => (isActive ? 'active' : '')}
+          style={{
+            margin: '0 15px',
+            padding: '8px 10px',
+            borderRadius: '5px',
+          }}
+          className={({ isActive }) => (isActive ? 'bg-primary' : '')}
           to="/encyclopedia"
         >
           Encyclopedia
         </NavLink>
         <NavLink
-          style={{ padding: '0 10px' }}
-          className={({ isActive }) => (isActive ? 'active' : '')}
+          style={{
+            margin: '0 15px',
+            padding: '8px 10px',
+            borderRadius: '5px',
+          }}
+          className={({ isActive }) => (isActive ? 'bg-primary' : '')}
           to="/login"
         >
           Login
         </NavLink>
         <NavLink
-          style={{ padding: '0 10px' }}
-          className={({ isActive }) => (isActive ? 'active' : '')}
+          style={{
+            margin: '0 15px',
+            padding: '8px 10px',
+            borderRadius: '5px',
+          }}
+          className={({ isActive }) => (isActive ? 'bg-primary' : '')}
           to="/map"
         >
           Find Pet Stores
@@ -54,8 +66,11 @@ function Navbar({ themeToggle }: any) {
           ☼
         </div>
         <NavLink
-          style={{ padding: '0 10px' }}
-          className={({ isActive }) => (isActive ? 'active' : '')}
+          style={{
+            margin: '0 15px',
+            padding: '8px 10px',
+            borderRadius: '5px',
+          }}
           to="/signup"
         >
           <Button title={'Signup'} />

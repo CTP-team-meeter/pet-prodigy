@@ -14,10 +14,6 @@
   font-family: 'Unbounded', cursive;
 }
 
-.active {
-  color: aqua !important;
-}
-
 .ReactModal__Overlay {
   background-color: rgba(30, 28, 28, 0.9) !important;
   transition: 200ms ease-in-out !important;
