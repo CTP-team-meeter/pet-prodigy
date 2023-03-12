@@ -39,7 +39,7 @@ function Map() {
       const placesService = new window.google.maps.places.PlacesService(map);
       const request = {
         location: map.getCenter(),
-        radius: 5000,
+        radius: 30000,
         keyword: 'pet store',
       };
 
