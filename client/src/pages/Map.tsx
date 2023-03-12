@@ -7,25 +7,35 @@ import {
 } from '@react-google-maps/api';
 import { TailSpin } from 'react-loader-spinner';
 
-const containerStyle = {
-  width: '1024px',
-  height: '600px',
-};
+interface Position {
+  lat: number;
+  lng: number;
+}
 
 function Map() {
-  const [map, setMap] = useState(null);
-  const [places, setPlaces] = useState([]);
-  const [position, setPosition] = useState(null);
-  const [autocomplete, setAutocomplete] = useState(null);
+  const [map, setMap] = useState<google.maps.Map | null>(null);
+  const [places, setPlaces] = useState<google.maps.places.PlaceResult[]>([]);
+  const [position, setPosition] = useState<Position | null>(null);
+  const [autocomplete, setAutocomplete] =
+    useState<google.maps.places.Autocomplete | null>(null);
+
+  /// isLoaded loads the google maps api
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
+    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY as string,
     libraries: ['places'],
   });
 
+  // Width and height of the map
+  const containerStyle = {
+    width: 1024,
+    height: 600,
+  };
+
+  // Get the user's current location
   useEffect(() => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
+      navigator.geolocation?.getCurrentPosition((position) => {
         setPosition({
           lat: position.coords.latitude,
           lng: position.coords.longitude,
@@ -34,6 +44,7 @@ function Map() {
     }
   }, []);
 
+  // Get the nearby pet stores
   useEffect(() => {
     if (map && isLoaded) {
       const placesService = new window.google.maps.places.PlacesService(map);
@@ -43,7 +54,7 @@ function Map() {
         keyword: 'pet store',
       };
 
-      placesService.nearbySearch(request, (results, status) => {
+      placesService.nearbySearch(request, (results: any, status) => {
         if (status === window.google.maps.places.PlacesServiceStatus.OK) {
           setPlaces(results);
         }
@@ -51,21 +62,26 @@ function Map() {
     }
   }, [map, isLoaded]);
 
-  const onLoad = (map) => {
+  // Load the map
+  const onLoad = (map: google.maps.Map) => {
     setMap(map);
   };
 
+  // Unload the map
   const onUnmount = () => {
     setMap(null);
   };
 
+  // Search for a location
   const onPlaceChanged = () => {
     if (autocomplete !== null) {
-      const place = autocomplete.getPlace();
-      if (place.geometry) {
+      const place = autocomplete?.getPlace();
+      if (place?.geometry?.location) {
         setMap((current) => {
-          current.panTo(place.geometry.location);
-          current.setZoom(15);
+          (current as google.maps.Map).panTo(
+            place.geometry?.location as google.maps.LatLng
+          );
+          (current as google.maps.Map).setZoom(15);
           return current;
         });
       } else {
@@ -76,18 +92,20 @@ function Map() {
     }
   };
 
-  const onAutocompleteLoad = (autocomplete) => {
+  const onAutocompleteLoad = (autocomplete: any) => {
     setAutocomplete(autocomplete);
   };
 
   return (
-    <div className="">
+    <div>
       {isLoaded ? (
         <>
           <div className="flex justify-center ">
             <GoogleMap
               mapContainerStyle={containerStyle}
-              center={{ lat: position?.lat, lng: position?.lng }}
+              center={
+                position ? { lat: position.lat, lng: position.lng } : undefined
+              }
               zoom={15}
               onLoad={onLoad}
               onUnmount={onUnmount}
@@ -95,7 +113,7 @@ function Map() {
               {places.map((place) => (
                 <Marker
                   key={place.place_id}
-                  position={place.geometry.location}
+                  position={place.geometry?.location as google.maps.LatLng}
                 />
               ))}
             </GoogleMap>
@@ -108,7 +126,7 @@ function Map() {
               <input
                 type="text"
                 placeholder="Enter a location"
-                className="w-full border rounded-md px-3 py-2 mt-4 mx-auto bg-white placeholder-black"
+                className="w-full border rounded-md px-3 py-2 mt-4 mx-auto bg-white text-black placeholder-black"
               />
             </div>
           </Autocomplete>
