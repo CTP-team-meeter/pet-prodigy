@@ -4,6 +4,7 @@ import {
   useJsApiLoader,
   Marker,
   Autocomplete,
+  InfoWindow,
 } from '@react-google-maps/api';
 import { TailSpin } from 'react-loader-spinner';
 
@@ -21,8 +22,8 @@ function Map() {
   const [position, setPosition] = useState<Position | null>(null);
   const [autocomplete, setAutocomplete] =
     useState<google.maps.places.Autocomplete | null>(null);
-
-  /// isLoaded loads the google maps api
+  const [selectedPlace, setSelectedPlace] =
+    useState<google.maps.places.PlaceResult | null>(null);
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY as string,
@@ -124,8 +125,22 @@ function Map() {
                 <Marker
                   key={place.place_id}
                   position={place.geometry?.location as google.maps.LatLng}
+                  onClick={() => setSelectedPlace(place)}
                 />
               ))}
+              {selectedPlace && (
+                <InfoWindow
+                  position={
+                    selectedPlace.geometry?.location as google.maps.LatLng
+                  }
+                  onCloseClick={() => setSelectedPlace(null)}
+                >
+                  <div className="text-black">
+                    <h2>{selectedPlace.name}</h2>
+                    <p>{selectedPlace.vicinity}</p>
+                  </div>
+                </InfoWindow>
+              )}
             </GoogleMap>
           </div>
           <Autocomplete

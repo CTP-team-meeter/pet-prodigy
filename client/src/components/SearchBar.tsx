@@ -22,8 +22,13 @@ function SearchBar(props: any) {
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
+      {/* render the RandomBreedButton component */}
+      <RandomBreedButton {...props} />
       {/* render the filteredBreeds array */}
-      <div className=" bg-slate-900 p-4 border-2 rounded-lg grid xl:grid-cols-4 lg:grid-cols-3 gap-4 text-center">
+      <div
+        style={{ backgroundColor: '#463366' }}
+        className="p-4 border-2 rounded-lg grid xl:grid-cols-4 lg:grid-cols-3 gap-4 text-center"
+      >
         {filteredBreeds.map((breed) => (
           <BreedImages {...breed} />
         ))}
