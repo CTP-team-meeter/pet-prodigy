@@ -136,7 +136,7 @@ function Map() {
                   onCloseClick={() => setSelectedPlace(null)}
                 >
                   <div className="text-black">
-                    <h2>{selectedPlace.name}</h2>
+                    <h2 className="font-bold">{selectedPlace.name}</h2>
                     <p>{selectedPlace.vicinity}</p>
                     <p>Rating: {selectedPlace.rating}</p>
                   </div>
