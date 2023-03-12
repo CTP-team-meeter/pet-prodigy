@@ -12,6 +12,9 @@ interface Position {
   lng: number;
 }
 
+// Variable has to be called outside of the component to prevent LoadScript Warning
+const libraries = ['places'];
+
 function Map() {
   const [map, setMap] = useState<google.maps.Map | null>(null);
   const [places, setPlaces] = useState<google.maps.places.PlaceResult[]>([]);
@@ -23,7 +26,7 @@ function Map() {
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY as string,
-    libraries: ['places'],
+    libraries: libraries as any,
   });
 
   // Width and height of the map
@@ -48,8 +51,15 @@ function Map() {
   useEffect(() => {
     if (map && isLoaded) {
       const placesService = new window.google.maps.places.PlacesService(map);
+
+      // Define a default location to use if position is null
+      const defaultLocation = new window.google.maps.LatLng(37.7749, -122.4194);
+
+      // Create the request, using defaultLocation if position is null
       const request = {
-        location: position,
+        location: position
+          ? new window.google.maps.LatLng(position.lat, position.lng)
+          : defaultLocation,
         radius: 30000,
         keyword: 'pet store',
       } as google.maps.places.PlaceSearchRequest;
@@ -61,6 +71,7 @@ function Map() {
       });
     }
   }, [map, isLoaded, position]);
+
   // Load the map
   const onLoad = (map: google.maps.Map) => {
     setMap(map);
