@@ -16,7 +16,7 @@ function SearchBar(props: any) {
   return (
     <div>
       <input
-        className="w-8/12 p-2 border-2 mb-4 mr-3 rounded-lg"
+        className="bg-primary w-8/12 p-2 border-2 mb-4 mr-3 rounded-lg"
         type="text"
         placeholder="Search..."
         value={search}
