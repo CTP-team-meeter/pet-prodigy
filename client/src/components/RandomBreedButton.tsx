@@ -15,7 +15,7 @@ function RandomBreedButton(props: any) {
 
   return (
     <>
-      <Button title="Random Cat" onclick={getRandomBreed} />
+      <Button title="Random Pet" onclick={getRandomBreed} />
       {showModal && <ModalDisplay {...breed} setShowModal={setShowModal} />}
     </>
   );

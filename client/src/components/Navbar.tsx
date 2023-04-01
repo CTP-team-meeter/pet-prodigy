@@ -9,7 +9,7 @@ function Navbar({ themeToggle }: any) {
     >
       <div className="nav__logo">
         <NavLink to="/">
-          <h1 className="text-3xl p-2 text-white hover:text-gray-300">
+          <h1 className="text-3xl p-2 text-primary hover:text-gray-300">
             Pet Prodigy
           </h1>
         </NavLink>
@@ -73,7 +73,7 @@ function Navbar({ themeToggle }: any) {
           }}
           to="/signup"
         >
-          <Button title={'Signup'} />
+          <Button title={'Sign Up'} />
         </NavLink>
       </div>
     </nav>

@@ -1,7 +1,7 @@
-GET http://localhost:8080/api/catBreeds
+GET https://api.thedogapi.com/v1/breeds
       
 ###
-GET  http://localhost:8080/api/catBreeds/
+GET  https://api.thecatapi.com/v1/breeds
 
 ###
 POST http://localhost:8080/api/catBreeds/

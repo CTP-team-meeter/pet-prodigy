@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* Color palate */
 :root {
   --background: #ffffff;
@@ -39,7 +43,6 @@
   color: var(--text-primary);
 }
 
-/* Ect */
 * {
   margin: 0;
   padding: 0;

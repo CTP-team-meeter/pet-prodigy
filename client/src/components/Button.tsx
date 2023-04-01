@@ -15,15 +15,17 @@ const Button = ({
   width,
   transparent,
   onclick,
+  className,
 }: {
   title: string;
-  width?: number;
+  width?: any;
   transparent?: boolean;
   onclick?: any;
+  className?: any;
 }) => {
   return (
     <button
-      className="button"
+      className={`button ${className}`}
       onClick={onclick}
       data-transparent={transparent}
       style={{ width: width }}

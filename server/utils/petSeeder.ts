@@ -1,8 +1,8 @@
 exports.seedPet = async (model: any) => {
   const res = await fetch('https://api.thecatapi.com/v1/breeds', {
-    // headers: {
-    //   'x-api-key': process.env.CAT_API_KEY || '',
-    // },
+    headers: {
+      'x-api-key': process.env.VITE_CAT_API_KEY || '',
+    },
   });
   const data = await res.json();
   model.collection.drop();
@@ -11,7 +11,7 @@ exports.seedPet = async (model: any) => {
       `https://api.thecatapi.com/v1/images/search?limit=5&breed_ids=${cat.id}`,
       {
         headers: {
-          'x-api-key': process.env.CAT_API_KEY || '',
+          'x-api-key': process.env.VITE_CAT_API_KEY || '',
         },
       }
     );
@@ -45,8 +45,8 @@ exports.seedPet = async (model: any) => {
     newCat.save((err: any, res: any) => {
       console.log(err);
       console.log(res);
-      if(!err){
-        console.log("Seeding completed");
+      if (!err) {
+        console.log('Seeding completed');
       }
     });
   });

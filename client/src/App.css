@@ -1,17 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@300&display=swap');
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 .App {
-  min-height: 100vh;
-}
-
-#root {
-  margin: 0 auto;
   text-align: center;
   font-family: 'Unbounded', cursive;
+  width: 100% !important;
+  height: 100%;
 }
 
 .ReactModal__Overlay {

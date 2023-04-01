@@ -103,6 +103,7 @@ function Map() {
     }
   };
 
+  // Load the autocomplete
   const onAutocompleteLoad = (autocomplete: any) => {
     setAutocomplete(autocomplete);
   };

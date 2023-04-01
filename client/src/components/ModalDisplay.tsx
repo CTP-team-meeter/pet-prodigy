@@ -207,7 +207,7 @@ function ModalDisplay(props: any) {
         <br />
       </div>
       <div>
-        <p className="xl:mt-32 mt-10">
+        <p className="xl:mt-14 mt-10">
           <span className="text-lg font-bold">Description:&nbsp;</span>
           {props?.description}
         </p>

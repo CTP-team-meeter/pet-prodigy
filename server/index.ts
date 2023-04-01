@@ -36,10 +36,17 @@ db.once('open', () => {
   console.log('Connected to MongoDB');
 });
 
-const CatBread = require('./models/catBreed');
-CatBread.count((err:any, count:any) => {
+const CatBreed = require('./models/catBreed');
+CatBreed.count((err: any, count: any) => {
   if (!err && count === 0) {
-    seedPet(CatBread);
+    seedPet(CatBreed);
+  }
+});
+
+const DogBreed = require('./models/dogBreed');
+DogBreed.count((err: any, count: any) => {
+  if (!err && count === 0) {
+    seedPet(DogBreed);
   }
 });
 
