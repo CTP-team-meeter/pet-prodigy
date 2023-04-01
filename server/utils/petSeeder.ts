@@ -53,7 +53,7 @@ exports.seedPet = async (model: any) => {
 
   const res2 = await fetch('https://api.thedogapi.com/v1/breeds', {
     headers: {
-      'x-api-key': process.env.CAT_API_KEY || '',
+      'x-api-key': process.env.DOG_API_KEY || '',
     },
   });
   const data2 = await res2.json();
