@@ -50,4 +50,38 @@ exports.seedPet = async (model: any) => {
       }
     });
   });
+
+  const res2 = await fetch('https://api.thedogapi.com/v1/breeds', {
+    headers: {
+      'x-api-key': process.env.CAT_API_KEY || '',
+    },
+  });
+  const data2 = await res2.json();
+  data2.forEach(async (dog: any) => {
+    const imgRes = await fetch(
+      `https://api.thedogapi.com/v1/images/search?limit=5&breed_ids=${dog.id}`,
+      {
+        headers: {
+          'x-api-key': `${process.env.VITE_DOG_API_KEY}` || '',
+        },
+      }
+    );
+    const images = await imgRes.json();
+    const newDog = new model({
+      name: dog.name,
+      alt_names: dog.alt_names,
+      imageURLs: images,
+      origin: dog.origin,
+      country_code: dog.country_code,
+      life_span: dog.life_span,
+      temperament: dog.temperament,
+    });
+    newDog.save((err: any, res: any) => {
+      console.log(err);
+      console.log(res);
+      if (!err) {
+        console.log('Seeding completed');
+      }
+    });
+  });
 };
