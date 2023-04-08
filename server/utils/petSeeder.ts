@@ -1,4 +1,6 @@
 exports.seedPet = async (model: any) => {
+  console.log(model.collection.collectionName);
+  if(model.collection.collectionName === "catbreeds") {
   const res = await fetch('https://api.thecatapi.com/v1/breeds', {
     headers: {
       'x-api-key': process.env.VITE_CAT_API_KEY || '',
@@ -50,6 +52,7 @@ exports.seedPet = async (model: any) => {
       }
     });
   });
+} else if(model.collection.collectionName === "dogbreeds"){
 
   const res2 = await fetch('https://api.thedogapi.com/v1/breeds', {
     headers: {
@@ -84,4 +87,5 @@ exports.seedPet = async (model: any) => {
       }
     });
   });
+}
 };
