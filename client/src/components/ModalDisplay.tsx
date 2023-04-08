@@ -3,6 +3,8 @@ import CarouselSlider from './CarouselSlider';
 import ReactCountryFlag from 'react-country-flag';
 import StarRatings from 'react-star-ratings';
 
+Modal.setAppElement('#root');
+
 function ModalDisplay(props: any) {
   function closeModal() {
     props.setShowModal(false);
@@ -63,8 +65,11 @@ function ModalDisplay(props: any) {
               </div>
               <div className="xl:justify-start lg:justify-start sm:justify-center">
                 <h1 className="flex flex-wrap justify-center mt-10 xl:justify-start lg:justify-start ">
-                  {props?.temperament.map((temp: string) => (
-                    <span className="text-xs bg-cyan-600 rounded-lg p-2 mb-3 mr-2 break-all">
+                  {props?.temperament.map((temp: string, index: any) => (
+                    <span
+                      key={index}
+                      className="text-xs bg-cyan-600 rounded-lg p-2 mb-3 mr-2 break-all"
+                    >
                       {temp}
                     </span>
                   ))}
