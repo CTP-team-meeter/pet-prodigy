@@ -6,9 +6,13 @@
 ### Front-end
 ```
 cd client
+cp .env_template .env
 npm install
 npm run dev
 ```
+Client accepts the following environment variables:
+- `VITE_GOOGLE_MAPS_API_KEY` to enable Google Maps API
+#### Environment variavle
 ### Database
 - Install mongoDB following the instruction 
 https://www.mongodb.com/docs/manual/administration/install-community/
@@ -21,3 +25,10 @@ cp .env_template .env
 npm install
 npm run dev
 ```
+Server accepts the following environment variables:
+- `DATABASE_URL` The URL for MongoDB database
+- `PORT` to choose which port for the application. Default: 8080
+- `TOKEN_SECRET` to encrypt JWT
+- `SALT` is used for password hashing by bcrypt
+- `CAT_API_KEY` to use Cat API
+- `DOG_API_KEY` to use Dog API
