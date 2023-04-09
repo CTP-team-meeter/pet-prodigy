@@ -2,7 +2,10 @@
 ## Links
 - [API Docs](https://github.com/CTP-team-meeter/pet-prodigy/blob/main/server/API_DOCS.md)
 - [Scrum board](https://petprodigy.atlassian.net/jira/software/projects/PP/boards/1)
+
 ## How to setup your local
+### Prerequisite
+Install [node](https://nodejs.org/en/download) 18.x
 ### Front-end
 ```
 cd client
