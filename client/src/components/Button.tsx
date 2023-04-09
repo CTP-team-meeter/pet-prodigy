@@ -1,4 +1,4 @@
-import './Button.css';
+import "./Button.css";
 /*
 This is a functional React component called "Button" that takes three props:
 1. "title": A string that represents the text that will be displayed on the button.
@@ -16,19 +16,39 @@ const Button = ({
   transparent,
   onclick,
   className,
+  size,
 }: {
   title: string;
-  width?: any;
+  width?: string | number;
   transparent?: boolean;
+  size?: "sm" | "md" | "lg";
   onclick?: any;
   className?: any;
 }) => {
+  // set css properties that are generally applied 
+  let styleObj: React.CSSProperties = { 
+    width: width,
+  };
+  if (size === "lg") {
+    styleObj = {
+      ...styleObj,
+      padding: "8px 39px",
+      fontSize: "18px",
+    };
+  } else if (size === "sm") {
+    styleObj = {
+      ...styleObj,
+      padding: "2px 24px",
+      fontSize: "12px",
+    };
+  }
+
   return (
     <button
       className={`button ${className}`}
       onClick={onclick}
       data-transparent={transparent}
-      style={{ width: width }}
+      style={styleObj}
     >
       {title}
     </button>
