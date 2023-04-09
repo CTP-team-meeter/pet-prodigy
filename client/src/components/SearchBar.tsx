@@ -5,7 +5,6 @@ import RandomBreedButton from './RandomBreedButton';
 function SearchBar(props: any) {
   const [search, setSearch] = useState<string>('');
   const [filteredBreeds, setFilteredBreeds] = useState<any[]>([]);
-  const [filterBy, setFilterBy] = useState<string>('name');
 
   useEffect(() => {
     const filtered = props.breeds.filter((breed: any) =>
@@ -15,8 +14,6 @@ function SearchBar(props: any) {
   }, [props.breeds, search]);
 
   const handleFilter = (e: any) => {
-    setFilterBy(e.target.value);
-
     if (e.target.value === 'Name') {
       const filtered = props.breeds.filter((breed: any) =>
         breed.name.toLowerCase().includes(search.toLowerCase())
@@ -57,8 +54,8 @@ function SearchBar(props: any) {
       <RandomBreedButton {...props} />
       {/* render the filteredBreeds array */}
       <div className="p-4 w-10/12 mx-auto grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4 justfify-center text-center">
-        {filteredBreeds.map((breed) => (
-          <BreedImages {...breed} />
+        {filteredBreeds.map((breed, index) => (
+          <BreedImages key={index} {...breed} />
         ))}
       </div>
     </div>
