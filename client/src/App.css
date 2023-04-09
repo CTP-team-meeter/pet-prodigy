@@ -2,9 +2,14 @@
 
 .App {
   text-align: center;
-  font-family: 'Unbounded', cursive;
+  /* Affects to search inputbox, dropdown(name,cat,dog), name on the card on Encyclopedia page */
+  /* font-family: 'Unbounded', cursive; */
   width: 100% !important;
-  height: 100%;
+  min-height: 100vh;
+}
+
+#SignupPage {
+  height: 75vh;
 }
 
 .ReactModal__Overlay {

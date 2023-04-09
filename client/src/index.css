@@ -16,6 +16,10 @@
   --toggle-text: 'Dark Mode';
 }
 
+.App {
+  min-height: 100vh;
+}
+
 [data-theme='dark'] {
   --background: #301e4e;
   --background-secondary: #463366;
