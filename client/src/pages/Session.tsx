@@ -1,21 +1,16 @@
 import { useEffect, useState } from "react";
 
-
 function Session() {
-    const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
 
-    const handleLogin = () => {
-        
+  const handleLogin = () => {
+    useEffect(() => {}, []);
 
-    useEffect(() => {
-        
-    }, []);
-
-
-  return <div>
-    <h1>Session</h1>
-
-    </div>;
+    return (
+      <div>
+        <h1>Session</h1>
+      </div>
+    );
+  };
 }
-
 export default Session;
