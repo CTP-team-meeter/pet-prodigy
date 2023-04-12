@@ -24,4 +24,12 @@ jobs:
           context: ./server
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/pet_prodigy_server:latest
+      
+      - name: Build and push Client
+        uses: docker/build-push-action@v4
+        with:
+          file: ./client/Dockerfile
+          context: ./client
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/pet_prodigy_client:latest
 
