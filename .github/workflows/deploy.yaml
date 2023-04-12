@@ -20,6 +20,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           file: ./server/Dockerfile
+          context: .
           push: true
-          tags: shino022/pet_prodigy_server:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/pet_prodigy_server:latest
 
