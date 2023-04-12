@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { TailSpin } from 'react-loader-spinner';
 import { Breed } from '../types/breed';
 import SearchBar from '../components/SearchBar';
-
+import { getApiUrl } from '../util/util';
 function Encyclopedia() {
   const [breeds, setBreeds] = useState<Breed[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -10,7 +10,8 @@ function Encyclopedia() {
 
   const fetchCatData = useCallback(async () => {
     try {
-      const response = await fetch('api/catBreeds');
+
+      const response = await fetch(getApiUrl('catBreeds'));
       const data = await response.json();
 
       const catData: Breed[] = data.map((cat: Breed) => {
@@ -55,7 +56,7 @@ function Encyclopedia() {
 
   const fetchDogData = useCallback(async () => {
     try {
-      const response = await fetch('api/dogBreeds');
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_HOST}/api/dogBreeds`);
       const data = await response.json();
 
       const dogData: Breed[] = data.map((dog: Breed) => {
