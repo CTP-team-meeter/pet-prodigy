@@ -26,9 +26,3 @@ jobs:
           push: true
           tags: shino022/pet_prodigy_server:latest
 
-      - name: Build and push client
-        uses: docker/build-push-action@v4
-        with:
-          context: ./client
-          push: true
-          tags: shino022/pet_prodigy_client:latest
