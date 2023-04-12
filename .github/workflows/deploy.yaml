@@ -17,10 +17,9 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build and push server
-        uses: docker/build-push-action@v4
-        with:
-          file: ./server/Dockerfile
-          context: ./server
-          push: true
-          tags: shino022/pet_prodigy_server:latest
+        run: |
+         cd ./server
+         docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/pet_prodigy_server:latest
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/pet_prodigy_server:latest
+
 
