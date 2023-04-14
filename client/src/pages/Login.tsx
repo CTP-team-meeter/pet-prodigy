@@ -1,6 +1,7 @@
-import { useState } from 'react';
-import Button from '../components/Button';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { getApiUrl } from '../util/util';
+import Button from '../components/Button';
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -20,7 +21,7 @@ function Login() {
     e.preventDefault();
 
     // Send data to server
-    const response = await fetch('/api/login', {
+    const response = await fetch(getApiUrl('login'), {
       method: 'POST',
       body: JSON.stringify({ username, password }),
       headers: {
@@ -48,51 +49,57 @@ function Login() {
   };
 
   return (
-    <div className="w-3/12 py-10 h-fit bg-secondary mx-auto rounded-lg shadow-inner">
-      <img className="w-24 mx-auto mb-10" src="./logo.png" alt="login" />
-      {error && (
-        <p className="w-96 mx-auto text-red-500 font-bold text-lg text-center mb-5">
-          {error}
+    <div id="LoginPage" className="grid">
+      <div className="w-3/12 py-10 h-fit bg-secondary mx-auto rounded-lg shadow-inner">
+        <img className="w-24 mx-auto mb-10" src="./logo.png" alt="login" />
+        {error && (
+          <p className="w-96 mx-auto text-red-500 font-bold text-lg text-center mb-5">
+            {error}
+          </p>
+        )}
+        <form action="/" method="POST" onSubmit={handleSubmit}>
+          <div className="flex justify-center">
+            <img
+              className="w-8 h-8 mr-3"
+              src="./user_logo.png"
+              alt="username"
+            />
+            <input
+              onChange={handleChange}
+              className="sm:w-3/5 w-32 h-9 p-4 mb-3 sm:text-lg text-sm text-white rounded-md"
+              type="text"
+              placeholder="Username"
+              value={username}
+              required
+            />
+          </div>
+          <div className="flex justify-center">
+            <img className="w-8 h-8 mr-3" src="./pwd_logo.png" alt="password" />
+            <input
+              onChange={handleChange}
+              className="sm:w-3/5 w-32 h-9 p-4 mb-10 sm:text-lg text-sm text-white rounded-md"
+              type="password"
+              placeholder="Password"
+              value={password}
+              required
+            />
+          </div>
+          <br />
+          <Button size="lg" title="Login" />
+        </form>
+
+        <p className="text-center mt-5">
+          Don't have an account? <Link to="/signup">Sign up</Link>
         </p>
-      )}
-      <form action="/" method="POST" onSubmit={handleSubmit}>
-        <div className="flex justify-center">
-          <img className="w-8 h-8 mr-3" src="./user_logo.png" alt="username" />
-          <input
-            onChange={handleChange}
-            className="sm:w-3/5 w-32 h-9 p-4 mb-3 sm:text-lg text-sm text-white rounded-md"
-            type="text"
-            placeholder="Username"
-            value={username}
-            required
-          />
-        </div>
-        <div className="flex justify-center">
-          <img className="w-8 h-8 mr-3" src="./pwd_logo.png" alt="password" />
-          <input
-            onChange={handleChange}
-            className="sm:w-3/5 w-32 h-9 p-4 mb-10 sm:text-lg text-sm text-white rounded-md"
-            type="password"
-            placeholder="Password"
-            value={password}
-            required
-          />
-        </div>
-        <br />
-        <Button size="lg" title="Login" />
-      </form>
 
-      <p className="text-center mt-5">
-        Don't have an account? <Link to="/signup">Sign up</Link>
-      </p>
-
-      <a
-        className="absolute left-0 right-0 bottom-0"
-        href="https://www.flaticon.com/free-icons/paw"
-        title="paw icons"
-      >
-        Paw icons created by logisstudio - Flaticon
-      </a>
+        <a
+          className="absolute left-0 right-0 bottom-0"
+          href="https://www.flaticon.com/free-icons/paw"
+          title="paw icons"
+        >
+          Paw icons created by logisstudio - Flaticon
+        </a>
+      </div>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Button from '../components/Button';
+import { getApiUrl } from '../util/util';
 import { Link } from 'react-router-dom';
 
 function Signup() {
@@ -20,7 +21,7 @@ function Signup() {
     e.preventDefault();
 
     // Send data to server
-    const response = await fetch('/api/signup', {
+    const response = await fetch(getApiUrl('signup'), {
       method: 'POST',
       body: JSON.stringify({ username, password }),
       headers: {
