@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { getApiUrl } from '../util/util';
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -18,7 +19,7 @@ function Login() {
     e.preventDefault();
 
     // Send data to server
-    const response = await fetch('/api/login', {
+    const response = await fetch(getApiUrl('login')), {
       method: 'POST',
       body: JSON.stringify({ username, password }),
       headers: {
