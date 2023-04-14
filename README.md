@@ -41,7 +41,7 @@ Server accepts the following environment variables:
 To deploy the application, we use a CI/CD pipeline that automatically builds and deploys Docker images for the frontend and backend on every push to the main branch of the GitHub repository. Here's an overview of the deployment process:
 1. A push to the main branch triggers a GitHub action that builds the Docker images for the frontend and backend.
 2. The Docker images are tagged with the latest tag and pushed to Docker Hub.
-3.On the server, we use Watchtower to automatically pull the latest Docker images from Docker Hub and restart the containers. This ensures that the application is always up-to-date and running the latest code.
+3. On the server, we use Watchtower to automatically pull the latest Docker images from Docker Hub and restart the containers. This ensures that the application is always up-to-date and running the latest code.
 4. We use Nginx as a reverse proxy to forward incoming requests to the appropriate container. 
 
 The Nginx configuration file used on the server is different from the one in this repository. If you need to update the Nginx configuration, you'll need to make changes to the configuration file in the separate repository.
