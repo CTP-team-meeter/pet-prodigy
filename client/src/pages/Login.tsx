@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import Button from '../components/Button';
+import { Link } from 'react-router-dom';
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -46,40 +48,51 @@ function Login() {
   };
 
   return (
-    <div className="w-2/5 sm:h-96 h-fit bg-slate-500 mx-auto border-2 rounded-lg">
-      <h1 className="mx-auto sm:text-5xl text-2xl p-8">Login Up</h1>
+    <div className="w-3/12 py-10 h-fit bg-secondary mx-auto rounded-lg shadow-inner">
+      <img className="w-24 mx-auto mb-10" src="./logo.png" alt="login" />
       {error && (
-        <p className="w-96 mx-auto text-red-500 font-bold text-lg text-center bg-white mb-5">
+        <p className="w-96 mx-auto text-red-500 font-bold text-lg text-center mb-5">
           {error}
         </p>
       )}
       <form action="/" method="POST" onSubmit={handleSubmit}>
-        <input
-          onChange={handleChange}
-          className="sm:w-3/5 w-32 h-9 p-1 mb-3 sm:text-lg text-sm"
-          type="text"
-          placeholder="Username"
-          value={username}
-          required
-        />
+        <div className="flex justify-center">
+          <img className="w-8 h-8 mr-3" src="./user_logo.png" alt="username" />
+          <input
+            onChange={handleChange}
+            className="sm:w-3/5 w-32 h-9 p-4 mb-3 sm:text-lg text-sm text-white rounded-md"
+            type="text"
+            placeholder="Username"
+            value={username}
+            required
+          />
+        </div>
+        <div className="flex justify-center">
+          <img className="w-8 h-8 mr-3" src="./pwd_logo.png" alt="password" />
+          <input
+            onChange={handleChange}
+            className="sm:w-3/5 w-32 h-9 p-4 mb-10 sm:text-lg text-sm text-white rounded-md"
+            type="password"
+            placeholder="Password"
+            value={password}
+            required
+          />
+        </div>
         <br />
-        <input
-          onChange={handleChange}
-          className="sm:w-3/5 w-32 h-9 p-2 mb-10 sm:text-lg text-sm"
-          type="password"
-          placeholder="Password"
-          value={password}
-          required
-        />
-        <br />
-        <button
-          className="sm:w-3/5 w-32 sm:text-xl text-sm"
-          style={{ backgroundColor: '#1a1a1a' }}
-          type="submit"
-        >
-          Login
-        </button>
+        <Button size="lg" title="Login" />
       </form>
+
+      <p className="text-center mt-5">
+        Don't have an account? <Link to="/signup">Sign up</Link>
+      </p>
+
+      <a
+        className="absolute left-0 right-0 bottom-0"
+        href="https://www.flaticon.com/free-icons/paw"
+        title="paw icons"
+      >
+        Paw icons created by logisstudio - Flaticon
+      </a>
     </div>
   );
 }

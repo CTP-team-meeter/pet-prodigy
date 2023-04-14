@@ -10,7 +10,6 @@ function Encyclopedia() {
 
   const fetchCatData = useCallback(async () => {
     try {
-
       const response = await fetch(getApiUrl('catBreeds'));
       const data = await response.json();
 
@@ -56,7 +55,9 @@ function Encyclopedia() {
 
   const fetchDogData = useCallback(async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_HOST}/api/dogBreeds`);
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_HOST}/api/dogBreeds`
+      );
       const data = await response.json();
 
       const dogData: Breed[] = data.map((dog: Breed) => {
@@ -115,7 +116,7 @@ function Encyclopedia() {
         Encyclopedia
       </h1>
       <br />
-      <div className="">
+      <div className="h-full">
         <SearchBar
           breeds={breeds.sort((a: any, b: any) => (a.name > b.name ? 1 : -1))}
         />
