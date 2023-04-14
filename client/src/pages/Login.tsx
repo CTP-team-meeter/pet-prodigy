@@ -49,7 +49,7 @@ function Login() {
   };
 
   return (
-    <div id="LoginPage" className="grid">
+    <div id="LoginPage" className="grid place-items-center">
       <div className="w-3/12 py-10 h-fit bg-secondary mx-auto rounded-lg shadow-inner">
         <img className="w-24 mx-auto mb-10" src="./logo.png" alt="login" />
         {error && (
@@ -58,7 +58,7 @@ function Login() {
           </p>
         )}
         <form action="/" method="POST" onSubmit={handleSubmit}>
-          <div className="flex justify-center">
+          <div className="flex items-center justify-center mb-3">
             <img
               className="w-8 h-8 mr-3"
               src="./user_logo.png"
@@ -66,18 +66,18 @@ function Login() {
             />
             <input
               onChange={handleChange}
-              className="sm:w-3/5 w-32 h-9 p-4 mb-3 sm:text-lg text-sm text-white rounded-md"
+              className="sm:w-3/5 w-32 h-9 p-4 sm:text-lg text-sm text-white rounded-md"
               type="text"
               placeholder="Username"
               value={username}
               required
             />
           </div>
-          <div className="flex justify-center">
+          <div className="flex items-center justify-center mb-10">
             <img className="w-8 h-8 mr-3" src="./pwd_logo.png" alt="password" />
             <input
               onChange={handleChange}
-              className="sm:w-3/5 w-32 h-9 p-4 mb-10 sm:text-lg text-sm text-white rounded-md"
+              className="sm:w-3/5 w-32 h-9 p-4 sm:text-lg text-sm text-white rounded-md"
               type="password"
               placeholder="Password"
               value={password}
