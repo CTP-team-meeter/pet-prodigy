@@ -17,7 +17,6 @@ npm run dev
 Client accepts the following environment variables:
 - `VITE_GOOGLE_MAPS_API_KEY` to enable Google Maps API
 - `VITE_BACKEND_HOST` to specify the base URL for the backend server API
-#### Environment variavle
 ### Database
 - Install MongoDB following the instruction 
 https://www.mongodb.com/docs/manual/administration/install-community/
@@ -31,12 +30,12 @@ npm install
 npm run dev
 ```
 Server accepts the following environment variables:
-- `DATABASE_URL` The URL for MongoDB database
-- `PORT` to choose which port for the application. Default: 8080
+- `DATABASE_URL` to specify the URL for the MongoDB database.
+- `PORT` to specify which port for the server run on. Default: 8080
 - `TOKEN_SECRET` to encrypt JWT
-- `SALT` is used for password hashing by bcrypt
-- `CAT_API_KEY` to use Cat API
-- `DOG_API_KEY` to use Dog API
+- `SALT` is used for password hashing using bcrypt
+- `CAT_API_KEY` to use access the Cat API
+- `DOG_API_KEY` to use access the Dog API
 
 ## Deployment
 To deploy the application, we use a CI/CD pipeline that automatically builds and deploys Docker images for the frontend and backend on every push to the main branch of the GitHub repository. Here's an overview of the deployment process:
