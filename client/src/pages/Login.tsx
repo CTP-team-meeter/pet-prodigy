@@ -19,7 +19,7 @@ function Login() {
     e.preventDefault();
 
     // Send data to server
-    const response = await fetch(getApiUrl('login')), {
+    const response = await fetch(getApiUrl('login'), {
       method: 'POST',
       body: JSON.stringify({ username, password }),
       headers: {
