@@ -2,6 +2,13 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { getApiUrl } from '../util/util';
 import Button from '../components/Button';
+import jwt_decode from 'jwt-decode';
+
+interface DecodedToken {
+  userId: string;
+  iat: number;
+  exp: number;
+}
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -29,18 +36,25 @@ function Login() {
       },
     });
 
-    // If response is ok, redirect to home page
     if (response.ok) {
+      // If response is ok, extract token and redirect to home page
+      const data = await response.json();
+      const token = data.token;
+      const decodedToken = jwt_decode(token) as DecodedToken;
+      window.localStorage.setItem('token', token);
+      window.localStorage.setItem('userId', decodedToken.userId);
+
+      // Clear input fields
+      setUsername('');
+      setPassword('');
+
+      // Redirect to home page
       window.location.href = '/';
+    } else {
+      // If response is not ok, display error message
+      const data = await response.json();
+      setError(data.msg);
     }
-
-    // If response is not ok, display error message
-    const data = await response.json();
-    setError(data.msg);
-
-    // Clear input fields
-    setUsername('');
-    setPassword('');
 
     // Clear error message after 5 seconds
     setTimeout(() => {

@@ -13,4 +13,4 @@ const dogBreedSchema = new mongoose.Schema({
   wikipedia_url: { type: String, required: false },
 });
 
-module.exports = mongoose.model('dogBreed', dogBreedSchema);
+module.exports = mongoose.model('DogBreed', dogBreedSchema);

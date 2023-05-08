@@ -8,17 +8,30 @@ exports.generateAccessToken = (username: Object) => {
 // Verify access token
 exports.authenticateToken = (req: any, res: any, next: any) => {
   const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];
+  console.log('authHeader:', authHeader);
 
-  if (token == null) return res.sendStatus(401);
+  if (!authHeader) return res.sendStatus(401);
+
+  const token = authHeader.split(' ')[1];
+  console.log('token:', token);
+
+  if (!token) return res.sendStatus(401);
 
   jwt.verify(
     token,
     process.env.TOKEN_SECRET as string,
     (err: any, user: any) => {
-      console.log(err);
+      console.log('jwt error:', err);
 
-      if (err) return res.sendStatus(403);
+      if (err) {
+        if (err.name === 'JsonWebTokenError') {
+          return res.status(401).json({ message: 'Invalid token' });
+        } else if (err.name === 'TokenExpiredError') {
+          return res.status(401).json({ message: 'Token expired' });
+        } else {
+          return res.status(500).json({ message: 'Server error' });
+        }
+      }
 
       req.user = user;
 

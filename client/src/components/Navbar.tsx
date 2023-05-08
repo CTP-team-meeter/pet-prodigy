@@ -1,7 +1,51 @@
 import { NavLink } from 'react-router-dom';
 import Button from './Button';
 import './Navbar.css';
+import { useEffect, useState } from 'react';
+
 function Navbar({ themeToggle }: any) {
+  const [user, setUser] = useState({ username: '' });
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setLoggedIn(false);
+      return;
+    }
+
+    fetch('/api/login', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Not logged in');
+        }
+
+        return response.json();
+      })
+      .then((user) => {
+        setUser(user);
+        setLoggedIn(true);
+        console.log(user);
+      })
+      .catch((error) => {
+        console.error(error);
+        setLoggedIn(false);
+      });
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId');
+    setUser({ username: '' });
+    setLoggedIn(false);
+  };
+
+  console.log(loggedIn);
+
   return (
     <nav
       id="navbar"
@@ -38,6 +82,7 @@ function Navbar({ themeToggle }: any) {
         >
           Encyclopedia
         </NavLink>
+
         <NavLink
           style={{
             margin: '0 15px',
@@ -45,9 +90,9 @@ function Navbar({ themeToggle }: any) {
             borderRadius: '5px',
           }}
           className={({ isActive }) => (isActive ? 'bg-primary' : '')}
-          to="/login"
+          to="/pet-community"
         >
-          Login
+          Pet Community
         </NavLink>
         <NavLink
           style={{
@@ -65,17 +110,48 @@ function Navbar({ themeToggle }: any) {
         <div id="light-dark-toggle" onClick={themeToggle}>
           ☼
         </div>
+        {!loggedIn && (
+          <>
+            <NavLink
+              style={{
+                margin: '0 15px',
+                padding: '8px 10px',
+                borderRadius: '5px',
+              }}
+              className={({ isActive }) => (isActive ? 'bg-primary' : '')}
+              to="/login"
+            >
+              Login
+            </NavLink>
+            <NavLink
+              style={{
+                margin: '0 15px',
+                padding: '8px 10px',
+                borderRadius: '5px',
+              }}
+              to="/signup"
+            >
+              <Button title={'Sign Up'} />
+            </NavLink>
+          </>
+        )}
+      </div>
+      {loggedIn && (
         <NavLink
+          to="/"
           style={{
             margin: '0 15px',
             padding: '8px 10px',
             borderRadius: '5px',
           }}
-          to="/signup"
         >
-          <Button title={'Sign Up'} />
+          <Button
+            title={'Logout'}
+            onclick={handleLogout}
+            className="text-primary h-10"
+          />
         </NavLink>
-      </div>
+      )}
     </nav>
   );
 }
