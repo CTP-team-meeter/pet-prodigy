@@ -2,10 +2,11 @@
 export {};
 
 // Import dependencies
-const express = require('express');
-const bcrypt = require('bcrypt');
+const express = require("express");
+const bcrypt = require("bcrypt");
 
-const Comment = require('../models/comment');
+const Comment = require("../models/comment");
+const User = require("../models/user");
 
 // Create router
 const router = express.Router();
@@ -13,7 +14,7 @@ const router = express.Router();
 // @route   Get /api/comments
 // @access  Public
 // @desc    Get a list of all comments
-router.get('/', async (req: any, res: any) => {
+router.get("/", async (req: any, res: any) => {
   try {
     const comments = await Comment.find();
     res.json(comments);
@@ -32,14 +33,17 @@ router.get('/:id', getComment, (req: any, res: any) => {
 });
 
 // POST comment
-router.post('/', async (req: any, res: any) => {
+router.post("/", async (req: any, res: any) => {
+  const user = await User.findById(req.body.id);
+  const username = user.username;
   const comment = new Comment({
-    username: req.body.username,
+    userId: user._id,
     comment: req.body.comment,
   });
   try {
     const newComment = await comment.save();
-    res.status(201).json(newComment);
+    delete newComment._doc["__v"];
+    res.status(201).json({ ...newComment._doc, username });
   } catch (err) {
     if (err instanceof Error) {
       res.status(400).json({ message: err.message });
@@ -48,10 +52,10 @@ router.post('/', async (req: any, res: any) => {
 });
 
 // Delete comment
-router.delete('/:id', getComment, async (req: any, res: any) => {
+router.delete("/:id", getComment, async (req: any, res: any) => {
   try {
     await res.comment.remove();
-    res.json({ message: 'Deleted comment' });
+    res.json({ message: "Deleted comment" });
   } catch (err) {
     if (err instanceof Error) {
       res.status(500).json({ message: err.message });
@@ -65,7 +69,7 @@ async function getComment(req: any, res: any, next: any) {
   try {
     await Comment.findById(req.params.id);
     if (comment == null) {
-      return res.status(400).json({ message: 'Cannot find comment' });
+      return res.status(400).json({ message: "Cannot find comment" });
     }
   } catch (err) {
     if (err instanceof Error) {
