@@ -7,6 +7,7 @@ const bcrypt = require("bcrypt");
 
 const Comment = require("../models/comment");
 const User = require("../models/user");
+const { authenticateToken } = require("../middlewares/authentication");
 
 // Create router
 const router = express.Router();
@@ -28,12 +29,14 @@ router.get("/", async (req: any, res: any) => {
 // @route   Get /api/comments/:id
 // @access  Public
 // @desc    Get a comment, not implemented yet
-router.get('/:id', getComment, (req: any, res: any) => {
+router.get("/:id", getComment, (req: any, res: any) => {
   res.json(res.comment);
 });
 
-// POST comment
-router.post("/", async (req: any, res: any) => {
+// @route   POST /api/comments
+// @access  Private
+// @desc    POST a comment
+router.post("/", authenticateToken, async (req: any, res: any) => {
   const user = await User.findById(req.body.id);
   const username = user.username;
   const comment = new Comment({
@@ -51,7 +54,9 @@ router.post("/", async (req: any, res: any) => {
   }
 });
 
-// Delete comment
+// @route   DELETE /api/comments/:id
+// @access  Private
+// @desc    Delete a comment
 router.delete("/:id", getComment, async (req: any, res: any) => {
   try {
     await res.comment.remove();
