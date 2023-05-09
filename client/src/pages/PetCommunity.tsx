@@ -1,14 +1,36 @@
-import { useState } from 'react';
+import { useState, useEffect } from "react";
+import { getApiUrl } from "../util/util";
+import { ftruncate } from "fs";
+
+type Comment = {
+  _id: string;
+  comment: string;
+  replies: Array<string>;
+  user: {
+    username: string;
+    _id: string;
+  };
+};
 
 function PetCommunity() {
-  const [comments, setComments] = useState([]) as any;
+  const [comments, setComments] = useState<Array<Comment>>([]); //should be typed appropriately
 
   const handleSubmit = (event: any) => {
-    event.preventDefault();
-    const data = new FormData(event.target);
-    const comment = data.get('comment');
-    setComments([...comments, comment]);
+    // event.preventDefault();
+    // const data = new FormData(event.target);
+    // const comment = data.get("comment");
+    // setComments([...comments, comment]);
   };
+  const getAllComments = async () => {
+    const res = await fetch(getApiUrl("comments"));
+    const data = await res.json();
+    setComments(data);
+    return;
+  };
+
+  useEffect(() => {
+    const fetchedComments = getAllComments();
+  }, []);
 
   return (
     <div>
@@ -36,8 +58,11 @@ function PetCommunity() {
       {comments.length > 0 ? (
         <div>
           <h2>Comments</h2>
-          {comments.map((comment: any, index: any) => (
-            <p key={index}>{comment}</p>
+          {comments.map((comment: Comment) => (
+            <>
+              <div>{comment.user.username}</div>
+              <p key={comment._id}>{comment.comment}</p>
+            </>
           ))}
         </div>
       ) : (
