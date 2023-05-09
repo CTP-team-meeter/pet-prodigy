@@ -17,7 +17,7 @@ const router = express.Router();
 // @desc    Get a list of all comments
 router.get("/", async (req: any, res: any) => {
   try {
-    const comments = await Comment.find();
+    const comments = await Comment.find().populate("user", "username");
     res.json(comments);
   } catch (err) {
     if (err instanceof Error) {
@@ -40,7 +40,7 @@ router.post("/", authenticateToken, async (req: any, res: any) => {
   const user = await User.findById(req.body.id);
   const username = user.username;
   const comment = new Comment({
-    userId: user._id,
+    user: user._id,
     comment: req.body.comment,
   });
   try {
