@@ -40,10 +40,11 @@ function Login() {
       // If response is ok, extract token and redirect to home page
       const data = await response.json();
       const token = data.token;
+      const userId = data.id
       const decodedToken = jwt_decode(token) as DecodedToken;
       window.localStorage.setItem('token', token);
-      window.localStorage.setItem('userId', decodedToken.userId);
-
+      window.localStorage.setItem('userId', userId);
+      console.log(data);
       // Clear input fields
       setUsername('');
       setPassword('');
