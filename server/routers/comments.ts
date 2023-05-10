@@ -38,7 +38,9 @@ router.get("/:id", getComment, (req: any, res: any) => {
 // @desc    POST a comment
 router.post("/", authenticateToken, async (req: any, res: any) => {
   const user = await User.findById(req.body.id);
-  const username = user.username;
+  delete user._doc["password"];
+  delete user._doc["__v"];
+  
   const comment = new Comment({
     user: user._id,
     comment: req.body.comment,
@@ -46,7 +48,7 @@ router.post("/", authenticateToken, async (req: any, res: any) => {
   try {
     const newComment = await comment.save();
     delete newComment._doc["__v"];
-    res.status(201).json({ ...newComment._doc, username });
+    res.status(201).json({ ...newComment._doc, user });
   } catch (err) {
     if (err instanceof Error) {
       res.status(400).json({ message: err.message });
