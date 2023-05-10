@@ -18,7 +18,7 @@ const router = express.Router();
 router.get("/", async (req: any, res: any) => {
   try {
     const comments = await Comment.find().populate("user", "username");
-    res.json(comments);
+    res.json(comments.reverse());
   } catch (err) {
     if (err instanceof Error) {
       res.status(500).json({ message: err.message });
