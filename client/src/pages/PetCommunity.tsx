@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { getApiUrl } from "../util/util";
-import { ftruncate } from "fs";
 
 type Comment = {
   _id: string;
@@ -13,7 +12,7 @@ type Comment = {
 };
 
 function PetCommunity() {
-  const [comments, setComments] = useState<Array<Comment>>([]); //should be typed appropriately
+  const [comments, setComments] = useState<Array<Comment>>([]);
 
   const handleSubmit = (event: any) => {
     // event.preventDefault();
