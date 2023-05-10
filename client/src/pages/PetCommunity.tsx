@@ -14,11 +14,28 @@ type Comment = {
 function PetCommunity() {
   const [comments, setComments] = useState<Array<Comment>>([]);
 
-  const handleSubmit = (event: any) => {
-    // event.preventDefault();
-    // const data = new FormData(event.target);
-    // const comment = data.get("comment");
-    // setComments([...comments, comment]);
+  const handleSubmit = async (event: any) => {
+    event.preventDefault();
+    const inputValue = event.target[0].value;
+    const token = localStorage.getItem("token");
+    const userId = localStorage.getItem("userId");
+
+    try {
+      const res = await fetch(getApiUrl("comments"), {
+        method: "POST",
+        body: JSON.stringify({ id: userId, comment: inputValue }),
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await res.json();
+      console.log(data);
+      setComments([data, ...comments]);
+    } catch (err) {
+      console.log(err);
+    }
   };
   const getAllComments = async () => {
     const res = await fetch(getApiUrl("comments"));
@@ -42,6 +59,7 @@ function PetCommunity() {
           rows={4}
           cols={50}
           placeholder="Write a comment...."
+          required
         />
         <br />
         <input
@@ -58,10 +76,10 @@ function PetCommunity() {
         <div>
           <h2>Comments</h2>
           {comments.map((comment: Comment) => (
-            <>
+            <div key={comment._id}>
               <div>{comment.user.username}</div>
-              <p key={comment._id}>{comment.comment}</p>
-            </>
+              <p>{comment.comment}</p>
+            </div>
           ))}
         </div>
       ) : (
