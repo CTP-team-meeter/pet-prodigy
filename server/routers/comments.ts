@@ -15,7 +15,7 @@ const router = express.Router();
 // @route   Get /api/comments
 // @access  Public
 // @desc    Get a list of all comments
-router.get("/", async (req: any, res: any) => {
+router.get("/", authenticateToken, async (req: any, res: any) => {
   try {
     const comments = await Comment.find().populate("user", "username");
     res.json(comments.reverse());
@@ -40,7 +40,7 @@ router.post("/", authenticateToken, async (req: any, res: any) => {
   const user = await User.findById(req.body.id);
   delete user._doc["password"];
   delete user._doc["__v"];
-  
+
   const comment = new Comment({
     user: user._id,
     comment: req.body.comment,

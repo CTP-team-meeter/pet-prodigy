@@ -38,7 +38,13 @@ function PetCommunity() {
     }
   };
   const getAllComments = async () => {
-    const res = await fetch(getApiUrl("comments"));
+    const token = localStorage.getItem("token");
+
+    const res = await fetch(getApiUrl("comments"), {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     const data = await res.json();
     setComments(data);
     return;
