@@ -18,7 +18,11 @@ const router = express.Router();
 router.get("/", authenticateToken, async (req: any, res: any) => {
   try {
     const comments = await Comment.find().populate("user", "username");
-    res.json(comments.reverse());
+    console.log(comments[0]._id.getTimestamp());
+    const commentsWithTime = comments.map((comment: any) => {
+      return { ...comment._doc, time: comment._id.getTimestamp() };
+    });
+    res.json(commentsWithTime.reverse());
   } catch (err) {
     if (err instanceof Error) {
       res.status(500).json({ message: err.message });
