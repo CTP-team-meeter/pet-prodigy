@@ -23,8 +23,8 @@ function PetCommunity() {
       });
 
       const data = await res.json();
-      console.log(data);
       setComments([data, ...comments]);
+      event.target[0].value = "";
     } catch (err) {
       console.log(err);
     }
