@@ -1,15 +1,7 @@
 import { useState, useEffect } from "react";
 import { getApiUrl } from "../util/util";
-
-type Comment = {
-  _id: string;
-  comment: string;
-  replies: Array<string>;
-  user: {
-    username: string;
-    _id: string;
-  };
-};
+import Comments from "../components/Comments";
+import { Comment } from "../types/comment";
 
 function PetCommunity() {
   const [comments, setComments] = useState<Array<Comment>>([]);
@@ -77,20 +69,7 @@ function PetCommunity() {
 
       <br />
       <br />
-
-      {comments.length > 0 ? (
-        <div>
-          <h2>Comments</h2>
-          {comments.map((comment: Comment) => (
-            <div key={comment._id}>
-              <div>{comment.user.username}</div>
-              <p>{comment.comment}</p>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <p>No comments yet</p>
-      )}
+      <Comments comments={comments} setComments={setComments} />
     </div>
   );
 }
