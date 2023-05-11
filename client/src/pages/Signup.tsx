@@ -94,14 +94,15 @@ function Signup() {
           Already have an account? <Link to="/login">Login</Link>
         </p>
       </div>
-
-      <a
-        className="absolute left-0 right-0 bottom-0"
-        href="https://www.flaticon.com/free-icons/paw"
-        title="paw icons"
-      >
-        Paw icons created by logisstudio - Flaticon
-      </a>
+      <footer className="text-center mt-10">
+        <a
+          className=""
+          href="https://www.flaticon.com/free-icons/paw"
+          title="paw icons"
+        >
+          Paw icons created by logisstudio - Flaticon
+        </a>
+      </footer>
     </div>
   );
 }

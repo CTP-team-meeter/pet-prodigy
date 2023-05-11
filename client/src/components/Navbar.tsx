@@ -44,8 +44,6 @@ function Navbar({ themeToggle }: any) {
     setLoggedIn(false);
   };
 
-  console.log(loggedIn);
-
   return (
     <nav
       id="navbar"
@@ -83,17 +81,19 @@ function Navbar({ themeToggle }: any) {
           Encyclopedia
         </NavLink>
 
-        <NavLink
-          style={{
-            margin: '0 15px',
-            padding: '8px 10px',
-            borderRadius: '5px',
-          }}
-          className={({ isActive }) => (isActive ? 'bg-primary' : '')}
-          to="/pet-community"
-        >
-          Pet Community
-        </NavLink>
+        {loggedIn && (
+          <NavLink
+            style={{
+              margin: '0 15px',
+              padding: '8px 10px',
+              borderRadius: '5px',
+            }}
+            className={({ isActive }) => (isActive ? 'bg-primary' : '')}
+            to="/pet-community"
+          >
+            Pet Community
+          </NavLink>
+        )}
         <NavLink
           style={{
             margin: '0 15px',

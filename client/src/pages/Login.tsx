@@ -106,15 +106,17 @@ function Login() {
         <p className="text-center mt-5">
           Don't have an account? <Link to="/signup">Sign up</Link>
         </p>
+      </div>
 
+      <footer className="text-center mt-10">
         <a
-          className="absolute left-0 right-0 bottom-0"
+          className=""
           href="https://www.flaticon.com/free-icons/paw"
           title="paw icons"
         >
           Paw icons created by logisstudio - Flaticon
         </a>
-      </div>
+      </footer>
     </div>
   );
 }

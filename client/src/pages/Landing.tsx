@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import './Landing.css';
 import Button from '../components/Button';
 import FadeInChildren from '../components/FadeInChildren';
-import jwt from 'jsonwebtoken';
+import { NavLink } from 'react-router-dom';
 
 const Landing = () => {
   return (
@@ -29,7 +29,12 @@ const Landing = () => {
               alt="pet"
             />
           </div>
-          <Button className="text-primary mx-auto" title={'Start free trial'} />
+          <NavLink to="/breedselector">
+            <Button
+              className="text-primary mx-auto"
+              title={'Check it out now!'}
+            />
+          </NavLink>
         </div>
       </section>
     </div>

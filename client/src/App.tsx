@@ -8,6 +8,7 @@ import Navbar from './components/Navbar';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import useLocalStorage from 'use-local-storage';
 import PetCommunity from './pages/PetCommunity';
+import BreedSelector from './pages/BreedSelector';
 
 function App() {
   const defaultDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -29,6 +30,7 @@ function App() {
           <Route path="/map" element={<Map />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/pet-community" element={<PetCommunity />} />
+          <Route path="/breedselector" element={<BreedSelector />} />
           <Route path="*" element={<h1>Not Found (Error 404)</h1>} />
         </Routes>
       </Router>
