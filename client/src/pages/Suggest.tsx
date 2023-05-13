@@ -6,7 +6,6 @@ function Suggest() {
   const [breeds, setBreeds] = useState([]);
   const [filteredBreeds, setFilteredBreeds] = useState([]);
   const { selectedTemperaments } = location.state;
-  const navigate = useNavigate();
 
   const getBreeds = async () => {
     const response = await fetch(
@@ -71,16 +70,12 @@ function Suggest() {
 
   const sortedBreeds = sortBreedsByMatchLevel(filteredBreeds);
 
-  const redirectToEncyclopedia = (breedName: any) => {
-    navigate(`/encyclopedia/${encodeURIComponent(breedName)}`);
-  };
-
   return (
     <div>
       <h3>Suggestion Content</h3>
       <p>Selected Temperaments: {selectedTemperaments.join(', ')}</p>
       <p>Number of breeds: {sortedBreeds.length}</p>
-      <ul>
+      <ul className="grid grid-cols-3">
         {sortedBreeds.map((breed) => (
           <li key={breed._id}>
             <br />
