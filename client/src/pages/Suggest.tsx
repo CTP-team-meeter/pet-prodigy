@@ -16,9 +16,9 @@ function Suggest() {
 
     console.log(data);
 
-    const filtered = data.filter((breed) => {
+    const filtered = data.filter((breed: any) => {
       const breedTemperaments = breed.temperament.split(', ');
-      return selectedTemperaments.some((selected) =>
+      return selectedTemperaments.some((selected: any) =>
         breedTemperaments.includes(selected)
       );
     });
@@ -32,7 +32,7 @@ function Suggest() {
     }
   }, [selectedTemperaments]);
 
-  const getMatchLevel = (matchedTemperaments) => {
+  const getMatchLevel = (matchedTemperaments: any) => {
     const totalTemperaments = selectedTemperaments.length;
     const matchedCount = matchedTemperaments.length;
     const matchRatio = totalTemperaments / matchedCount;
@@ -46,8 +46,8 @@ function Suggest() {
     }
   };
 
-  const sortBreedsByMatchLevel = (breeds) => {
-    return breeds.sort((a, b) => {
+  const sortBreedsByMatchLevel = (breeds: any) => {
+    return breeds.sort((a: any, b: any) => {
       const matchedTemperamentsA = a.temperament.split(', ');
       const matchedTemperamentsB = b.temperament.split(', ');
 
@@ -76,7 +76,7 @@ function Suggest() {
       <p>Selected Temperaments: {selectedTemperaments.join(', ')}</p>
       <p>Number of breeds: {sortedBreeds.length}</p>
       <ul className="grid grid-cols-3">
-        {sortedBreeds.map((breed) => (
+        {sortedBreeds.map((breed: any) => (
           <li key={breed._id}>
             <br />
             {breed.name} - Match Level:{' '}

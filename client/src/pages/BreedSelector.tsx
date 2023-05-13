@@ -25,14 +25,14 @@ function BreedSelector() {
 
   useEffect(() => {
     if (breeds.length > 0) {
-      const temperamentArray = breeds.flatMap((breed) =>
+      const temperamentArray = breeds.flatMap((breed: any) =>
         breed.temperament.split(',')
       );
       setTemperament(new Set(temperamentArray));
     }
   }, [breeds]);
 
-  const handleCheckboxChange = (event) => {
+  const handleCheckboxChange = (event: any) => {
     const { value, checked } = event.target;
     setSelectedTemperaments((prev: any) =>
       checked ? [...prev, value] : prev.filter((t: any) => t !== value)

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import StarRatings from 'react-star-ratings';
 import Slider from 'react-slick';
 import ReactCountryFlag from 'react-country-flag';
@@ -66,6 +66,13 @@ function Breed() {
                     {breed.name}
                   </h1>
                   <ReactCountryFlag countryCode={breed.country_code} svg />
+                  <a
+                    className="inline-block text-sm text-white bg-gray-500 hover:text-slate-900 p-2 rounded-lg ml-8 mt-2"
+                    href={breed.wikipedia_url}
+                    target="_blank"
+                  >
+                    Wikipedia
+                  </a>
                 </div>
 
                 <br />
@@ -87,13 +94,9 @@ function Breed() {
               </div>
 
               <div className="">
-                <a
-                  className="inline-block text-sm text-white bg-gray-500 hover:text-slate-900 p-2 rounded-lg ml-8 mt-2"
-                  href={breed.wikipedia_url}
-                  target="_blank"
-                >
-                  Wikipedia
-                </a>
+                <Link to="/encyclopedia">
+                  Want to know more about other breeds?
+                </Link>
                 <br />
                 <div className="grid grid-cols-2 mt-20">
                   <div className="mb-3">

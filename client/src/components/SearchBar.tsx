@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import BreedImages from './BreedImages';
 import RandomBreedButton from './RandomBreedButton';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 function SearchBar(props: any) {
   const [search, setSearch] = useState<string>('');
