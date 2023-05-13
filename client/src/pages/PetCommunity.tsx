@@ -1,7 +1,15 @@
-import { useState, useEffect } from "react";
-import { getApiUrl } from "../util/util";
-import Comments from "../components/Comments";
-import { Comment } from "../types/comment";
+import { useState, useEffect } from 'react';
+import { getApiUrl } from '../util/util';
+
+type Comment = {
+  _id: string;
+  comment: string;
+  replies: Array<string>;
+  user: {
+    username: string;
+    _id: string;
+  };
+};
 
 function PetCommunity() {
   const [comments, setComments] = useState<Array<Comment>>([]);
@@ -9,34 +17,28 @@ function PetCommunity() {
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     const inputValue = event.target[0].value;
-    const token = localStorage.getItem("token");
-    const userId = localStorage.getItem("userId");
+    const token = localStorage.getItem('token');
+    const userId = localStorage.getItem('userId');
 
     try {
-      const res = await fetch(getApiUrl("comments"), {
-        method: "POST",
+      const res = await fetch(getApiUrl('comments'), {
+        method: 'POST',
         body: JSON.stringify({ id: userId, comment: inputValue }),
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       });
 
       const data = await res.json();
       setComments([data, ...comments]);
-      event.target[0].value = "";
+      event.target[0].value = '';
     } catch (err) {
       console.log(err);
     }
   };
   const getAllComments = async () => {
-    const token = localStorage.getItem("token");
-
-    const res = await fetch(getApiUrl("comments"), {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const res = await fetch(getApiUrl('comments'));
     const data = await res.json();
     setComments(data);
     return;
@@ -69,7 +71,25 @@ function PetCommunity() {
 
       <br />
       <br />
-      <Comments comments={comments} setComments={setComments} />
+
+      {comments.length > 0 ? (
+        <div>
+          <h2>Comments</h2>
+          {comments.map((comment: Comment) => (
+            <div key={comment._id}>
+              <div className="flex w-80 mx-auto justify-start">
+                <h2 style={{ fontSize: '1.5rem' }} className="">
+                  {comment.user.username}:
+                </h2>
+
+                <p>&nbsp; {comment.comment}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p>No comments yet</p>
+      )}
     </div>
   );
 }
