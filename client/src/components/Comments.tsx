@@ -31,8 +31,13 @@ const Comments = ({ comments, setComments }: CommentsProps) => {
           <h2>Comments</h2>
           {comments.map((comment: Comment) => (
             <div key={comment._id}>
-              <div>{comment.user.username}</div>
-              <p>{comment.comment}</p>
+              <div className="flex w-80 mx-auto justify-start">
+                <h2 style={{ fontSize: "1.5rem" }} className="">
+                  {comment.user.username}:
+                </h2>
+
+                <p>&nbsp; {comment.comment}</p>
+              </div>
             </div>
           ))}
         </div>
