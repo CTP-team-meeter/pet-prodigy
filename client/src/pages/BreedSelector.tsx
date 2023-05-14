@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormGroup from '@mui/material/FormGroup';
-import FormControl from '@mui/material/FormControl';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormGroup from "@mui/material/FormGroup";
+import FormControl from "@mui/material/FormControl";
+import { useNavigate } from "react-router-dom";
 
 function BreedSelector() {
   const [breeds, setBreeds] = useState([]);
-  const [temperament, setTemperament] = useState(new Set());
+  const [temperament, setTemperament] = useState<Set<String>>(new Set());
   const [selectedTemperaments, setSelectedTemperaments] = useState([]);
   const navigate = useNavigate();
 
@@ -26,7 +26,7 @@ function BreedSelector() {
   useEffect(() => {
     if (breeds.length > 0) {
       const temperamentArray = breeds.flatMap((breed: any) =>
-        breed.temperament.split(',')
+        breed.temperament.split(",")
       );
       setTemperament(new Set(temperamentArray));
     }
@@ -41,20 +41,20 @@ function BreedSelector() {
 
   const handleSubmit = () => {
     // Handle form submission logic here
-    console.log('Form submitted!');
+    console.log("Form submitted!");
 
     // Convert the selected temperaments Set to an array
     const chosenTemperaments = Array.from(selectedTemperaments);
 
     // Redirect to the next page with the selected choices
-    navigate('/suggest', {
+    navigate("/suggest", {
       state: { selectedTemperaments: chosenTemperaments },
     });
   };
 
   return (
     <div>
-      <h1 style={{ fontSize: '2.5rem' }}>Breed Selector</h1>
+      <h1 style={{ fontSize: "2.5rem" }}>Breed Selector</h1>
       <br />
       <h2>How would you like your pet temperament to be?</h2>
 
