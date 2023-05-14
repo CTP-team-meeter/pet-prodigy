@@ -44,7 +44,6 @@ function Login() {
       const decodedToken = jwt_decode(token) as DecodedToken;
       window.localStorage.setItem('token', token);
       window.localStorage.setItem('userId', userId);
-      console.log(data);
       // Clear input fields
       setUsername('');
       setPassword('');

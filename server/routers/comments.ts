@@ -18,7 +18,6 @@ const router = express.Router();
 router.get("/", authenticateToken, async (req: any, res: any) => {
   try {
     const comments = await Comment.find().populate("user", "username");
-    console.log(comments[0]._id.getTimestamp());
     const commentsWithTime = comments.map((comment: any) => {
       return { ...comment._doc, time: comment._id.getTimestamp() };
     });
