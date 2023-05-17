@@ -5,20 +5,35 @@ function Suggest() {
   const location = useLocation();
   const [breeds, setBreeds] = useState([]);
   const [filteredBreeds, setFilteredBreeds] = useState([]);
-  const { selectedTemperaments } = location.state;
+  const { selectedTemperaments, chosenPet } = location.state;
 
-  const getBreeds = async () => {
+  const getCatBreeds = async () => {
     const response = await fetch(
       `${import.meta.env.VITE_BACKEND_HOST}/api/catBreeds`
     );
     const data = await response.json();
     setBreeds(data);
 
-    console.log(data);
-
-    const filtered = data.filter((breed: any) => {
+    const filtered = data.filter((breed) => {
       const breedTemperaments = breed.temperament.split(', ');
-      return selectedTemperaments.some((selected: any) =>
+      return selectedTemperaments.some((selected) =>
+        breedTemperaments.includes(selected)
+      );
+    });
+
+    setFilteredBreeds(filtered);
+  };
+
+  const getDogBreeds = async () => {
+    const response = await fetch(
+      `${import.meta.env.VITE_BACKEND_HOST}/api/dogBreeds`
+    );
+    const data = await response.json();
+    setBreeds(data);
+
+    const filtered = data.filter((breed) => {
+      const breedTemperaments = breed.temperament.split(', ');
+      return selectedTemperaments.some((selected) =>
         breedTemperaments.includes(selected)
       );
     });
@@ -28,20 +43,24 @@ function Suggest() {
 
   useEffect(() => {
     if (selectedTemperaments && selectedTemperaments.length > 0) {
-      getBreeds();
+      if (chosenPet === 'dog') {
+        getDogBreeds();
+      } else {
+        getCatBreeds();
+      }
     }
-  }, [selectedTemperaments]);
+  }, [selectedTemperaments, chosenPet]);
 
   const getMatchLevel = (matchedTemperaments: any) => {
     const totalTemperaments = selectedTemperaments.length;
     const matchedCount = matchedTemperaments.length;
     const matchRatio = totalTemperaments / matchedCount;
 
-    if (matchRatio >= 0.8) {
+    if (matchRatio >= 0.99) {
       return 'Most Likely a Match';
-    } else if (matchRatio >= 0.5) {
+    } else if (matchRatio >= 0.8 && matchRatio < 0.95) {
       return 'Likely a Match';
-    } else {
+    } else if (matchRatio >= 0.5 && matchRatio < 0.8) {
       return 'Unlikely a Match';
     }
   };
@@ -72,9 +91,10 @@ function Suggest() {
 
   return (
     <div>
-      <h3>Suggestion Content</h3>
+      <h1 style={{ fontSize: '2.5rem' }}>Results</h1>
       <p>Selected Temperaments: {selectedTemperaments.join(', ')}</p>
       <p>Number of breeds: {sortedBreeds.length}</p>
+
       <ul className="grid grid-cols-3">
         {sortedBreeds.map((breed: any) => (
           <li key={breed._id}>

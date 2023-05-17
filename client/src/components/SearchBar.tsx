@@ -7,16 +7,6 @@ function SearchBar(props: any) {
   const [search, setSearch] = useState<string>('');
   const [filteredBreeds, setFilteredBreeds] = useState<any[]>([]);
   const location = useLocation();
-  const breedName = location?.state?.breedName || '';
-
-  console.log(breedName);
-
-  useEffect(() => {
-    if (breedName) {
-      setSearch(breedName);
-      console.log(breedName);
-    }
-  }, [breedName]);
 
   useEffect(() => {
     const filtered = props.breeds.filter((breed: any) =>
