@@ -41,8 +41,8 @@ function BreedSelector() {
 
   useEffect(() => {
     if (catBreeds.length > 0) {
-      const temperamentArray = catBreeds.flatMap((breed) =>
-        breed.temperament.split(',')
+      const temperamentArray = catBreeds.flatMap((breed: any) =>
+        breed?.temperament.split(',')
       );
       const uniqueTemperaments = [
         ...new Set(temperamentArray.map((temp) => temp.trim())),
@@ -53,8 +53,8 @@ function BreedSelector() {
 
   useEffect(() => {
     if (dogBreeds.length > 0) {
-      const temperamentArray = dogBreeds.flatMap((breed) =>
-        breed.temperament.split(',')
+      const temperamentArray = dogBreeds.flatMap((breed: any) =>
+        breed?.temperament.split(',')
       );
       const uniqueTemperaments = [
         ...new Set(temperamentArray.map((temp) => temp.trim())),
@@ -63,14 +63,14 @@ function BreedSelector() {
     }
   }, [dogBreeds]);
 
-  const handleCheckboxChange = (event) => {
+  const handleCheckboxChange = (event: any) => {
     const { value, checked } = event.target;
-    setSelectedTemperaments((prev) =>
-      checked ? [...prev, value] : prev.filter((t) => t !== value)
+    setSelectedTemperaments((prev: any) =>
+      checked ? [...prev, value] : prev.filter((t: any) => t !== value)
     );
   };
 
-  const handleAnimalTypeChange = (animalType) => {
+  const handleAnimalTypeChange = (animalType: any) => {
     setAnimalType(animalType);
     setButtonsVisible(false); // Hide the buttons after selection
   };
@@ -142,7 +142,7 @@ function BreedSelector() {
               <div className="grid grid-cols-4 p-4 gap-4">
                 {[
                   ...(animalType === 'cat' ? catTemperament : dogTemperament),
-                ].map((temp, index) => (
+                ].map((temp: any, index) => (
                   <FormControlLabel
                     key={index}
                     control={<Checkbox onChange={handleCheckboxChange} />}
