@@ -14,9 +14,9 @@ function Suggest() {
     const data = await response.json();
     setBreeds(data);
 
-    const filtered = data.filter((breed) => {
+    const filtered = data.filter((breed: any) => {
       const breedTemperaments = breed.temperament.split(', ');
-      return selectedTemperaments.some((selected) =>
+      return selectedTemperaments.some((selected: any) =>
         breedTemperaments.includes(selected)
       );
     });
@@ -31,9 +31,9 @@ function Suggest() {
     const data = await response.json();
     setBreeds(data);
 
-    const filtered = data.filter((breed) => {
+    const filtered = data.filter((breed: any) => {
       const breedTemperaments = breed.temperament.split(', ');
-      return selectedTemperaments.some((selected) =>
+      return selectedTemperaments.some((selected: any) =>
         breedTemperaments.includes(selected)
       );
     });
