@@ -10,7 +10,10 @@ function Encyclopedia() {
 
   const fetchCatData = useCallback(async () => {
     try {
-      const response = await fetch(getApiUrl('catBreeds'));
+      const response = await fetch(getApiUrl('catBreeds'), {
+        method: 'GET',
+        mode: 'no-cors',
+      });
       const data = await response.json();
 
       const catData: Breed[] = data.map((cat: Breed) => {
@@ -55,9 +58,10 @@ function Encyclopedia() {
 
   const fetchDogData = useCallback(async () => {
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_HOST}/api/dogBreeds`
-      );
+      const response = await fetch(getApiUrl('dogBreeds'), {
+        method: 'GET',
+        mode: 'no-cors',
+      });
       const data = await response.json();
 
       const dogData: Breed[] = data.map((dog: Breed) => {
