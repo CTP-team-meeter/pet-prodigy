@@ -53,8 +53,8 @@ function Breed() {
     <div className="flex justify-center">
       <div className="bg-primary text-primary w-7/12 p-2 border-2 mb-4 mr-3 rounded-lg">
         {breed.map((breed: any) => (
-          <>
-            <div className="grid grid-cols-2" key={breed.id}>
+          <div key={breed.id}>
+            <div className="grid grid-cols-2">
               <div>
                 <div className="flex items-center justify-center">
                   <h1
@@ -83,6 +83,8 @@ function Breed() {
                       <img
                         className="h-96 cursor-crosshair hover:opacity-60 mx-auto mb-3 object-cover border-2 rounded-lg"
                         src={image.url}
+                        alt={breed.name}
+                        key={image.id}
                       />
                     ))}
                 </Slider>
@@ -204,7 +206,7 @@ function Breed() {
                 </div>
               </div>
             </div>
-          </>
+          </div>
         ))}
       </div>
     </div>

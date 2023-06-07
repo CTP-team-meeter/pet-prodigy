@@ -13,15 +13,10 @@ const app = express();
 const mongoose = require('mongoose');
 const { seedPet } = require('./utils/petSeeder');
 
-// Enable CORS
+// Importing cors
 const cors = require('cors');
-const corsOptions = {
-  origin: '*',
-  credentials: true, //access-control-allow-credentials:true
-  optionSuccessStatus: 200,
-};
 
-app.use(cors(corsOptions));
+app.use(cors());
 
 // Avoids deprecation warnings
 mongoose.set('strictQuery', false);
