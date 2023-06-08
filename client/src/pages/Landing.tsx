@@ -10,6 +10,7 @@ const Landing = () => {
       <section className="bg-primary" id="landing-first-section">
         <div className="mx-auto grid max-w-2xl grid-cols-1 items-center gap-y-16 gap-x-8 px-4 lg:max-w-screen-xl lg:grid-cols-5 lg:px-8 xl:gap-x-16 xl:px-12">
           <div className="text-left relative z-10 md:text-center lg:text-left col-span-2">
+            <h1>HI</h1>
             <FadeInChildren>
               <h1 style={{ fontSize: '2.25rem', marginBottom: '10px' }}>
                 Find the pet best fit for you
