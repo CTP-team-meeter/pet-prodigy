@@ -10,10 +10,9 @@ function Encyclopedia() {
 
   const fetchCatData = useCallback(async () => {
     try {
-      const response = await fetch(getApiUrl('catBreeds'), {
-        method: 'GET',
-        mode: 'no-cors',
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_HOST}/api/catBreeds`
+      );
       const data = await response.json();
 
       const catData: Breed[] = data.map((cat: Breed) => {
@@ -58,10 +57,9 @@ function Encyclopedia() {
 
   const fetchDogData = useCallback(async () => {
     try {
-      const response = await fetch(getApiUrl('dogBreeds'), {
-        method: 'GET',
-        mode: 'no-cors',
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_HOST}/api/dogBreeds`
+      );
       const data = await response.json();
 
       const dogData: Breed[] = data.map((dog: Breed) => {
@@ -75,7 +73,14 @@ function Encyclopedia() {
           animal_type: 'dog',
         };
       });
-      setBreeds((prevBreeds) => prevBreeds.concat(dogData));
+      setBreeds((prevBreeds: any) => {
+        const uniqueBreeds = [...prevBreeds, ...dogData];
+        return Array.from(new Set(uniqueBreeds.map((breed) => breed.name))).map(
+          (name) => {
+            return uniqueBreeds.find((breed) => breed.name === name);
+          }
+        );
+      });
       setLoading(false);
     } catch (error) {
       if (error instanceof Error) {
@@ -86,8 +91,20 @@ function Encyclopedia() {
   }, []);
 
   useEffect(() => {
-    fetchCatData();
-    fetchDogData();
+    const fetchData = async () => {
+      try {
+        await fetchCatData();
+        await fetchDogData();
+        setLoading(false);
+      } catch (error) {
+        if (error instanceof Error) {
+          setError(error.message);
+        }
+        console.log(error);
+      }
+    };
+
+    fetchData();
   }, []);
 
   if (loading) {
