@@ -1,14 +1,14 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "index.ts",
   "keywords": [],
   "author": "",
   "license": "MIT",
   "description": "",
   "scripts": {
     "build": "tsc",
-    "dev": "concurrently \"npx tsc --watch\" \"nodemon --inspect -q dist/index.js\""
+    "dev": "concurrently \"npx tsc --watch\" \"nodemon --inspect -q dist/index.ts\""
   },
   "dependencies": {
     "bcrypt": "^5.1.0",
