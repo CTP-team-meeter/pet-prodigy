@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 // Importing dotenv
 require('dotenv').config();
-const host = process.env.HOST || '0.0.0.0';
 const port = process.env.PORT || 8080;
+const host = process.env.HOST || '0.0.0.0';
 // Importing express
 const express = require('express');
 const app = express();
@@ -45,6 +45,6 @@ app.use(express.json());
 app.use('/api', require('./routers'));
 // Starting server
 app.listen(port, host, () => {
-    console.log('Server started on host ' + host);
+    console.log('Server started on port ' + host);
     console.log('Server started on port ' + port);
 });
