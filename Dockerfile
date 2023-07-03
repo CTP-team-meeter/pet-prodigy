@@ -29,6 +29,9 @@ RUN npm install
 # Install the concurrently package
 RUN npm install -g concurrently
 
+# Install nodemon globally
+RUN npm install -g nodemon
+
 # Change back to the server directory
 WORKDIR /home/node/app
 
