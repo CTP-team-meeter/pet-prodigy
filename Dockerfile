@@ -15,6 +15,9 @@ RUN npm install
 RUN npm uninstall bcrypt
 RUN npm install --force bcrypt
 
+# Install the concurrently package globally
+RUN npm install -g concurrently
+
 # Change directory to the client folder
 WORKDIR /home/node/app/public
 
