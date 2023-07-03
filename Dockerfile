@@ -1,5 +1,5 @@
-# Use a Node.js 18 base image
-FROM node:18
+# Use a Node.js 14 base image
+FROM node:14
 
 # Set the working directory
 WORKDIR /home/node/app
@@ -32,8 +32,8 @@ RUN npm install
 # Change back to the server directory
 WORKDIR /home/node/app
 
-# Set the command to run both server and client
-CMD concurrently "npm run dev" --names "SERVER,CLIENT"
-
 # Expose the necessary ports
 EXPOSE 9999
+
+# Set the command to run both server and client
+CMD concurrently "npm run dev" --names "SERVER,CLIENT"
