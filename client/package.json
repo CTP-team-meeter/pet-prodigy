@@ -2,9 +2,9 @@
   "name": "pet-prodigy",
   "private": true,
   "version": "0.0.0",
-  "proxy": "http://0.0.0.0:3030",
+  "proxy": "http://0.0.0.0:3000",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host 0.0.0.0",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "start": "vite"
