@@ -17,12 +17,16 @@ RUN npm install bcrypt
 # Install the concurrently package
 RUN npm install -g concurrently
 
-# Change directory to client
-WORKDIR /home/node/app/client
+# Change directory to the public folder
+WORKDIR /home/node/app/public
+
+# Copy the client files
+COPY client/package.json /home/node/app/public/
+COPY client/package-lock.json /home/node/app/public/
+COPY client/public /home/node/app/public/
+COPY client/src /home/node/app/public/src
 
 # Install client dependencies
-COPY client/package.json /home/node/app/client/
-COPY client/package-lock.json /home/node/app/client/
 RUN npm install
 
 # Change back to the server directory
