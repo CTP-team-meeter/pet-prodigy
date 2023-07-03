@@ -3,6 +3,7 @@ export {};
 
 // Importing dotenv
 require('dotenv').config();
+const host = process.env.HOST || '0.0.0.0';
 const port = process.env.PORT || 8080;
 
 // Importing express
@@ -56,6 +57,7 @@ app.use(express.json());
 app.use('/api', require('./routers'));
 
 // Starting server
-app.listen(port, () => {
+app.listen(port, host, () => {
+  console.log('Server started on host ' + host);
   console.log('Server started on port ' + port);
 });
