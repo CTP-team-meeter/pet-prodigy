@@ -8,7 +8,9 @@
   "description": "",
   "scripts": {
     "build": "tsc",
-    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\""
+    "dev:server": "npx tsc --watch && nodemon -q dist/index.js",
+    "dev:client": "cd client && npm run start",
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\""
   },
   "dependencies": {
     "bcrypt": "^5.1.0",
