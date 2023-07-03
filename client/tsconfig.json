@@ -9,7 +9,7 @@
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "module": "ESNext",
+    "module": "ES2020",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
