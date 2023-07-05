@@ -1,9 +1,0 @@
-{
-  "name": "pet-prodigy",
-  "version": "1.0.0",
-  "scripts": {
-    "start": "concurrently \"npm run server\" \"npm run client\"",
-    "server": "cd server && npm install && npm start",
-    "client": "cd client && npm install && npm start"
-  }
-}
