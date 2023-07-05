@@ -1,33 +1,42 @@
-# Base image
+# Use a Node.js 14 base image
 FROM node:14
 
 # Set the working directory
-WORKDIR /app
+WORKDIR /home/node/app
 
-# Copy package.json and package-lock.json to the container
-COPY package*.json ./
-
-# Install dependencies for the entire application
-RUN npm ci --only=production
-
-# Copy the client directory
-COPY client /app/client
-
-# Install client dependencies and build the client
-WORKDIR /app/client
-RUN npm install
-RUN npm run build
-
-# Copy the server directory
-WORKDIR /app
-COPY server /app/server
+# Copy the server files
+COPY server /home/node/app/
 
 # Install server dependencies
-WORKDIR /app/server
 RUN npm install
 
-# Expose the necessary ports
-EXPOSE 3000 8080
+# Uninstall bcrypt (if required) and reinstall
+RUN npm uninstall bcrypt
+RUN npm install bcrypt
 
-# Set the command to start both the client and server
-CMD npm run start:dev
+# Change directory to the public folder
+WORKDIR /home/node/app/public
+
+# Copy the client files
+COPY client/package.json /home/node/app/public/
+COPY client/package-lock.json /home/node/app/public/
+COPY client/public /home/node/app/public/
+COPY client/src /home/node/app/public/src
+
+# Install client dependencies
+RUN npm install
+
+# Install the concurrently package
+RUN npm install -g concurrently
+
+# Install nodemon globally
+RUN npm install -g nodemon
+
+# Change back to the server directory
+WORKDIR /home/node/app
+
+# Expose the necessary ports
+EXPOSE 9999
+
+# Set the command to run both server and client
+CMD concurrently "npx tsc --watch" "nodemon -q dist/index.js"
