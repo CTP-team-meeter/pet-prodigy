@@ -1,0 +1,17 @@
+[runtime]
+  # Configuration for the client service
+  [runtime.ports]
+    port = 3000
+  [runtime.command]
+    start = "cd client && npm start"
+
+[builds]
+  [builds.client]
+    # Build configuration for the client service
+    directory = "client"
+    dockerfile = "client/Dockerfile"
+
+  [builds.server]
+    # Build configuration for the server service
+    directory = "server"
+    dockerfile = "server/Dockerfile"
