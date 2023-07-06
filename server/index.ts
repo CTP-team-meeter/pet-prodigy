@@ -64,19 +64,19 @@ app.get('/', (req: any, res: any) => {
 });
 
 app.get('/encyclopedia', (req: any, res: any) => {
-  res.sendFile(path.join(__dirname, '../../client/dist/encyclopedia.html'));
+  res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
 });
 
 app.get('/maps', (req: any, res: any) => {
-  res.sendFile(path.join(__dirname, '../../client/dist/maps.html'));
+  res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
 });
 
 app.get('/login', (req: any, res: any) => {
-  res.sendFile(path.join(__dirname, '../../client/dist/login.html'));
+  res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
 });
 
 app.get('/signup', (req: any, res: any) => {
-  res.sendFile(path.join(__dirname, '../../client/dist/signup.html'));
+  res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
 });
 
 // Importing routes

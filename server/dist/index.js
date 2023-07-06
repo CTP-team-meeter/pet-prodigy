@@ -49,16 +49,16 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
 });
 app.get('/encyclopedia', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../client/dist/encyclopedia.html'));
+    res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
 });
 app.get('/maps', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../client/dist/maps.html'));
+    res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
 });
 app.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../client/dist/login.html'));
+    res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
 });
 app.get('/signup', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../client/dist/signup.html'));
+    res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
 });
 // Importing routes
 app.use('/api', require('./routers'));
