@@ -1,44 +1,36 @@
-# Use a Node.js 14 base image
-FROM node:14
+# Build the client
+FROM node:14 AS client-builder
+WORKDIR /home/node/app/client
+COPY client/package*.json ./
+RUN npm ci
+COPY client .
+RUN npm run build
 
-# Set the working directory
+# Build the server
+FROM node:14 AS server-builder
+WORKDIR /home/node/app/server
+COPY server/package*.json ./
+RUN npm ci
+COPY server .
+RUN npm run build
+
+# Final image
+FROM node:14
 WORKDIR /home/node/app
 
-# Copy the client files
-COPY client/package.json /home/node/app/
-COPY client/package-lock.json /home/node/app/
-COPY client/public /home/node/app/public/
-COPY client/src /home/node/app/public/src
+# Copy built client files
+COPY --from=client-builder /home/node/app/client/build ./client/build
 
-# Install client dependencies
-RUN npm install
-
-# Change directory to the server folder
-WORKDIR /home/node/app/server
-
-# Copy the server files
-COPY server/package.json /home/node/app/server/
-COPY server/package-lock.json /home/node/app/server/
-COPY server /home/node/app/server/
+# Copy built server files
+COPY --from=server-builder /home/node/app/server/dist ./server/dist
+COPY --from=server-builder /home/node/app/server/package*.json ./server/
 
 # Install server dependencies
-RUN npm install
-
-# Uninstall bcrypt (if required) and reinstall
-RUN npm uninstall bcrypt
-RUN npm install bcrypt
-
-# Change back to the root directory
-WORKDIR /home/node/app
-
-# Install the concurrently package
-RUN npm install -g concurrently
-
-# Install nodemon globally
-RUN npm install -g nodemon
+WORKDIR /home/node/app/server
+RUN npm ci --only=production
 
 # Expose the necessary ports
 EXPOSE 9999
 
-# Set the command to run both client and server
-CMD concurrently "cd public && npm run start -- --host 0.0.0.0" "cd server && concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\""
+# Start the server
+CMD ["npm", "start"]
