@@ -45,19 +45,7 @@ app.use(express.json());
 // Serve static files from the client build directory
 app.use(express.static(path.join(__dirname, '../../client/dist')));
 // Define route handler for the root path ("/")
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
-});
-app.get('/encyclopedia', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
-});
-app.get('/maps', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
-});
-app.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
-});
-app.get('/signup', (req, res) => {
+app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
 });
 // Importing routes

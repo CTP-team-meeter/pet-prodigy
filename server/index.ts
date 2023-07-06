@@ -59,26 +59,9 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, '../../client/dist')));
 
 // Define route handler for the root path ("/")
-app.get('/', (req: any, res: any) => {
+app.get('*', (req: any, res: any) => {
   res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
 });
-
-app.get('/encyclopedia', (req: any, res: any) => {
-  res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
-});
-
-app.get('/maps', (req: any, res: any) => {
-  res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
-});
-
-app.get('/login', (req: any, res: any) => {
-  res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
-});
-
-app.get('/signup', (req: any, res: any) => {
-  res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
-});
-
 // Importing routes
 app.use('/api', require('./routers'));
 
