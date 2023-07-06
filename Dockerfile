@@ -26,9 +26,6 @@ COPY client/src /home/node/app/public/src
 # Install client dependencies
 RUN npm install
 
-# Install the concurrently package
-RUN npm install -g concurrently
-
 # Install nodemon globally
 RUN npm install -g nodemon
 
