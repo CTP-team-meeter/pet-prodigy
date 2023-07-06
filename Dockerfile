@@ -1,4 +1,4 @@
-# Use a Node.js 14 base image for building the client
+# Build the client
 FROM node:14 AS client-builder
 WORKDIR /home/node/app/client
 COPY client/package*.json ./
@@ -6,7 +6,7 @@ RUN npm ci
 COPY client .
 RUN npm run build
 
-# Use a Node.js 14 base image for building the server
+# Build the server
 FROM node:14 AS server-builder
 WORKDIR /home/node/app/server
 COPY server/package*.json ./
@@ -14,7 +14,7 @@ RUN npm ci
 COPY server .
 RUN npm run build
 
-# Use a Node.js 14 base image for the final server image
+# Final image
 FROM node:14
 WORKDIR /home/node/app
 
@@ -28,6 +28,9 @@ COPY --from=server-builder /home/node/app/server/package*.json ./server/
 # Install server dependencies
 WORKDIR /home/node/app/server
 RUN npm ci --only=production
+
+# Install dotenv module
+RUN npm install dotenv
 
 # Expose the necessary ports
 EXPOSE 9999
