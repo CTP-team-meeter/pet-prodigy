@@ -18,12 +18,6 @@ export default ({ mode }) => {
     },
     build: {
       target: 'es2020',
-      polyfillDynamicImport: false,
-      esbuild: {
-        jsxFactory: 'h',
-        jsxFragment: 'Fragment',
-        jsxInject: `import { h, Fragment } from 'preact'`, // Replace with your chosen JSX library (e.g., React)
-      },
     },
   });
 };
