@@ -12,7 +12,6 @@ WORKDIR /home/node/app/server
 COPY server/package*.json ./
 RUN npm ci
 COPY server .
-RUN npm run build
 
 # Final image
 FROM node:14
