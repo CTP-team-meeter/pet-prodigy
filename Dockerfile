@@ -23,6 +23,10 @@ COPY client/package-lock.json /home/node/app/public/
 COPY client/public /home/node/app/public/
 COPY client/src /home/node/app/public/src
 
+
+# Install the concurrently package
+RUN npm install -g concurrently
+
 # Install client dependencies
 RUN npm install
 
