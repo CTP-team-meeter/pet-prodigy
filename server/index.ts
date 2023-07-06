@@ -58,6 +58,10 @@ app.use(express.json());
 // Serve static files from the client build directory
 app.use(express.static(path.join(__dirname, '../../client/dist')));
 
+// Importing routes
+app.use('/api', require('./routers'));
+
+// Define route handler for the root path ("/")
 app.get('/', (req: any, res: any) => {
   res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
 });
@@ -66,8 +70,6 @@ app.get('/', (req: any, res: any) => {
 app.get('*', (req: any, res: any) => {
   res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
 });
-// Importing routes
-app.use('/api', require('./routers'));
 
 // Starting server
 app.listen(port, host, () => {
