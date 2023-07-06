@@ -3,6 +3,8 @@ export {};
 
 // Importing dotenv
 require('dotenv').config();
+const path = require('path');
+
 const port = process.env.PORT || 3000;
 const host = process.env.HOST || '0.0.0.0';
 
@@ -53,9 +55,12 @@ DogBreed.count((err: any, count: any) => {
 
 app.use(express.json());
 
+// Serve static files from the client build directory
+app.use(express.static(path.join(__dirname, 'client', 'build')));
+
 // Define route handler for the root path ("/")
 app.get('/', (req: any, res: any) => {
-  res.send('Hello, World!'); // Replace this with your desired response or view rendering logic
+  res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
 });
 
 // Importing routes

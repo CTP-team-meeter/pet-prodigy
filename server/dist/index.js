@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 // Importing dotenv
 require('dotenv').config();
+const path = require('path');
 const port = process.env.PORT || 3000;
 const host = process.env.HOST || '0.0.0.0';
 // Importing express
@@ -41,9 +42,11 @@ DogBreed.count((err, count) => {
     }
 });
 app.use(express.json());
+// Serve static files from the client build directory
+app.use(express.static(path.join(__dirname, 'client', 'build')));
 // Define route handler for the root path ("/")
 app.get('/', (req, res) => {
-    res.send('Hello, World!'); // Replace this with your desired response or view rendering logic
+    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
 });
 // Importing routes
 app.use('/api', require('./routers'));
