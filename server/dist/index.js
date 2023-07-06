@@ -48,6 +48,12 @@ app.use(express.static(path.join(__dirname, '../../client/dist')));
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
 });
+app.get('/encyclopedia', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../client/dist/encyclopedia.html'));
+});
+app.get('/maps', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../client/dist/maps.html'));
+});
 // Importing routes
 app.use('/api', require('./routers'));
 // Starting server
