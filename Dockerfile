@@ -1,4 +1,4 @@
-# Build the client
+# Use a Node.js 14 base image for building the client
 FROM node:14 AS client-builder
 WORKDIR /home/node/app/client
 COPY client/package*.json ./
@@ -6,21 +6,22 @@ RUN npm ci
 COPY client .
 RUN npm run build
 
-# Build the server
+# Use a Node.js 14 base image for building the server
 FROM node:14 AS server-builder
 WORKDIR /home/node/app/server
 COPY server/package*.json ./
 RUN npm ci
 COPY server .
+RUN npm run build
 
-# Final image
+# Use a Node.js 14 base image for the final server image
 FROM node:14
 WORKDIR /home/node/app
 
-# Copy built client files
-COPY --from=client-builder /home/node/app/client/build ./client/build
+# Copy the built client files
+COPY --from=client-builder /home/node/app/client/public ./client/public
 
-# Copy built server files
+# Copy the built server files
 COPY --from=server-builder /home/node/app/server/dist ./server/dist
 COPY --from=server-builder /home/node/app/server/package*.json ./server/
 
@@ -32,4 +33,4 @@ RUN npm ci --only=production
 EXPOSE 9999
 
 # Start the server
-CMD ["npm", "start"]
+CMD ["node", "./dist/index.js"]
