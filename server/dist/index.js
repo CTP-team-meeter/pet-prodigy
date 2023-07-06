@@ -44,7 +44,10 @@ DogBreed.count((err, count) => {
 app.use(express.json());
 // Serve static files from the client build directory
 app.use(express.static(path.join(__dirname, '../../client/dist')));
-// Define route handler for the root path ("/")
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
+});
+// Serve index.html from the client build directory for all other requests
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
 });
