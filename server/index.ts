@@ -71,6 +71,14 @@ app.get('/maps', (req: any, res: any) => {
   res.sendFile(path.join(__dirname, '../../client/dist/maps.html'));
 });
 
+app.get('/login', (req: any, res: any) => {
+  res.sendFile(path.join(__dirname, '../../client/dist/login.html'));
+});
+
+app.get('/signup', (req: any, res: any) => {
+  res.sendFile(path.join(__dirname, '../../client/dist/signup.html'));
+});
+
 // Importing routes
 app.use('/api', require('./routers'));
 

@@ -54,6 +54,12 @@ app.get('/encyclopedia', (req, res) => {
 app.get('/maps', (req, res) => {
     res.sendFile(path.join(__dirname, '../../client/dist/maps.html'));
 });
+app.get('/login', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../client/dist/login.html'));
+});
+app.get('/signup', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../client/dist/signup.html'));
+});
 // Importing routes
 app.use('/api', require('./routers'));
 // Starting server
