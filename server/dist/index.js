@@ -41,6 +41,10 @@ DogBreed.count((err, count) => {
     }
 });
 app.use(express.json());
+// Define route handler for the root path ("/")
+app.get('/', (req, res) => {
+    res.send('Hello, World!'); // Replace this with your desired response or view rendering logic
+});
 // Importing routes
 app.use('/api', require('./routers'));
 // Starting server
