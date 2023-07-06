@@ -19,7 +19,7 @@ FROM node:14
 WORKDIR /home/node/app
 
 # Copy the built client files
-COPY --from=client-builder /home/node/app/client/public ./client/public
+COPY --from=client-builder /home/node/app/client/dist ./client/dist
 
 # Copy the built server files
 COPY --from=server-builder /home/node/app/server/dist ./server/dist
