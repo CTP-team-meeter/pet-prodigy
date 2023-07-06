@@ -18,6 +18,15 @@ export default ({ mode }) => {
     },
     build: {
       target: 'es2020',
+      rollupOptions: {
+        input: {
+          main: './index.html',
+          encyclopedia: './encyclopedia.html',
+          maps: './maps.html',
+          login: './login.html',
+          signup: './signup.html',
+        },
+      },
     },
   });
 };
