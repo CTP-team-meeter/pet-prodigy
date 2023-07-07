@@ -2,7 +2,7 @@
   "name": "pet-prodigy",
   "private": true,
   "version": "0.0.0",
-  "proxy": "http://0.0.0.0:3000",
+  "proxy": "https://pet-prodigy-production.up.railway.app",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "build": "tsc && vite build",
