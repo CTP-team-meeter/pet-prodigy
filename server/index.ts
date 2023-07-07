@@ -73,6 +73,6 @@ app.get('*', (req: any, res: any) => {
 
 // Starting server
 app.listen(port, host, () => {
-  console.log('Server started on port ' + host);
+  console.log('Server started on host ' + host);
   console.log('Server started on port ' + port);
 });

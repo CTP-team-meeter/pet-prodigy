@@ -1,4 +1,4 @@
-GET https://api.thedogapi.com/v1/breeds
+GET https://api.thedogapi.com/v1/catBreeds/
       
 ###
 GET  https://api.thecatapi.com/v1/breeds
